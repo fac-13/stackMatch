@@ -1,0 +1,46 @@
+{
+  "name": "stackmatch",
+  "version": "1.0.0",
+  "description": "A Founders & Coders job opportunities platform.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "NODE_ENV=test nyc tape src/test/*.test.js | tap-spec",
+    "test:app": "NODE_ENV=test nodemon src/test/app.test.js | tap-spec",
+    "test:db": "NODE_ENV=test nodemon src/test/db.test.js | tap-spec",
+    "test:coverage": "NODE_ENV=test nyc --reporter=lcov --reporter=text-lcov tape src/test/*.test.js | tap-spec && open -a \"Google Chrome\" ./coverage/lcov-report/index.html",
+    "build": "node src/model/database/db_build.js",
+    "lint": "./node_modules/.bin/eslint **/*.js --ignore-pattern node_modules/"
+  },
+  "pre-commit": [
+    "test",
+    "lint"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fac-13/stackMatch.git"
+  },
+  "author": "tdoran, LawEKS, vlbee, helenzhou6",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fac-13/stackMatch/issues"
+  },
+  "homepage": "https://github.com/fac-13/stackMatch#readme",
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.11.0",
+    "nodemon": "^1.17.4",
+    "nyc": "^11.7.1",
+    "pre-commit": "^1.2.2",
+    "supertest": "^3.0.0",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.9.0"
+  },
+  "dependencies": {
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "pg-promise": "^8.4.3"
+  }
+}
