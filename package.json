@@ -39,6 +39,8 @@
     "tape": "^4.9.0"
   },
   "dependencies": {
-    "express": "^4.16.3"
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "pg-promise": "^8.4.3"
   }
 }
