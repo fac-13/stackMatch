@@ -3,6 +3,8 @@ const path = require('path');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.send(path.join(__dirname, '..', 'public', 'index.html'));
-});
+const home = require('./home');
+
+router.get('/', home.get);
+
+module.exports = router;
