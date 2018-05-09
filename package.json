@@ -39,9 +39,13 @@
     "tape": "^4.9.0"
   },
   "dependencies": {
+    "body-parser": "^1.18.2",
+    "cookie-session": "^2.0.0-beta.3",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
     "express-handlebars": "^3.0.0",
+    "passport": "^0.4.0",
+    "passport-github2": "^0.1.11",
     "pg-promise": "^8.4.3"
   }
 }

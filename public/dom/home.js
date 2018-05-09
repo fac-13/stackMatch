@@ -7,7 +7,7 @@ var signupButton = document.getElementById('js-signup');
 
 signupButton.addEventListener('click', function (e) {
   e.preventDefault();
-  clientRequest('GET', '/signup', null, function (response) {
+  clientRequest('GET', '/auth/github/signup', null, function (response) {
     console.log(response);
   });
 });
