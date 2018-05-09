@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
     <link rel="stylesheet" href="/css/style.css">
     <title>StackMatch</title>
 </head>
+
 <body>
     <header>
         <span>Stackmatch</span>
@@ -17,11 +19,15 @@
         </nav>
     </header>
     <main>
-        {{{body}}}        
+        {{{body}}}
     </main>
 
     <footer>
         <h2>Copyright StackMatch</h2>
     </footer>
+
+    <script src="/dom/index.js"></script> {{#if activePage.home}}
+    <script src="/dom/home.js"></script> {{/if}}
 </body>
+
 </html>

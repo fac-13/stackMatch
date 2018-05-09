@@ -19,13 +19,22 @@ test(`Test if Express app is running on http://${process.env.HOST}:${
     });
 });
 
-test(`Test if Express app is running on http://${process.env.HOST}:${
-  process.env.PORT
-} or http://localhost:3000/`, (t) => {
+test('Test if home route gets status code 200 and is html', (t) => {
   request(app)
     .get('/')
     .expect(200)
     .expect('Content-Type', /html/)
+    .end((err, res) => {
+      t.equal(res.statusCode, 200, 'Should return 200');
+      t.error(err, 'no server error');
+      t.end();
+    });
+});
+
+test('Test if signup route gets status code 200', (t) => {
+  request(app)
+    .get('/signup')
+    .expect(200)
     .end((err, res) => {
       t.equal(res.statusCode, 200, 'Should return 200');
       t.error(err, 'no server error');
