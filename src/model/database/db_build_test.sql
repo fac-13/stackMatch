@@ -7,4 +7,3 @@ CREATE TABLE members  (
 );
 
 COMMIT;
-
