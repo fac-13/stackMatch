@@ -9,7 +9,7 @@ require('dotenv').config();
 
 // Import Passport and Strategy
 const passport = require('passport');
-const Strategy = require('passport-github2').Strategy;
+const { Strategy } = require('passport-github2');
 
 // Import Constrollers
 const controllers = require('./controllers/');
@@ -21,11 +21,7 @@ passport.use(new Strategy(
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
     callbackURL: `${process.env.BASE_URL}/auth/github/callback`,
   },
-  ((accessToken, refreshToken, profile, done) => {
-    console.log('strategy success!! ');
-    console.log(profile._json);
-    return done(null, profile);
-  }),
+  ((accessToken, refreshToken, profile, done) => done(null, profile)),
 ));
 
 passport.serializeUser((user, done) => {
