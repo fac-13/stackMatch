@@ -5,10 +5,10 @@
 
 var signupButton = document.getElementById('js-signup');
 
-signupButton.addEventListener('click', function (e) {
-  e.preventDefault();
-  clientRequest('GET', '/auth/github/signup', null, function (response) {
-    console.log(response);
-  });
-});
+// signupButton.addEventListener('click', function (e) {
+//   e.preventDefault();
+//   clientRequest('GET', '/auth/github/signup', null, function (response) {
+//     console.log(response);
+//   });
+// });
 
