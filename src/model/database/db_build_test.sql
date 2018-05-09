@@ -1,1 +1,10 @@
+BEGIN;
+
+DROP TABLE IF EXISTS members CASCADE;
+
+CREATE TABLE members  (
+  id SERIAL PRIMARY KEY
+);
+
+COMMIT;
 
