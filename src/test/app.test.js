@@ -19,3 +19,16 @@ test(`Test if Express app is running on http://${process.env.HOST}:${
     });
 });
 
+test(`Test if Express app is running on http://${process.env.HOST}:${
+  process.env.PORT
+} or http://localhost:3000/`, (t) => {
+  request(app)
+    .get('/')
+    .expect(200)
+    .expect('Content-Type', /html/)
+    .end((err, res) => {
+      t.equal(res.statusCode, 200, 'Should return 200');
+      t.error(err, 'no server error');
+      t.end();
+    });
+});
