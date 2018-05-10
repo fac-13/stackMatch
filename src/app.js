@@ -4,6 +4,7 @@ const exphbs = require('express-handlebars');
 const path = require('path');
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const cookieSession = require('cookie-session');
 require('dotenv').config();
 
 // import route controllers
@@ -32,15 +33,10 @@ app.engine(
 // config middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(session({
-//   secret: 'keyboard cat',
-//   resave: true,
-//   saveUninitialized: true,
-// }));
-// // app.use(cookieSession({
-// //   maxAge: 30 * 24 * 60 * 60 * 1000,
-// //   keys: [process.env.COOKIE_KEY],
-// // }));
+app.use(cookieSession({
+  maxAge: 24 * 60 * 60 * 1000,
+  keys: [process.env.COOKIE_KEY],
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, '..', 'public')));

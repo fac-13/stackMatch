@@ -56,8 +56,7 @@ test('Test member data to ensure correct data received', (t) => {
       const correctResult = {
         id: 1,
         github_id: 1,
-        first_name: 'Helen',
-        last_name: 'Zhou',
+        full_name: 'Helen',
         github_handle: 'helenzhou6',
         github_avatar_url: 'https://uk.linkedin.com/dbsmith',
         fac_campus: 'london',
@@ -72,7 +71,7 @@ test('Test member data to ensure correct data received', (t) => {
         cv_url: 'https://github.com/helenzhou6/CV',
         job_view_pref: 'private',
       };
-      t.equal(Object.keys(res).length, 17, 'correct array length');
+      t.equal(Object.keys(res).length, 16, 'correct array length');
       t.deepEqual(res, correctResult, 'deepEquals of first test member');
       t.end();
     })
@@ -88,8 +87,7 @@ test('Test postMemberInfo adds a row', (t) => {
   const memberProfile = {
     github_id: 43948924,
     github_handle: 'john_profile',
-    first_name: 'John',
-    last_name: 'Doe',
+    full_name: 'John',
     github_avatar_url: 'https://avatars3.githubusercontent.com/u/32312712?v=4',
   };
   runDbBuild().then(() => {
