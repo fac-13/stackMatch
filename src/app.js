@@ -1,44 +1,22 @@
-// Import modules
+// import modules
 const express = require('express');
 const exphbs = require('express-handlebars');
 const path = require('path');
-const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
-
+const passport = require('passport');
 require('dotenv').config();
 
-// Import Passport and Strategy
-const passport = require('passport');
-const Strategy = require('passport-github2').Strategy;
+// import route controllers
+const controllers = require('./controllers/index');
 
-// Import Constrollers
-const controllers = require('./controllers/');
+// github oauth 2.0
+// contains IFFE function running all passport.js setup
+require('./oauth');
 
-// Passport oAuth set up
-passport.use(new Strategy(
-  {
-    clientID: process.env.GITHUB_CLIENT_ID,
-    clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: `${process.env.BASE_URL}/auth/github/callback`,
-  },
-  ((accessToken, refreshToken, profile, done) => {
-    console.log('strategy success!! ');
-    console.log(profile._json);
-    return done(null, profile);
-  }),
-));
-
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
-
-passport.deserializeUser((obj, done) => {
-  done(null, obj);
-});
-
-// Configure Express app
+// express app
 const app = express();
 
+// config view engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.engine(
@@ -51,18 +29,23 @@ app.engine(
   }),
 );
 
+// config middleware
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
-
-app.use(cookieSession({
-  maxAge: 30 * 24 * 60 * 60 * 1000,
-  keys: [process.env.COOKIE_KEY],
-}));
-
+app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(session({
+//   secret: 'keyboard cat',
+//   resave: true,
+//   saveUninitialized: true,
+// }));
+// // app.use(cookieSession({
+// //   maxAge: 30 * 24 * 60 * 60 * 1000,
+// //   keys: [process.env.COOKIE_KEY],
+// // }));
 app.use(passport.initialize());
 app.use(passport.session());
-
 app.use(express.static(path.join(__dirname, '..', 'public')));
+
+// config route controller
 app.use(controllers);
 
 
