@@ -2,8 +2,8 @@
 const passport = require('passport');
 const Strategy = require('passport-github2').Strategy;
 
-// this is the database!!
-// const User = require('../models/user');
+const postMemberInfo = require('./model/queries/postMemberInfo.js');
+const getMemberData = require('./model/queries/getMemberData.js');
 
 
 (function config() {
@@ -13,29 +13,45 @@ const Strategy = require('passport-github2').Strategy;
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
       callbackURL: `${process.env.BASE_URL}/auth/github/callback`,
     },
-    ((accessToken, refreshToken, profile, done) => {
-      console.log('strategy success!! ');
-      console.log(profile._json);
+    ((accessToken, refreshToken, profile, next) => {
 
       let memberProfile = {
         github_id: profile._json.id,
         github_handle: profile._json.login,        
-        first_name: profile._json.name,
+        full_name: profile._json.name,
         github_avatar_url: profile._json.avatar_url,
       }
 
-      return done(null, profile);
+      return getMemberData(memberProfile.github_id)
+      .then((userDataObj) => {
+        if(!userDataObj){
+          postMemberInfo(memberProfile)
+          .then(() => {
+            getMemberData(memberProfile.github_id)
+            .then((newUserDataObj) => {
+              return next(null, newUserDataObj, { message: 'Signed up successfully' })
+            })
+          })
+        } else {
+          return next(null, userDataObj, { message: 'Logged in successfully' })
+        }
+      })
+      .catch(error => { throw new Error(error.message) });
     }),
   ));
-  // profile ID info needs to go into the database or check against what is in the DB
-  passport.serializeUser((user, done) => {
-    done(null, user.id);
+
+  passport.serializeUser((userDataObj, next) => {
+    next(null, userDataObj.github_id);
   });
 
-  passport.deserializeUser((id, done) => {
-    // need to get the user id from the dtb
-  // User.findById(id, (err, user) => {
-  //   done(err, user);
-  // });
+  passport.deserializeUser((id, next) => {
+    getMemberData(id)
+    .then((user) => {
+      next(null, user);
+    })
+    .catch((error) => {
+      next(error);
+    })
+
   });
 })();
