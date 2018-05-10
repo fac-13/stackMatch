@@ -36,7 +36,7 @@ test('Test database has content', (t) => {
 // GET MEMBER DATA TEST
 test('Test get member data and is the correct format', (t) => {
   runDbBuild()
-    .then(() => getMemberData())
+    .then(() => getMemberData(1))
     .then((res) => {
       t.ok(res, 'database responds with data');
       t.ok(Array.isArray(res), 'response from database is an array');
