@@ -3,6 +3,7 @@ const test = require('tape');
 const runDbBuild = require('../model/database/db_build_test');
 const dbConnection = require('../model/database/db_connection');
 const postMemberInfo = require('../model/queries/postMemberInfo.js');
+const getMemberData = require('../model/queries/getMemberData.js');
 
 const selectAllMembers = 'SELECT * FROM members';
 
