@@ -12,7 +12,8 @@ test('Test runDBBuild is working', (t) => {
     t.ok(build, 'runDbBuild is working');
     t.end();
   }).catch((error) => {
-    t.error(error, 'no build error');
+    console.log(error);
+    t.error(error, 'build error');
     t.end();
   });
 });
