@@ -1,5 +1,8 @@
 <header>
   <span>Stackmatch</span>
   <nav>
+    <ul>
+      {{#unless loggedOut}}<li><a href="/auth/github/logout" type="button" id="js-logout">Logout</a></li>{{/unless}}
+    </ul>
   </nav>
 </header>
