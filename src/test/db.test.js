@@ -39,8 +39,7 @@ test('Test get member data and is the correct format', (t) => {
     .then(() => getMemberData(1))
     .then((res) => {
       t.ok(res, 'database responds with data');
-      t.ok(Array.isArray(res), 'response from database is an array');
-      t.equals(typeof res[0], 'object', 'type of res should be an array of objects');
+      t.equals(typeof res, 'object', 'type of res should be an object');
       t.end();
     })
     .catch((error) => {
