@@ -1,12 +1,14 @@
 const router = require('express').Router();
 const passport = require('passport');
 
+// import routes
 const home = require('./home');
-// const auth = require('./auth');
+const error = require('./error');
 
 router.get('/', home.get);
 
-// auth routes
+
+// AUTHENTICATION ROUTES //
 router.get(
   '/auth/github/signup',
   passport.authenticate('github', { scope: ['read:org'] }),
@@ -14,25 +16,36 @@ router.get(
 
 router.get(
   '/auth/github/callback',
-  passport.authenticate('github', { failureRedirect: '/' }),
-  (req, res) => {
-    // Successful authentication, redirect home.
-    console.log('success!!!');
-    console.log(req.url);
-    res.redirect('/');
+  // passport.authenticate must be wrapped in a function
+  (req, res, next) => {
+    passport.authenticate('github', (err, user, info) => {
+      if (info.message === 'Not FAC member') {
+        res.redirect('/notmember');
+      } else if (info.message === 'Authentication successful') {
+        res.redirect('/profile');
+      }
+    // and then invoked by its own arguments to function as proper middleware
+    })(req, res, next);
   },
 );
 
-// TODO check session management is working
 router.get('/auth/github/logout', (req, res) => {
-  console.log('logout!!!');
   req.session = null;
   req.logout();
   res.redirect('/');
 });
-// router.get('/auth/github/signup', auth.signup);
-// router.get('/auth/github/callback', auth.signupCallback);
-// router.get('/auth/github/logout', auth.logout);
 
+router.get('/notmember', (req, res) => {
+  res.send('You are not a member of the Founders and Coders Github organization. You must be a member in order to sign up and use StackMatch');
+});
+
+// this profile route will be replaced
+router.get('/profile', (req, res) => {
+  res.send('profile');
+});
+
+// ERROR ROUTES //
+router.use(error.client);
+router.use(error.server);
 
 module.exports = router;

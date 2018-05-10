@@ -1,12 +1,22 @@
 /* eslint-disable */
 const passport = require('passport');
 const Strategy = require('passport-github2').Strategy;
-
+const request = require('axios'); // alternative to request module
 const postMemberInfo = require('./model/queries/postMemberInfo.js');
 const getMemberData = require('./model/queries/getMemberData.js');
 
+function checkOrgMembership(accessToken) {
+  return request.get(`https://api.github.com/user/orgs?access_token=${accessToken}`).then((res) => {
+      if(res.data.some((org) => org.login === 'foundersandcoders')) {
+        return true
+      } else {
+        return false
+      }
+    })
+  .catch(error => { throw new Error(error.message) });
+}
 
-(function config() {
+(function () {
   passport.use(new Strategy(
     {
       clientID: process.env.GITHUB_CLIENT_ID,
@@ -14,26 +24,33 @@ const getMemberData = require('./model/queries/getMemberData.js');
       callbackURL: `${process.env.BASE_URL}/auth/github/callback`,
     },
     ((accessToken, refreshToken, profile, next) => {
-
+    
       let memberProfile = {
         github_id: profile._json.id,
         github_handle: profile._json.login,        
         full_name: profile._json.name,
         github_avatar_url: profile._json.avatar_url,
       }
-
-      return getMemberData(memberProfile.github_id)
-      .then((userDataObj) => {
-        if(!userDataObj){
-          postMemberInfo(memberProfile)
-          .then(() => {
-            getMemberData(memberProfile.github_id)
-            .then((newUserDataObj) => {
-              return next(null, newUserDataObj, { message: 'Signed up successfully' })
-            })
-          })
+     
+      //ensure member of F&C github  org 
+      checkOrgMembership(accessToken).then((res) => {
+        if (res === false) {
+          return next(null, false, { message: 'Not FAC member' });
         } else {
-          return next(null, userDataObj, { message: 'Logged in successfully' })
+          return getMemberData(memberProfile.github_id)
+          .then((userDataObj) => {
+            if(!userDataObj){
+              postMemberInfo(memberProfile)
+              .then(() => {
+                getMemberData(memberProfile.github_id)
+                .then((newUserDataObj) => {
+                  return next(null, newUserDataObj, { message: 'Authentication successful' })
+                })
+              })
+            } else {
+              return next(null, userDataObj, { message: 'Authentication successful' })
+            }
+          })
         }
       })
       .catch(error => { throw new Error(error.message) });
@@ -41,10 +58,12 @@ const getMemberData = require('./model/queries/getMemberData.js');
   ));
 
   passport.serializeUser((userDataObj, next) => {
+    console.log('serialize')
     next(null, userDataObj.github_id);
   });
 
   passport.deserializeUser((id, next) => {
+    console.log('deserialize', id)
     getMemberData(id)
     .then((user) => {
       next(null, user);
@@ -52,6 +71,6 @@ const getMemberData = require('./model/queries/getMemberData.js');
     .catch((error) => {
       next(error);
     })
-
   });
+
 })();
