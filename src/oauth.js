@@ -16,6 +16,14 @@ const Strategy = require('passport-github2').Strategy;
     ((accessToken, refreshToken, profile, done) => {
       console.log('strategy success!! ');
       console.log(profile._json);
+
+      let memberProfile = {
+        github_id: profile._json.id,
+        github_handle: profile._json.login,        
+        first_name: profile._json.name,
+        github_avatar_url: profile._json.avatar_url,
+      }
+
       return done(null, profile);
     }),
   ));
