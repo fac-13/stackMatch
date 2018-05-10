@@ -12,22 +12,7 @@ test('Test runDBBuild is working', (t) => {
     t.ok(build, 'runDbBuild is working');
     t.end();
   }).catch((error) => {
-    console.log(error);
-    t.error(error, 'build error');
-    t.end();
-  });
-});
-
-test('Test database has content', (t) => {
-  runDbBuild().then((build) => {
-    let query = 'SELECT * FROM members';
-    return dbConnection.query(query);
-  }).then(res => {
-    t.ok(res.length > 0, 'Content received from test database');
-    t.end();
-  }).catch((error) => {
-    console.log(error);
-    t.error(error, 'build error');
+    t.error(error, 'no build error');
     t.end();
   });
 });
