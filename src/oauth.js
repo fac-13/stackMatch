@@ -44,8 +44,8 @@ const getMemberData = require('./model/queries/getMemberData.js');
     next(null, userDataObj.github_id);
   });
 
-  passport.deserializeUser((github_id, next) => {
-    getMemberData(github_id)
+  passport.deserializeUser((id, next) => {
+    getMemberData(id)
     .then((user) => {
       next(null, user);
     })
