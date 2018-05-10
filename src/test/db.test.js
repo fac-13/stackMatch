@@ -18,6 +18,20 @@ test('Test runDBBuild is working', (t) => {
   });
 });
 
+test('Test database has content', (t) => {
+  runDbBuild().then((build) => {
+    let query = 'SELECT * FROM members';
+    return dbConnection.query(query);
+  }).then(res => {
+    t.ok(res.length > 0, 'Content received from test database');
+    t.end();
+  }).catch((error) => {
+    console.log(error);
+    t.error(error, 'build error');
+    t.end();
+  });
+});
+
 
 test.onFinish(() => {
   dbConnection.$pool.end();
