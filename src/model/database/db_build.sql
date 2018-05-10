@@ -18,6 +18,7 @@ CREATE TABLE members (
   first_name VARCHAR(255),
   last_name VARCHAR(255),
   github_handle VARCHAR(255) NOT NULL,
+  github_avatar_url VARCHAR(4000),
   fac_campus VARCHAR(255),
   fac_code_id INTEGER,
   linkedin_url VARCHAR(4000),
