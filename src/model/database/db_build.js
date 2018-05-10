@@ -10,4 +10,3 @@ db
   .query(dbBuild)
   .then((res) => {})
   .catch(err => console.error('error', err));
-
