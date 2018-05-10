@@ -1,9 +1,44 @@
 BEGIN;
 
-DROP TABLE IF EXISTS members CASCADE;
+DROP TABLE IF EXISTS members, fac_code, member_tech_stack, tech_stack CASCADE;
 
-CREATE TABLE members  (
-  id SERIAL PRIMARY KEY
+CREATE TABLE fac_code (
+  id SERIAL PRIMARY KEY,
+  code VARCHAR(255)
+);
+
+CREATE TABLE tech_stack (
+  id SERIAL PRIMARY KEY,
+  tech VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE members (
+  id SERIAL PRIMARY KEY,
+  github_id INTEGER NOT NULL,
+  first_name VARCHAR(255),
+  last_name VARCHAR(255),
+  github_handle VARCHAR(255) NOT NULL,
+  fac_campus VARCHAR(255),
+  fac_code_id INTEGER,
+  linkedin_url VARCHAR(4000),
+  twitter_handle VARCHAR(255),
+  member_type VARCHAR(255),
+  job_search_status VARCHAR(255),
+  min_years_exp INTEGER,
+  max_years_exp INTEGER,
+  github_cv_url VARCHAR(4000),
+  cv_url VARCHAR(4000),
+  job_view_pref VARCHAR(255),
+  FOREIGN KEY (fac_code_id) REFERENCES fac_code(id)
+);
+
+CREATE TABLE member_tech_stack (
+  member_id INTEGER NOT NULL,
+  stack_id INTEGER NOT NULL,
+  order_num INTEGER,
+  PRIMARY KEY (stack_id, member_id),
+  FOREIGN KEY (member_id) REFERENCES members(id),
+  FOREIGN KEY (stack_id) REFERENCES tech_stack(id)
 );
 
 COMMIT;
