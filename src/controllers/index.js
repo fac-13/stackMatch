@@ -17,22 +17,21 @@ router.get('/notmember', (req, res) => {
 router.get('/myprofile', ensureAuthenticated, (req, res) => {
   res.send('profile');
 });
-router.get(
-  '/myprofile/mydetails/edit', ensureAuthenticated, profileDetails.get
-);
+router.get('/myprofile/mydetails/edit', ensureAuthenticated, profileDetails.get);
 
 // AUTHENTICATION ROUTES //
 router.get(
   '/auth/github/signup',
-  passport.authenticate('github', { scope: ['read:org'] })
+  passport.authenticate('github', { scope: ['read:org'] }),
 );
 
 router.get(
   '/auth/github/callback',
   // passport.authenticate custom callback - see passport documentation
   (req, res, next) => {
-    passport.authenticate('github', (err, user, info) => {
-      if (err) { return next(err); }
+    /* eslint consistent-return: off */
+    passport.authenticate('github', (authErr, user, info) => {
+      if (authErr) { return next(authErr); }
       if (!user) { return res.redirect('/'); }
       req.logIn(user, (err) => {
         if (err) { return next(err); }
