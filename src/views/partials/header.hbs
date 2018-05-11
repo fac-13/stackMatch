@@ -1,0 +1,9 @@
+<header>
+  <span>Stackmatch</span>
+  <nav>
+    <ul>
+      {{#if user.session}}<li><a href="/auth/github/logout" type="button" id="js-logout">Logout</a></li>{{/if}}
+      {{#if user.github_avatar_url}} <img src="{{user.github_avatar_url}}" alt="my profile picture" class="nav-avatar"> {{/if}}
+    </ul>
+  </nav>
+</header>
