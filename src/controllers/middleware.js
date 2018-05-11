@@ -1,11 +1,3 @@
-exports.ensureAuthenticated = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    // req.user is available for use here
-    return next();
-  }
-  res.redirect('/');
-};
-
 // MIDDLEWARE to ensure user is authenticated
 exports.updateUserSession = (req, res, next) => {
   let userInfo;

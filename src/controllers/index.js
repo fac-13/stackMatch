@@ -5,7 +5,7 @@ const passport = require('passport');
 const home = require('./home');
 const profileDetails = require('./profileDetails');
 const error = require('./error');
-const { ensureAuthenticated, updateUserSession, protectedRoute } = require('./middleware');
+const { updateUserSession, protectedRoute } = require('./middleware');
 
 // UNPROTECTED ROUTES //
 router.get('/', home.get);
