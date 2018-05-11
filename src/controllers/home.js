@@ -1,3 +1,7 @@
 exports.get = (req, res) => {
-  res.render('home', { activePage: { home: true } });
+  if (req.session.isPopulated) {
+    res.render('home', { activePage: { home: true }, loggedIn: true });
+  } else {
+    res.render('home', { activePage: { home: true } });
+  }
 };
