@@ -5,7 +5,17 @@ const passport = require('passport');
 const home = require('./home');
 const error = require('./error');
 
+
+// UNPROTECTED ROUTES //
 router.get('/', home.get);
+router.get('/notmember', (req, res) => {
+  res.send('You are not a member of the Founders and Coders Github organization. You must be a member in order to sign up and use StackMatch');
+});
+
+// PROTECTED ROUTES //
+router.get('/profile', (req, res) => {
+  res.send('profile');
+});
 
 
 // AUTHENTICATION ROUTES //
@@ -35,15 +45,6 @@ router.get('/auth/github/logout', (req, res) => {
   req.session = null;
   req.logout();
   res.redirect('/');
-});
-
-router.get('/notmember', (req, res) => {
-  res.send('You are not a member of the Founders and Coders Github organization. You must be a member in order to sign up and use StackMatch');
-});
-
-// this profile route will
-router.get('/profile', (req, res) => {
-  res.send('profile');
 });
 
 // ERROR ROUTES //
