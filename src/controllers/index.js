@@ -3,7 +3,7 @@ const passport = require('passport');
 
 // import routes
 const home = require('./home');
-const profileDetails = require('./profileDetails');
+const profile = require('./profile');
 const error = require('./error');
 const { updateUserSession, protectedRoute } = require('./middleware');
 
@@ -17,7 +17,8 @@ router.get('/notmember', (req, res) => {
 router.get('/myprofile', updateUserSession, protectedRoute, (req, res) => {
   res.send('profile');
 });
-router.get('/myprofile/:github_id/mydetails/edit', updateUserSession, protectedRoute, profileDetails.get);
+router.get('/myprofile/:github_id', updateUserSession, protectedRoute, profile.get);
+// router.get('/myprofile/:github_id/mydetails/edit', updateUserSession, protectedRoute, profileDetails.get);
 
 // AUTHENTICATION ROUTES //
 router.get(
@@ -38,7 +39,7 @@ router.get(
           return res.redirect('/notmember');
         } else if (info.message === 'Login successful') {
           req.session.registeredProfile = true;
-          return res.redirect(`/myprofile/${req.user.github_id}/mydetails/edit`);
+          return res.redirect(`/myprofile/${req.user.github_id}`);
         } else if (info.message === 'Signup successful') {
           req.session.registeredProfile = false;
           return res.redirect(`/myprofile/${req.user.github_id}/mydetails/edit`);

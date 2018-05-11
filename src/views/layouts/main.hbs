@@ -12,7 +12,8 @@
     {{> footer }}
 
     <script src="/dom/index.js"></script> {{#if activePage.home}}
-    <script src="/dom/home.js"></script> {{/if}}
+    <script src="/dom/home.js"></script> {{/if}}{{#if activePage.profile}}
+    <script src="/dom/profile.js"></script> {{/if}}
 </body>
 
 </html>
