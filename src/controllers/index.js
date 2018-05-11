@@ -3,8 +3,9 @@ const passport = require('passport');
 
 // import routes
 const home = require('./home');
+const profileDetails = require('./profileDetails');
 const error = require('./error');
-
+const { ensureAuthenticated } = require('./middleware');
 
 // UNPROTECTED ROUTES //
 router.get('/', home.get);
@@ -13,15 +14,17 @@ router.get('/notmember', (req, res) => {
 });
 
 // PROTECTED ROUTES //
-router.get('/profile', (req, res) => {
+router.get('/myprofile', ensureAuthenticated, (req, res) => {
   res.send('profile');
 });
-
+router.get(
+  '/myprofile/mydetails/edit', ensureAuthenticated, profileDetails.get
+);
 
 // AUTHENTICATION ROUTES //
 router.get(
   '/auth/github/signup',
-  passport.authenticate('github', { scope: ['read:org'] }),
+  passport.authenticate('github', { scope: ['read:org'] })
 );
 
 router.get(
@@ -36,9 +39,9 @@ router.get(
         if (info.message === 'Not FAC member') {
           return res.redirect('/notmember');
         } else if (info.message === 'Login successful') {
-          return res.redirect('/profile');
+          return res.redirect('/myprofile');
         } else if (info.message === 'Signup successful') {
-          return res.redirect('/profile');
+          return res.redirect('/myprofile/mydetails/edit');
         }
       });
     })(req, res, next);
