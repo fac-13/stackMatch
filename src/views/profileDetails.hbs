@@ -2,10 +2,10 @@
 <form method="post" action="/saveDetails" novalidate>
   <span>* Required</span>
   <label for="full_name">Full Name *
-    <input id="full_name" name="full_name" type="text"/>
+    <input id="full_name" name="full_name" type="text" {{#if user.full_name}} value="{{user.full_name}}"{{/if}}/>
   </label>
   <label for="github_handle">GitHub/Gitter Username *
-    <input id="github_handle" name="github_handle" type="text"/>
+    <input id="github_handle" name="github_handle" type="text"  {{#if user.github_handle}} value="{{user.github_handle}}"{{/if}}/>
   </label>
   <label for="fac_campus">FAC Location *
     <select id="fac_campus" name="fac_campus">

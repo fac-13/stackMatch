@@ -14,5 +14,5 @@ exports.post = (req, res) => {
     "twitter_handle": "a"
     }
   */
-  res.redirect('/myprofile/mydetails/edit');
+  res.redirect(`/myprofile/${req.user.github.id}/mydetails/edit`);
 };

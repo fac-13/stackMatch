@@ -25,18 +25,19 @@ test('Test if home route gets status code 200 and is html', (t) => {
     .expect(200)
     .expect('Content-Type', /html/)
     .end((err, res) => {
-      t.equal(res.statusCode, 200, 'Should return 200');
+      t.equal(res.statusCode, 200, 'should return 200');
       t.error(err, 'no server error');
       t.end();
     });
 });
 
+// AUTHENTICATION TESTS
 test('Test if /auth/github/signup route redirects to Github', (t) => {
   request(app)
     .get('/auth/github/signup')
     .expect(302)
     .end((err, res) => {
-      t.equal(res.statusCode, 302, 'Should return 302');
+      t.equal(res.statusCode, 302, 'should return 302');
       t.error(err, 'no server error');
       t.end();
     });
@@ -47,7 +48,7 @@ test('Test if /auth/github/callback route redirects', (t) => {
     .get('/auth/github/callback')
     .expect(302)
     .end((err, res) => {
-      t.equal(res.statusCode, 302, 'Should return 302');
+      t.equal(res.statusCode, 302, 'should return 302');
       t.error(err, 'no server error');
       t.end();
     });
@@ -58,8 +59,21 @@ test('Test if /auth/github/logout route redirects', (t) => {
     .get('/auth/github/logout')
     .expect(302)
     .end((err, res) => {
-      t.equal(res.statusCode, 302, 'Should return 302');
+      t.equal(res.statusCode, 302, 'should return 302');
       t.error(err, 'no server error');
       t.end();
     });
 });
+
+// 404 ERROR HANDLING ROUTES
+test('Test if server returns 404 on invalid route', (t) => {
+  request(app)
+    .get('/notavalidroute')
+    .expect(404)
+    .end((err, res) => {
+      t.equal(res.statusCode, 404, 'should return 404');
+      t.error(err, 'no server error');
+      t.end();
+    });
+});
+
