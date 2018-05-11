@@ -1,12 +1,24 @@
 const router = require('express').Router();
 const passport = require('passport');
 
+// import routes
 const home = require('./home');
-// const auth = require('./auth');
+const error = require('./error');
 
+
+// UNPROTECTED ROUTES //
 router.get('/', home.get);
+router.get('/notmember', (req, res) => {
+  res.send('You are not a member of the Founders and Coders Github organization. You must be a member in order to sign up and use StackMatch');
+});
 
-// auth routes
+// PROTECTED ROUTES //
+router.get('/profile', (req, res) => {
+  res.send('profile');
+});
+
+
+// AUTHENTICATION ROUTES //
 router.get(
   '/auth/github/signup',
   passport.authenticate('github', { scope: ['read:org'] }),
@@ -14,25 +26,33 @@ router.get(
 
 router.get(
   '/auth/github/callback',
-  passport.authenticate('github', { failureRedirect: '/' }),
-  (req, res) => {
-    // Successful authentication, redirect home.
-    console.log('success!!!');
-    console.log(req.url);
-    res.redirect('/');
+  // passport.authenticate custom callback - see passport documentation
+  (req, res, next) => {
+    passport.authenticate('github', (err, user, info) => {
+      if (err) { return next(err); }
+      if (!user) { return res.redirect('/'); }
+      req.logIn(user, (err) => {
+        if (err) { return next(err); }
+        if (info.message === 'Not FAC member') {
+          return res.redirect('/notmember');
+        } else if (info.message === 'Login successful') {
+          return res.redirect('/profile');
+        } else if (info.message === 'Signup successful') {
+          return res.redirect('/profile');
+        }
+      });
+    })(req, res, next);
   },
 );
 
-// TODO check session management is working
 router.get('/auth/github/logout', (req, res) => {
-  console.log('logout!!!');
   req.session = null;
   req.logout();
   res.redirect('/');
 });
-// router.get('/auth/github/signup', auth.signup);
-// router.get('/auth/github/callback', auth.signupCallback);
-// router.get('/auth/github/logout', auth.logout);
 
+// ERROR ROUTES //
+router.use(error.client);
+router.use(error.server);
 
 module.exports = router;
