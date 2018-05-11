@@ -2,7 +2,7 @@
   <span>Stackmatch</span>
   <nav>
     <ul>
-      {{#unless loggedOut}}<li><a href="/auth/github/logout" type="button" id="js-logout">Logout</a></li>{{/unless}}
+      {{#if loggedIn}}<li><a href="/auth/github/logout" type="button" id="js-logout">Logout</a></li>{{/if}}
     </ul>
   </nav>
 </header>

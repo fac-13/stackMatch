@@ -1,7 +1,6 @@
 exports.get = (req, res) => {
-  console.log('sesh', req.session);
-  if (Object.keys(req.session).length === 0) {
-    res.render('home', { activePage: { home: true }, loggedOut: true });
+  if (req.session.isPopulated) {
+    res.render('home', { activePage: { home: true }, loggedIn: true });
   } else {
     res.render('home', { activePage: { home: true } });
   }
