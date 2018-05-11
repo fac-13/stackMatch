@@ -21,7 +21,9 @@ router.get(
     passport.authenticate('github', (err, user, info) => {
       if (info.message === 'Not FAC member') {
         res.redirect('/notmember');
-      } else if (info.message === 'Authentication successful') {
+      } else if (info.message === 'Login successful') {
+        res.redirect('/profile');
+      } else if (info.message === 'Signup successful') {
         res.redirect('/profile');
       }
     // and then invoked by its own arguments to function as proper middleware
@@ -39,7 +41,7 @@ router.get('/notmember', (req, res) => {
   res.send('You are not a member of the Founders and Coders Github organization. You must be a member in order to sign up and use StackMatch');
 });
 
-// this profile route will be replaced
+// this profile route will
 router.get('/profile', (req, res) => {
   res.send('profile');
 });

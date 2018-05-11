@@ -44,11 +44,11 @@ function checkOrgMembership(accessToken) {
               .then(() => {
                 getMemberData(memberProfile.github_id)
                 .then((newUserDataObj) => {
-                  return next(null, newUserDataObj, { message: 'Authentication successful' })
+                  return next(null, newUserDataObj, { message: 'Signup successful' })
                 })
               })
             } else {
-              return next(null, userDataObj, { message: 'Authentication successful' })
+              return next(null, userDataObj, { message: 'Login successful' })
             }
           })
         }
