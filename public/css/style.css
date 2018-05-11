@@ -1,3 +1,7 @@
 .is-hidden{
     display: none;
 }
+
+.nav-avatar {
+    max-width: 5rem;
+}
