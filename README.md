@@ -1,6 +1,8 @@
 # StackMatch
 
-![StackMatch logo](https://i.imgur.com/cNzP2c4.png =250x)
+![StackMatch logo](https://i.imgur.com/cNzP2c4.png)
+
+[![Build Status](https://travis-ci.org/fac-13/stackMatch.svg?branch=master)](https://travis-ci.org/fac-13/stackMatch)
 
 Preview StackMatch: _link to Heroku to come_
 
@@ -14,14 +16,14 @@ The [Founders & Coders (FAC)](https://foundersandcoders.com/) community needs a 
 - To facilitate connecting FAC members together that could lead to spontaneous collaboration and encourage creativity.
 - To demonstrate that a FAC network exists beyond [Space4](http://space4.tech/) (FAC's physical location) and it is supportive of other FAC members even after the 16-week bootcamp course.
 
-## User Stories
+## User Journeys
 - As a FAC grad, I can sign up to StackMatch, create my profile with Github info and then log out.
 ___
 
 ### The app
 
 Preview of the first page:
-    ![First page of the app](https://i.imgur.com/TuLtliP.png =400x)
+    ![First page of the app](https://i.imgur.com/TuLtliP.png)
 
 _GIF that demos the app coming soon and/or Invision link_
 
@@ -33,44 +35,58 @@ ___
 
 | Front end             | Backend              | Testing    | Other               |
 |:---------------------:|:--------------------:|:----------:|:-------------------:|
-| HTML5                 | Node.js              | Tape       | Figma               | 
-| CSS3 (BEM)            | Handlebars temp.     | Travis CI  | Sketch              |
-| SASS                  | PostgreSQL           | Supertest  | Invision            |
-| Javascript            | Express.js           | istanbul   | OAuth (Passport)    |
-|                       |                      |            | GraphQL API         |
+| HTML5                 | Node.js              | Tape       | OAuth (Passport)    | 
+| CSS3 (BEM)            | Handlebars temp.     | Travis CI  | GraphQL API         |
+| SASS                  | PostgreSQL           | Supertest  |                     |
+| Javascript            | Express.js           | istanbul   |                     |
 
 ___
 
 ### Software Architecture
 
 _Diagram that links Node.js icon to other services (that have their own icons) coming_
-
+* The database schema:
+![schema](https://i.imgur.com/87975Wi.png)
 ___
-
 ## How to run locally
-You will need before hand:
-- GitHub account
 
-### Steps:
-1. Clone the repo: `git clone https://github.com/fac-13/stackMatch.git`
-2. Install dependencies: `npm install`
-3. Set up the local database by:
+### You will need before hand:
+
+1. **PostgreSQL Database set up locally**
     1. Connect to postgres, either by `psql` (`pgcli`) in the terminal on MAC, and `sudo -u postgres psql` on ubuntu.
     2. Create the database by typing `CREATE DATABASE [the name of the database];`. It's best not to use a hyphen (`-`) or uppercase letters in your database name.
     3. Create a superuser with a password - type in `CREATE USER [the new username] WITH SUPERUSER PASSWORD '[the password of the database]';`
     4. Change ownership of the database to the new user by typing `ALTER DATABASE [name of the database] OWNER TO [the new username];`
     5. Exit postgres
-3. Create a `config.env` in the root directory. This will need:
-- `SECRET = ` [Your secret]  
-- `DATABASE_URL = ` [Your PostgreSQL prod DB]
-- `HEROKU_POSTGRESQL_URL` = [Your PostgreSQL dev DB]
 
-5. Run `npm run build` to build the database (or login to your prod db using postgres and run [full path to]`db_build.sql`).
-6. Run the app in dev mode using`npm run dev` and access the site at localhost:3000. 
-    * You will need a GitHub account to sign up.
+2. **GitHub oAuth App**
+    * Log in to Github and go to **Personal Settings > Developer Settings > OAuth Apps**
+    * Click **New OAuth app**
+    * Give it any name and description you want. 
+    * Homepage URL = [http://localhost:3000]
+    * Authorization callback URL = [http://localhost:3000/auth/github/callback]
+    * Save and make note of your Client ID and Client Secret for your secret environment variables. 
+
+### Steps:
+
+1. Clone the repo: `git clone https://github.com/fac-13/stackMatch.git`
+2. Install dependencies: `npm install`
+
+3. Create a `.env` in the root directory. This will need:
+
+TEST_DB_URL = [Your local PostgreSQL testing DB]
+DB_URL = [Your local development DB] 
+GITHUB_CLIENT_ID = [Client ID from your app registration]
+GITHUB_CLIENT_SECRET = [Client Secret from your app registration]
+BASE_URL = http://localhost:3000
+COOKIE_KEY = [Anything you want]
+
+5. Run `npm run build` to build the database (or login to your prod db using postgres and run `\i [full path to] db_build.sql`).
+6. Run the app in dev mode using`npm run dev` and access the site at [http:://localhost:3000](http:://localhost:3000). 
 
 ### Testing:
 1. Run `npm test` in the command line
+2. Check coverage with `npm run test:coverage`
 
 ## Useful resources
 
