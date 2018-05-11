@@ -57,12 +57,10 @@ passport.use(new Strategy(
 ));
 
 passport.serializeUser((userDataObj, next) => {
-  console.log('serialize')
   next(null, userDataObj.github_id);
 });
 
 passport.deserializeUser((id, next) => {
-  console.log('deserialize', id)
   getMemberData(id)
   .then((user) => {
     next(null, user);

@@ -43,14 +43,4 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 // config route controller
 app.use(controllers);
 
-// production error handler
-const HTTP_SERVER_ERROR = 500;
-app.use((err, req, res, next) => {
-  if (res.headersSent) {
-    return next(err);
-  }
-  return res.status(err.status || HTTP_SERVER_ERROR).render('500');
-});
-
-
 module.exports = app;

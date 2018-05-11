@@ -26,17 +26,21 @@ router.get(
 
 router.get(
   '/auth/github/callback',
-  // passport.authenticate must be wrapped in a function
+  // passport.authenticate custom callback - see passport documentation
   (req, res, next) => {
     passport.authenticate('github', (err, user, info) => {
-      if (info.message === 'Not FAC member') {
-        res.redirect('/notmember');
-      } else if (info.message === 'Login successful') {
-        res.redirect('/profile');
-      } else if (info.message === 'Signup successful') {
-        res.redirect('/profile');
-      }
-    // and then invoked by its own arguments to function as proper middleware
+      if (err) { return next(err); }
+      if (!user) { return res.redirect('/'); }
+      req.logIn(user, (err) => {
+        if (err) { return next(err); }
+        if (info.message === 'Not FAC member') {
+          return res.redirect('/notmember');
+        } else if (info.message === 'Login successful') {
+          return res.redirect('/profile');
+        } else if (info.message === 'Signup successful') {
+          return res.redirect('/profile');
+        }
+      });
     })(req, res, next);
   },
 );
