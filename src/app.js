@@ -10,8 +10,7 @@ require('dotenv').config();
 // import route controllers
 const controllers = require('./controllers/index');
 
-// github oauth 2.0
-// contains IFFE function running all passport.js setup
+// github oauth 2.0 passport setup
 require('./oauth');
 
 // express app
@@ -43,6 +42,5 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 
 // config route controller
 app.use(controllers);
-
 
 module.exports = app;
