@@ -2,33 +2,33 @@
 <form novalidate>
   <span>* Required</span>
   <label for="full_name">Full Name *
-    <input id="full_name" type="text" />
+    <input id="full_name" name="full_name" type="text" required/>
   </label>
   <label for="github_handle">GitHub/Gitter Username *
-    <input id="github_handle" type="text" />
+    <input id="github_handle" name="github_handle" type="text" required/>
   </label>
   <label for="fac_campus">FAC Location *
-    <select id="fac_campus">
+    <select id="fac_campus" name="fac_campus" required>
       <option value="London">London</option>
       <option value="Nazareth">Nazareth</option>
       <option value="Gaza">Gaza</option>
     </select>
   </label>
   <label for="fac_number">FAC Cohort Number *
-    <input id="fac_number" type="number" />
+    <input id="fac_number" name="fac_number" type="number" required/>
   </label>
   <label for="tech_stack">Tech Stack
-    <select id="tech_stack">
+    <select id="tech_stack" name="tech_stack">
       <option value="JavaScript">JavaScript</option>
       <option value="HTML">HTML</option>
       <option value="CSS3">CSS3</option>
     </select>
   </label>
   <label for="linkedin_url">LinkedIn URL
-    <input id="linkedin_url" type="text" />
+    <input id="linkedin_url" name="linkedin_url" type="text" />
   </label>
   <label for="twitter_handle">Twitter Handle
-    <input id="twitter_handle" type="text" />
+    <input id="twitter_handle" name="twitter_handle" type="text" />
   </label>
   <button>Submit</button>
 </form>
