@@ -1,5 +1,4 @@
 const test = require('tape');
-const sinon = require('sinon');
 const request = require('supertest');
 const app = require('./../app.js');
 
@@ -66,7 +65,7 @@ test('Test if /auth/github/logout route redirects', (t) => {
     });
 });
 
-// ERROR HANDLING ROUTES
+// 404 ERROR HANDLING ROUTES
 test('Test if server returns 404 on invalid route', (t) => {
   request(app)
     .get('/notavalidroute')
@@ -78,18 +77,3 @@ test('Test if server returns 404 on invalid route', (t) => {
     });
 });
 
-
-// TODO 500 server error test
-test('Test if server returns 500 on server error', (t) => {
-  request(app)
-    .get('/brokenroute')
-    .end((err, res) => {
-      t.ok(
-        res.text.includes('Internal Server Error'),
-        'response includes "internal server error" message for client',
-      );
-      t.equal(res.statusCode, 500, 'should return 500');
-      t.error(err, 'server error');
-      t.end();
-    });
-});
