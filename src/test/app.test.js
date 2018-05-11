@@ -9,15 +9,15 @@ test('Test if tape is working', (t) => {
 
 test(`Test if Express app is running on http://${process.env.HOST}:${
   process.env.PORT
-} or http://localhost:3000/`, (t) => {
-  request(app)
-    .get('/')
-    .end((err, res) => {
-      t.ok(res, `response received with status code: ${res.status}`);
-      t.error(err, 'no server error');
-      t.end();
-    });
-});
+  } or http://localhost:3000/`, (t) => {
+    request(app)
+      .get('/')
+      .end((err, res) => {
+        t.ok(res, `response received with status code: ${res.status}`);
+        t.error(err, 'no server error');
+        t.end();
+      });
+  });
 
 test('Test if home route gets status code 200 and is html', (t) => {
   request(app)
@@ -77,3 +77,15 @@ test('Test if server returns 404 on invalid route', (t) => {
     });
 });
 
+// FOR PROTECTED ROUTES
+test('Test for /myprofile/12/mydetails/edit', (t) => {
+  request(app)
+    .get('/myprofile/12/mydetails/edit')
+    .expect(302)
+    .end((err, res) => {
+      t.equal(res.statusCode, 302, 'should return 302');
+      t.equal(res.headers.location, '/', 'should redirect to / when not logged in');
+      t.error(err, 'no server error');
+      t.end();
+    });
+});

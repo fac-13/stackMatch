@@ -30,7 +30,7 @@ exports.updateUserSession = (req, res, next) => {
 
 exports.protectedRoute = (req, res, next) => {
   if (!req.user.session.login && !req.user.session.signup) {
-    return res.send('please login');
+    return res.redirect('/');
   }
   return next(null, req.user);
 };
