@@ -19,6 +19,25 @@ router.get('/myprofile', ensureAuthenticated, (req, res) => {
 });
 router.get('/myprofile/mydetails/edit', ensureAuthenticated, profileDetails.get);
 
+router.get('/temp', profileDetails.get);
+
+router.post('/saveDetails', (req, res) => {
+  console.log('trying to save');
+  const formData = req.body;
+  /*
+  {
+    "full_name": "aaaa",
+    "github_handle": "bbbbbb",
+    "fac_campus": "London",
+    "fac_number": "0",
+    "tech_stack": "JavaScript",
+    "linkedin_url": "a",
+    "twitter_handle": "a"
+    }
+  */
+  res.send(formData);
+});
+
 // AUTHENTICATION ROUTES //
 router.get(
   '/auth/github/signup',
