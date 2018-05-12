@@ -1,9 +1,5 @@
 <header>
   <h1>My Profile</h1>
-  <div>
-    <a id="">View Profile</a>
-    <a id="">Edit Profile</a>
-  </div>
 </header>
 
 <article>
@@ -14,7 +10,7 @@
       </h1>
       <i class="icon icon-visible">eye icon</i>
     </header>
-    <button id="open-modal-details">Edit Me</button>
+    <button id="open-modal-details">Edit</button>
     {{!-- github info --}}
     <div>
       {{#if user.github_avatar_url}}
@@ -60,7 +56,7 @@
       {{/if}} {{else}}
       <i class="icon icon-private">lock</i>{{/if}}
     </header>
-    <button>Edit Me</button>
+    <button id="open-modal-job">Edit</button>
     <h2>Status</h2>
     {{#if user.job_search_status}}
     <i class="icon icon-jobstatus-{{user.job_search_status}}">{{user.job_search_status}} circle</i>

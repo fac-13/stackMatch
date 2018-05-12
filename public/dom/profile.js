@@ -7,39 +7,35 @@
 
 var openDetailsBtn = document.getElementById('open-modal-details');
 var modalDetails = document.getElementById('modal-details');
-var modalProjects = document.getElementById('modal-projects');
-var modalJobs = document.getElementById('modal-jobs');
+var openJobsBtn = document.getElementById('open-modal-job');
+var modalJob = document.getElementById('modal-job');
 
 
 function closeModal() {
   modalDetails.style.display = 'none';
-  // modalProjects.style.display = 'none';
-  // modalJobs.style.display = 'none';
+  modalJob.style.display = 'none';
 }
 
 function openModal(modalName) {
   modalName.style.display = 'block';
   // document.getElementById('close-modal').addEventListener('click', closeModal);
   window.addEventListener('keydown', (event) => {
-    if (event.key == 'Escape') closeModal();
+    if (event.key == 'Escape') closeModal(modalDetails);
   });
 }
 
-
 openDetailsBtn.addEventListener('click', () => { openModal(modalDetails); });
-// openProjectsBtn.addEventListener('click', openModal);
-// openJobsBtn.addEventListener('click', openModal);
+openJobsBtn.addEventListener('click', () => { openModal(modalJob); });
 
-document.getElementById('open-modal').addEventListener('keydown', (event) => {
-  if (event.key == 'Enter') openModal();
-});
-
+// document.getElementById('open-modal').addEventListener('keydown', (event) => {
+//   if (event.key == 'Enter') openModal();
+// });
 
 // Modal does not close on click!!
-window.addEventListener('click', (event) => {
-  console.log(event.target);
-  console.log('clicking');
-  if (event.target !== document.getElementsByClassName('modal')) {
-    closeModal();
-  }
-});
+// window.addEventListener('click', (event) => {
+//   console.log(event.target);
+//   console.log('clicking');
+//   if (event.target !== document.getElementsByClassName('modal')) {
+//     closeModal();
+//   }
+// });
