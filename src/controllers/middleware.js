@@ -6,29 +6,20 @@ exports.ensureAuthenticated = (req, res, next) => {
   res.redirect('/');
 };
 
-exports.updateUserSession = (req, res, next) => {
-  let userInfo;
-  if (req.isAuthenticated()) {
-    userInfo = req.user;
-    if (req.session.registeredProfile) {
-      userInfo.session = {
-        login: true,
-        signup: false,
-      };
-      return next(null, userInfo);
-    }
+// Updates user object to include user session
+exports.updateUserSession = (req) => {
+  // Deep copy of req.user
+  let userInfo = JSON.parse(JSON.stringify((req.user)));
+  if (req.session.registeredProfile) {
+    userInfo.session = {
+      login: true,
+      signup: false,
+    };
+  } else {
     userInfo.session = {
       login: false,
       signup: true,
     };
-    return next(null, userInfo);
   }
-
-  userInfo = {
-    session: {
-      login: false,
-      signup: false,
-    },
-  };
-  return next();
+  return userInfo;
 };

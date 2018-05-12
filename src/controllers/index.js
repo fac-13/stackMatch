@@ -5,7 +5,7 @@ const passport = require('passport');
 const home = require('./home');
 const profile = require('./profile');
 const error = require('./error');
-const { updateUserSession, protectedRoute, ensureAuthenticated } = require('./middleware');
+const { ensureAuthenticated } = require('./middleware');
 
 // UNPROTECTED ROUTES //
 router.get('/', home.get);
@@ -14,7 +14,7 @@ router.get('/notmember', (req, res) => {
 });
 
 // PROTECTED ROUTES //
-router.get('/myprofile/:github_id', updateUserSession, ensureAuthenticated, profile.get);
+router.get('/myprofile/:github_id', ensureAuthenticated, profile.get);
 router.post('/saveDetails', ensureAuthenticated, (req, res) => {
   // post user data (req.body) to database
   console.log('form data: ', req.body);

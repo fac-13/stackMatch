@@ -1,4 +1,5 @@
+const { updateUserSession } = require('./middleware');
 exports.get = (req, res) => {
-  const { user } = req;
+  let user = updateUserSession(req);
   res.render('profile', { activePage: { profile: true }, user });
 };
