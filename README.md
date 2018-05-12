@@ -53,18 +53,18 @@ ___
 ### You will need before hand:
 
 1. **PostgreSQL Database set up locally**
-    1. Connect to postgres, either by `psql` (`pgcli`) in the terminal on MAC, and `sudo -u postgres psql` on ubuntu.
-    2. Create the database by typing `CREATE DATABASE [the name of the database];`. It's best not to use a hyphen (`-`) or uppercase letters in your database name.
-    3. Create a superuser with a password - type in `CREATE USER [the new username] WITH SUPERUSER PASSWORD '[the password of the database]';`
-    4. Change ownership of the database to the new user by typing `ALTER DATABASE [name of the database] OWNER TO [the new username];`
-    5. Exit postgres
+    * Connect to postgres, either by `psql` (`pgcli`) in the terminal on MAC, and `sudo -u postgres psql` on ubuntu.
+    * Create the database by typing `CREATE DATABASE [the name of the database];`. It's best not to use a hyphen (`-`) or uppercase letters in your database name.
+    * Create a superuser with a password - type in `CREATE USER [the new username] WITH SUPERUSER PASSWORD '[the password of the database]';`
+    * Change ownership of the database to the new user by typing `ALTER DATABASE [name of the database] OWNER TO [the new username];`
+    * Exit postgres
 
 2. **GitHub oAuth App**
     * Log in to Github and go to **Personal Settings > Developer Settings > OAuth Apps**
     * Click **New OAuth app**
     * Give it any name and description you want. 
-    * Homepage URL = [http://localhost:3000]
-    * Authorization callback URL = [http://localhost:3000/auth/github/callback]
+    * `Homepage URL = http://localhost:3000` 
+    * `Authorization callback URL = http://localhost:3000/auth/github/callback` 
     * Save and make note of your Client ID and Client Secret for your secret environment variables. 
 
 ### Steps:
@@ -74,12 +74,12 @@ ___
 
 3. Create a `.env` in the root directory. This will need:
 
-TEST_DB_URL = [Your local PostgreSQL testing DB]
-DB_URL = [Your local development DB] 
-GITHUB_CLIENT_ID = [Client ID from your app registration]
-GITHUB_CLIENT_SECRET = [Client Secret from your app registration]
-BASE_URL = http://localhost:3000
-COOKIE_KEY = [Anything you want]
+    * `TEST_DB_URL =` [Your local PostgreSQL testing DB]
+    * `DB_URL =` [Your local development DB] 
+    * `GITHUB_CLIENT_ID = `[Client ID from your app registration]
+    * `GITHUB_CLIENT_SECRET =` [Client Secret from your app registration]
+    * `BASE_URL = http://localhost:3000`
+    * `COOKIE_KEY =` [Anything you want]
 
 5. Run `npm run build` to build the database (or login to your prod db using postgres and run `\i [full path to] db_build.sql`).
 6. Run the app in dev mode using`npm run dev` and access the site at [http:://localhost:3000](http:://localhost:3000). 
