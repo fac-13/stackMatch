@@ -19,59 +19,65 @@
     <div>
       {{#if user.github_avatar_url}}
       <img src="{{user.github_avatar_url}}" alt="my profile picture" class="profile-avatar"> {{/if}}
-      <p>Name Name</p>
-      <p>FAC13</p>
-
-
+      <p>{{user.full_name}}</p>
+      <p>{{#if user.fac_code_id}}{{user.fac_code_id}}{{/if}}</p>
     </div>
     {{!-- links --}}
     <ul>
+      {{#if user.github_handle}}
       <li>
-        <a>
-          <i class="icon icon-github"></i>github</a>
+        <a href="https://github.com/{{user.github_handle}}" target="_blank">
+          <i class="icon icon-github">github icon</i>{{user.github_handle}}</a>
       </li>
-      <li<a>
-        <i class="icon icon-linkedin"></i>linkedin</a>
-        </li>
-        <li>
-          <a>
-            <i class="icon icon-twitter"></i>twitter</a>
-        </li>
-
+      {{/if}} {{#if user.linkedin_url}}
+      <li>
+        <a href="https://github.com/{{user.linkedin_url}}" target="_blank">
+          <i class="icon icon-linkedin">linkedin icon</i>{{user.linkedin_url}}</a>
+      </li>
+      {{/if}} {{#if user.linkedin_url}}
+      <li>
+        <a href="https://github.com/{{user.twitter_handle}}" target="_blank">
+          <i class="icon icon-twitter">Twitter icon</i>{{user.twitter_handle}}</a>
+      </li>
+      {{/if}}
     </ul>
 
-    {{!-- tech stack --}}
-    <ul>
-      <li>Javascript</li>
-      <li>Node.js</li>
-      <li>CSS3</li>
-      <li>HTML5</li>
-    </ul>
-    <button>Add</button>
     {{!-- contact --}}
     <a>
-      <i class="icon icon-gitter"></i>Contact me on Gitter</a>
-
+      {{#if user.github_handle}}
+      <a href="https://gitter.im/{{user.github_handle}}" target="_blank">
+        <i class="icon icon-gitter">gitter icon</i>Contact me on Gitter</a>
+      {{/if}}
   </section>
 
   <section>
-
     <header>
       <h1>
         Job Search
       </h1>
-      <i class="icon icon-private">lock</i>
+      {{#if user.job_view_pref}} {{#if jobPrefIsPublic user.job_view_pref}}
+      <i class="icon icon-visible">eye icon</i>
+      {{/if}} {{else}}
+      <i class="icon icon-private">lock</i>{{/if}}
     </header>
     <button>Edit Me</button>
     <h2>Status</h2>
-    <p>Looking for work</p>
-
-    <h2>Career Interests</h2>
-    <li>
-      <ul>Permanent Dev</ul>
-      <ul>Freelance</ul>
-    </li>
-
+    {{#if user.job_search_status}}
+    <i class="icon icon-jobstatus-{{user.job_search_status}}">{{user.job_search_status}} circle</i>
+    <p>{{jobStatusText user.job_search_status}}</p>
+    {{else}}
+    <i class="icon icon-jobstatus-red">red circle</i>
+    <p>Not Looking</p>
+    {{/if}} {{#if user.max_years_exp}}
+    <p>Has {{user.max_years_exp}} years experience</p>{{/if}} {{#if user.github_cv_url}}
+    <a href="{{user.github_cv_url}}" target="_blank">
+      <i class="icon icon-github">github icon</i>Github CV
+    </a>
+    {{/if}} {{#if user.cv_url}}
+    <a href="{{user.cv_url}}" target="_blank">
+      <i class="icon icon-cv">cv icon</i>PDF of CV
+    </a>
+    {{/if}}
   </section>
 </article>
 

@@ -2,10 +2,10 @@
 <form method="POST" action="/saveDetails" novalidate>
   <span>* Required</span>
   <label for="job_view_pref">Preferred
-    <input type="radio" id="job_pref_public" name="job_view_pref" value="public" checked>
+    <input type="radio" id="job_pref_public" name="job_view_pref" value="public">
     <label for="job_pref_public">Public</label>
 
-    <input type="radio" id="job_pref_private" name="job_view_pref" value="private">
+    <input type="radio" id="job_pref_private" name="job_view_pref" value="private" checked>
     <label for="job_pref_private">Private</label>
   </label>
   <label for="job_search_status">Job Search Status *
@@ -17,9 +17,9 @@
   </label>
   <label for="years_experience">Years experience
     <select id="years_experience" name="years_experience">
-      <option value="{'min_years_exp': 0, 'max_years_exp': 2}">Less than two years</option>
-      <option value="{'min_years_exp': 2, 'max_years_exp': 5}">Two to five years</option>
-      <option value="{'min_years_exp': 5, 'max_years_exp': 100}">More than five years</option>
+      <option value="{min_years_exp: 0, max_years_exp: 2}">Less than two years</option>
+      <option value="{min_years_exp: 2, max_years_exp: 5}">Two to five years</option>
+      <option value="{min_years_exp: 5, max_years_exp: 100}">More than five years</option>
     </select>
   </label>
   <label for="github_cv_url">GitHub CV URL
