@@ -1,4 +1,11 @@
 // MIDDLEWARE to ensure user is authenticated
+exports.ensureAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/');
+};
+
 exports.updateUserSession = (req, res, next) => {
   let userInfo;
   if (req.isAuthenticated()) {
@@ -23,14 +30,5 @@ exports.updateUserSession = (req, res, next) => {
       signup: false,
     },
   };
-  req.user = userInfo;
   return next();
-};
-// denied - should redirect to login;
-
-exports.protectedRoute = (req, res, next) => {
-  if (!req.user.session.login && !req.user.session.signup) {
-    return res.send('please login');
-  }
-  return next(null, req.user);
 };
