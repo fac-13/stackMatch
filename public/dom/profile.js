@@ -3,39 +3,39 @@
 /* eslint func-names: 0 */
 /* eslint wrap-iife: 0 */
 
-// modal functionality courtesy of team pett-y - https://github.com/fac-13/pett-y
-
-var openDetailsBtn = document.getElementById('open-modal-details');
+var openModalBtn = document.querySelectorAll('.btn-open-modal');
+var closeModalBtn = document.querySelectorAll('.btn-close-modal');
+var modalIsOpen = document.querySelectorAll('.modal');
 var modalDetails = document.getElementById('modal-details');
-var openJobsBtn = document.getElementById('open-modal-job');
 var modalJob = document.getElementById('modal-job');
 
 
 function closeModal() {
-  modalDetails.style.display = 'none';
-  modalJob.style.display = 'none';
-}
-
-function openModal(modalName) {
-  modalName.style.display = 'block';
-  // document.getElementById('close-modal').addEventListener('click', closeModal);
-  window.addEventListener('keydown', (event) => {
-    if (event.key == 'Escape') closeModal(modalDetails);
+  modalIsOpen.forEach((modal) => {
+    modal.style.display = 'none';
   });
 }
 
-openDetailsBtn.addEventListener('click', () => { openModal(modalDetails); });
-openJobsBtn.addEventListener('click', () => { openModal(modalJob); });
+function openModal(profileSection) {
+  // used switch case to allow for addition profile sections, ie projects section
+  switch (profileSection) {
+    case 'details':
+      modalDetails.style.display = 'block';
+      break;
+    case 'job':
+      modalJob.style.display = 'block';
+      break;
+    default:
+      break;
+  }
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+}
 
-// document.getElementById('open-modal').addEventListener('keydown', (event) => {
-//   if (event.key == 'Enter') openModal();
-// });
-
-// Modal does not close on click!!
-// window.addEventListener('click', (event) => {
-//   console.log(event.target);
-//   console.log('clicking');
-//   if (event.target !== document.getElementsByClassName('modal')) {
-//     closeModal();
-//   }
-// });
+openModalBtn.forEach(btn => btn.addEventListener('click', (e) => {
+  openModal(e.target.value);
+}));
+closeModalBtn.forEach(btn => btn.addEventListener('click', (e) => {
+  closeModal();
+}));
