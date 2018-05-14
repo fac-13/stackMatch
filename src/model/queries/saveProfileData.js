@@ -27,14 +27,17 @@ const dbConnection = require('../database/db_connection');
  * A query is required to get the stack_id
  * and INSERT INTO the table if what we are looking for does not exist
  *
- * To insert into memeber_tech_stack we need member_id and stack_id at the same time.
+ * To insert into member_tech_stack we need member_id and stack_id at the same time.
  * Using Promise.all(), query updateMemberGetID and getTechStack
  * use the response values to query and insert into member_tech_stack
+ *
+ * TODO: modularise queries in file and test
 */
 
+// transform query result into an object
 const toResObj = res => res[0];
 
-// add a fac code and return id
+// insert code into fac_code table and return id
 const addFacCode = codeName => dbConnection.query(
   'INSERT INTO fac_code (code) VALUES ($1) RETURNING id',
   [codeName],
@@ -50,7 +53,7 @@ const makeFacCodeName = (facCampus, facNumber) => {
   return `${prefix}${facNumber}`;
 };
 
-// query to get fac code id for memeber table
+// get fac code id for memeber table
 const getFacCodeID = (facCampus, facNumber) => {
   const codeName = makeFacCodeName(facCampus, facNumber);
   return dbConnection.query('SELECT id FROM fac_code WHERE code = $1', [codeName])
@@ -58,7 +61,7 @@ const getFacCodeID = (facCampus, facNumber) => {
     .then(o => o.id);
 };
 
-// this query must be an update because a member is created during authentication
+// query must be an update because a member is created during authentication
 // the id returned is used to insert into member_tech_Stack
 const updateMemberGetID = (formDataObj, facCodeID, githubID) => dbConnection.query(`
     UPDATE members
@@ -73,11 +76,13 @@ const updateMemberGetID = (formDataObj, facCodeID, githubID) => dbConnection.que
   .then(toResObj)
   .then(res => ({ member_id: res.id }));
 
+// query will insert a tech to tech_stack table and return member_id object
 const addTechStack = name => dbConnection.query(
   'INSERT INTO tech_stack (tech) VALUES ($1) RETURNING id',
   [name],
 ).then(toResObj);
 
+// query will return the stack_id object of a tech and insert it if it does not exist
 const getTechStackID = tech => dbConnection.query(
   'SELECT id FROM tech_stack WHERE tech = $1',
   [tech],
@@ -85,8 +90,10 @@ const getTechStackID = tech => dbConnection.query(
   .then(res => res[0] || addTechStack(tech))
   .then(res => ({ stack_id: res.id }));
 
+// transform promise.all()result array into an object
 const promiseAllResultToObj = arr => arr.reduce((acc, curr) => Object.assign(acc, curr), {});
 
+// insert member_id and stack_id into member_tech_stack
 // need to handle error for when query tries to insert a stack that someone already has
 const addMemberTechStack = idObj => dbConnection.query(
   'INSERT INTO member_tech_stack ($/this:name/) VALUES ($/this:list/) RETURNING *',
