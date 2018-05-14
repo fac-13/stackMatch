@@ -4,6 +4,9 @@ const runDbBuild = require('../model/database/db_build_test');
 const dbConnection = require('../model/database/db_connection');
 const postMemberInfo = require('../model/queries/postMemberInfo.js');
 const getMemberData = require('../model/queries/getMemberData.js');
+const getAllFacCodes = require('../model/queries/getAllFacCodes.js');
+const addFacCodeReturnID = require('../model/queries/addFacCodeReturnID');
+const getFacCodeID = require('../model/queries/getFacCodeID');
 
 const selectAllMembers = 'SELECT * FROM members';
 
@@ -110,6 +113,58 @@ test('Test postMemberInfo adds a row', (t) => {
         t.end();
       });
   });
+});
+
+// ADD FACCODE
+test('Add fac code to fac_code table and return id', (t) => {
+  const facCode = 'FAC13';
+  let original;
+  runDbBuild()
+    .then(getAllFacCodes)
+    .then((res) => {
+      original = res;
+    })
+    .then(() => addFacCodeReturnID(facCode))
+    .then((res) => {
+      t.equal(typeof res, 'object', 'db response is an object');
+      t.deepEqual(Object.keys(res), ['id'], 'res is an object containing an id');
+      t.end();
+    })
+    .then(getAllFacCodes)
+    .then((res) => {
+      t.equal(res.length, original.length + 1, 'added one row to fac codes table');
+      t.deepEqual(res[res.length - 1].code, facCode, 'added FAC13');
+    })
+    .catch((error) => {
+      t.error(error, 'no db error');
+      t.end();
+    });
+});
+
+// getAllFacCodes
+test('Test get all FAC codes', (t) => {
+  runDbBuild()
+    .then(() => getAllFacCodes())
+    .then((res) => {
+      t.ok(Array.isArray(res), 'db response is an array');
+      t.end();
+    })
+    .catch((error) => {
+      t.error(error, 'no db error');
+      t.end();
+    });
+});
+
+// getFacCodeID
+test('Test get fac code id', (t) => {
+  const facCode = 'FAC0';
+  runDbBuild()
+    .then(() => getFacCodeID(facCode))
+    .then((res) => {
+      t.equal(typeof res, 'object', 'db response is an object');
+      t.deepEqual(Object.keys(res), ['id'], 'res is an object containing an id');
+      t.end();
+    });
 });
 
 test.onFinish(() => {
