@@ -7,7 +7,7 @@ const getMemberData = require('../model/queries/getMemberData.js');
 
 const selectAllMembers = 'SELECT * FROM members';
 
-test('Test if tape is working', (t) => {
+test('DATABASE & QUERY TESTS', (t) => {
   t.ok(true, 'tape is working');
   t.end();
 });
@@ -34,8 +34,11 @@ test('Test database has content', (t) => {
   });
 });
 
+// QUERY TESTS
+
 // GET MEMBER DATA TEST
-test('Test get member data and is the correct format', (t) => {
+
+test('Test getMemberData query and returns the correct format', (t) => {
   runDbBuild()
     .then(() => getMemberData(1))
     .then((res) => {
@@ -49,7 +52,7 @@ test('Test get member data and is the correct format', (t) => {
     });
 });
 
-test('Test member data to ensure correct data received', (t) => {
+test('Test getMemberData query to ensure correct data received', (t) => {
   runDbBuild()
     .then(() => getMemberData(1))
     .then((res) => {
