@@ -226,7 +226,7 @@ test('Test update members table', (t) => {
 });
 
 
-test.only('Test saveProfileData', (t) => {
+test('Test saveProfileData', (t) => {
   const githubID = 1;
   let before;
   const expected = {
@@ -280,19 +280,6 @@ test.only('Test saveProfileData', (t) => {
       t.end();
     });
 });
-
-// .then(array => updateMemberDetails(...array))
-// .then(() => Promise.all([getFilteredMembers(githubID), getFacCodeID('FAC123')]))
-// .then((resArr) => {
-//   console.log('resArry: ', getFacCodeID('FAC123'));
-//   const [filteredRes, idRes] = resArr;
-//   t.ok(filteredRes, 'we have db response');
-//   t.notDeepEqual(before, filteredRes, 'members table has been changed');
-//   t.deepEqual(filteredRes, expected, 'update was successful');
-//   t.equal(filteredRes.fac_code_id, idRes, 'has added new FAC code');
-//   t.end();
-// })
-
 test.onFinish(() => {
   dbConnection.$pool.end();
 });
