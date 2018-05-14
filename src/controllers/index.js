@@ -43,7 +43,7 @@ router.get(
           return res.redirect(`/myprofile/${req.user.github_id}`);
         } else if (info.message === 'Signup successful') {
           req.session.registeredProfile = false;
-          return res.redirect(`/myprofile/${req.user.github_id}/mydetails/edit`);
+          return res.redirect(`/myprofile/${req.user.github_id}`);
         }
       });
     })(req, res, next);

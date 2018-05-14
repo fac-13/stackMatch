@@ -7,16 +7,16 @@ exports.ensureAuthenticated = (req, res, next) => {
 };
 
 // Updates user object to include user session
-exports.updateUserSession = (req) => {
+exports.addUserStatus = (req) => {
   // Deep copy of req.user
   let userInfo = JSON.parse(JSON.stringify((req.user)));
   if (req.session.registeredProfile) {
-    userInfo.session = {
+    userInfo.status = {
       login: true,
       signup: false,
     };
   } else {
-    userInfo.session = {
+    userInfo.status = {
       login: false,
       signup: true,
     };

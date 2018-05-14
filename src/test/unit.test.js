@@ -1,6 +1,6 @@
 const test = require('tape');
 
-const { updateUserSession } = require('../controllers/middleware');
+const { addUserStatus } = require('../controllers/middleware');
 const { jobStatusText, jobPrefIsPublic } = require('../views/helpers/index');
 
 test('Test if tape is working', (t) => {
@@ -8,8 +8,8 @@ test('Test if tape is working', (t) => {
   t.end();
 });
 
-// MIDDLEWARE -- Update User Session Function
-test('Test updateUserSession - registeredProfile: true', (t) => {
+// MIDDLEWARE -- Add User Status Function
+test('Test addUserStatus - registeredProfile: true', (t) => {
   const originalRequest = {
     user: {
       id: 1,
@@ -26,10 +26,10 @@ test('Test updateUserSession - registeredProfile: true', (t) => {
       registeredProfile: true,
     }
   }
-  const actual = updateUserSession(request);
+  const actual = addUserStatus(request);
   const expected = {
     id: 1,
-    session: {
+    status: {
       login: true,
       signup: false,
     }
@@ -39,7 +39,7 @@ test('Test updateUserSession - registeredProfile: true', (t) => {
   t.end();
 });
 
-test('Test updateUserSession - registeredProfile: false', (t) => {
+test('Test addUserStatus - registeredProfile: false', (t) => {
   const originalRequest = {
     user: {
       id: 1,
@@ -56,10 +56,10 @@ test('Test updateUserSession - registeredProfile: false', (t) => {
       registeredProfile: false,
     }
   }
-  const actual = updateUserSession(request);
+  const actual = addUserStatus(request);
   const expected = {
     id: 1,
-    session: {
+    status: {
       login: false,
       signup: true,
     }
