@@ -25,8 +25,7 @@ CREATE TABLE members (
   member_type VARCHAR(255),
   job_view_pref VARCHAR(255),  
   job_search_status VARCHAR(255),
-  min_years_exp INTEGER,
-  max_years_exp INTEGER,
+  years_experience INTEGER,
   github_cv_url VARCHAR(4000),
   cv_url VARCHAR(4000),
   FOREIGN KEY (fac_code_id) REFERENCES fac_code(id)
@@ -54,10 +53,10 @@ VALUES
   ('Node.js');
 
 INSERT INTO members
-  (github_id, full_name, github_handle, github_avatar_url, fac_campus, fac_code_id, linkedin_url, twitter_handle, member_type, job_view_pref, job_search_status, min_years_exp, max_years_exp, github_cv_url, cv_url)
+  (github_id, full_name, github_handle, github_avatar_url, fac_campus, fac_code_id, linkedin_url, twitter_handle, member_type, job_view_pref, job_search_status, years_experience, github_cv_url, cv_url)
 VALUES
-  (1, 'Helen', 'helenzhou6', 'https://uk.linkedin.com/dbsmith', 'london', 1, 'https://uk.linkedin.com/', 'hel_zhou', 'admin', 'private', 'red', 0, 1, 'https://github.com/helenzhou6/CV', 'https://github.com/helenzhou6/CV'),
-  (2, 'Deborah', 'dsmith', 'https://uk.linkedin.com/dbsmith', 'gaza', 2, 'https://uk.linkedin.com/dbsmith', 'dbsmith', 'member', 'public', 'orange', 2, 5, NULL, NULL);
+  (1, 'Helen', 'helenzhou6', 'https://uk.linkedin.com/dbsmith', 'london', 1, 'https://uk.linkedin.com/', 'hel_zhou', 'admin', 'private', 'red', 1, 'https://github.com/helenzhou6/CV', 'https://github.com/helenzhou6/CV'),
+  (2, 'Deborah', 'dsmith', 'https://uk.linkedin.com/dbsmith', 'gaza', 2, 'https://uk.linkedin.com/dbsmith', 'dbsmith', 'member', 'public', 'orange', 5, NULL, NULL);
   
 INSERT INTO member_tech_stack
   (member_id, stack_id, order_num)

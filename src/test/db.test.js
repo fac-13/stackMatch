@@ -68,13 +68,12 @@ test('Test getMemberData query to ensure correct data received', (t) => {
         twitter_handle: 'hel_zhou',
         member_type: 'admin',
         job_search_status: 'red',
-        min_years_exp: 0,
-        max_years_exp: 1,
+        years_experience: 1,
         github_cv_url: 'https://github.com/helenzhou6/CV',
         cv_url: 'https://github.com/helenzhou6/CV',
         job_view_pref: 'private',
       };
-      t.equal(Object.keys(res).length, 16, 'correct array length');
+      t.equal(Object.keys(res).length, Object.keys(correctResult).length, 'correct array length');
       t.deepEqual(res, correctResult, 'deepEquals of first test member');
       t.end();
     })

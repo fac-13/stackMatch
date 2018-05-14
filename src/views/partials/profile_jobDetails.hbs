@@ -3,24 +3,27 @@
   <form method="POST" action="/saveJobDetails" novalidate>
     <span>* Required</span>
     <label for="job_view_pref">Preferred
-      <input type="radio" id="job_pref_public" name="job_view_pref" value="public">
+      <input type="radio" id="job_pref_public" name="job_view_pref" value="public" {{#compare user.job_view_pref "===" 'public'}}checked{{/compare}}>
       <label for="job_pref_public">Public</label>
 
-      <input type="radio" id="job_pref_private" name="job_view_pref" value="private" checked>
+      <input type="radio" id="job_pref_private" name="job_view_pref" value="private" {{#compare user.job_view_pref "===" 'private'}}checked{{/compare}}{{#unless user.job_view_pref}}checked{{/unless}}>
       <label for="job_pref_private">Private</label>
     </label>
     <label for="job_search_status">Job Search Status *
       <select id="job_search_status" name="job_search_status">
-        <option value="green">Currently Looking</option>
-        <option value="orange">Maybe interested</option>
-        <option value="red">Not interested</option>
+        <option value="green" {{#compare user.job_search_status "===" 'green'}}selected{{/compare}}>Currently Looking</option>
+        <option value="orange" {{#compare user.job_search_status "===" 'orange'}}selected{{/compare}}>Maybe interested</option>
+        <option value="red" {{#compare user.job_search_status "===" 'red'}}selected{{/compare}}>Not interested</option>
       </select>
     </label>
     <label for="years_experience">Years experience
       <select id="years_experience" name="years_experience">
-        <option value="{'min_years_exp': 0, 'max_years_exp': 2}">Less than two years</option>
-        <option value="{'min_years_exp': 2, 'max_years_exp': 5}">Two to five years</option>
-        <option value="{'min_years_exp': 5, 'max_years_exp': 100}">More than five years</option>
+        <option value="0" {{#compare user.years_experience "===" 0}}selected{{/compare}}>Less than 1 year </option>
+        <option value="1" {{#compare user.years_experience "===" 1}}selected{{/compare}}>Less than 2 years</option>
+        <option value="2" {{#compare user.years_experience "===" 2}}selected{{/compare}}>Less than 3 years</option>
+        <option value="3" {{#compare user.years_experience "===" 3}}selected{{/compare}}>Less than 4 years</option>
+        <option value="4" {{#compare user.years_experience "===" 4}}selected{{/compare}}>Less than 5 years</option>
+        <option value="5" {{#compare user.years_experience "===" 5}}selected{{/compare}}>5 or more years</option>
       </select>
     </label>
     <label for="github_cv_url">GitHub CV URL
