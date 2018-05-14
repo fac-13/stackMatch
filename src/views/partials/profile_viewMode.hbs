@@ -51,9 +51,10 @@
       <h1>
         Job Search
       </h1>
-      {{#if user.job_view_pref}}
+   {{#if user.job_view_pref}}
       <i class="icon icon-visible">{{jobPrefIsPublic user.job_view_pref}}</i>
-      {{/if}}
+{{else}}
+      <i class="icon icon-private">{{jobPrefIsPublic user.job_view_pref}}</i>{{/if}}
     </header>
     <button id="open-modal-job">Edit</button>
     <h2>Status</h2>
