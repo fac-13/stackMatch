@@ -1,5 +1,5 @@
 <h1>My Details</h1>
-<form method="POST" action="/saveDetails" novalidate>
+<form method="POST" action="/savePersonalDetails" novalidate>
   <span>* Required</span>
   <label for="full_name">Full Name *
     <input id="full_name" name="full_name" type="text" {{#if user.full_name}} value="{{user.full_name}}" {{/if}}/>

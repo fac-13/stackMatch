@@ -1,3 +1,7 @@
 module.exports = (jobViewPref) => {
-  return jobViewPref === 'public';
-}
+  if (jobViewPref === 'public') {
+    return 'eye icon';
+  }
+  return 'lock icon';
+};
+
