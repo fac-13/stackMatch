@@ -3,7 +3,7 @@ const getFacCodeID = require('./getFacCodeID');
 const updateMemberDetails = require('./updateMemberDetails');
 const makeFacCodeName = require('../../lib/makeFacCodeName');
 
-exports.saveProfileData = (dataObj, githubID) => {
+const saveProfileData = (dataObj, githubID) => {
   const objClone = JSON.parse(JSON.stringify(dataObj));
   const codeName = makeFacCodeName(objClone.fac_campus, objClone.fac_number);
   return getFacCodeID(codeName)
@@ -15,4 +15,6 @@ exports.saveProfileData = (dataObj, githubID) => {
     })
     .then(facCodeID => updateMemberDetails(objClone, facCodeID.id, githubID));
 };
+
+module.exports = saveProfileData;
 

@@ -8,6 +8,7 @@ const getAllFacCodes = require('../model/queries/getAllFacCodes.js');
 const addFacCodeReturnID = require('../model/queries/addFacCodeReturnID');
 const getFacCodeID = require('../model/queries/getFacCodeID');
 const updateMemberDetails = require('../model/queries/updateMemberDetails');
+const saveProfileData = require('../model/queries/saveProfileData');
 
 const selectAllMembers = 'SELECT * FROM members';
 const getFilteredMembers = arg => dbConnection.query('SELECT * FROM members WHERE github_id = $1', [arg]).then(res => res[0]);
@@ -110,7 +111,6 @@ test('Test postMemberInfo adds a row', (t) => {
               t.end();
             }));
       }).catch((error) => {
-        console.log(error);
         t.error(error, 'postMemberInfo test error');
         t.end();
       });
@@ -209,6 +209,58 @@ test('Test update members table', (t) => {
       return Promise.resolve([formDataObj, 1, githubID]);
     })
     .then(array => updateMemberDetails(...array))
+    .then(() => getFilteredMembers(githubID))
+    .then((res) => {
+      t.ok(res, 'we have db response');
+      t.notDeepEqual(before, res, 'members table has been changed');
+      t.deepEqual(res, expected, 'update was successful');
+      t.end();
+    })
+    .catch((error) => {
+      t.error(error, 'no db error');
+      t.end();
+    });
+});
+
+test('Test saveProfileData', (t) => {
+  const githubID = 1;
+  let before;
+  const expected = {
+    id: 1,
+    github_id: 1,
+    full_name: 'Helen',
+    github_handle: 'helenzhou6',
+    github_avatar_url: 'https://uk.linkedin.com/dbsmith',
+    fac_campus: 'London',
+    fac_code_id: 1,
+    linkedin_url: 'knowwhere.com',
+    twitter_handle: 'helenTweetz',
+    member_type: 'admin',
+    job_search_status: 'red',
+    min_years_exp: 0,
+    max_years_exp: 1,
+    github_cv_url: 'https://github.com/helenzhou6/CV',
+    cv_url: 'https://github.com/helenzhou6/CV',
+    job_view_pref: 'private',
+  };
+  runDbBuild()
+    .then(() => getFilteredMembers(githubID))
+    .then((res) => {
+      before = res;
+    })
+    .then(() => {
+      const formDataObj = {
+        full_name: 'Helen',
+        github_handle: 'helenzhou6',
+        fac_campus: 'London',
+        fac_number: '0',
+        linkedin_url: 'knowwhere.com',
+        twitter_handle: 'helenTweetz',
+      };
+      // form obj
+      return Promise.resolve([formDataObj, githubID]);
+    })
+    .then(array => saveProfileData(...array))
     .then(() => getFilteredMembers(githubID))
     .then((res) => {
       t.ok(res, 'we have db response');
