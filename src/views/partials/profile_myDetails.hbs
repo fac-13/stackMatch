@@ -1,11 +1,16 @@
 <h1>My Details</h1>
-<form method="post" action="/saveDetails" novalidate>
+<form method="POST" action="/saveDetails" novalidate>
   <span>* Required</span>
   <label for="full_name">Full Name *
-    <input id="full_name" name="full_name" type="text" {{#if user.full_name}} value="{{user.full_name}}"{{/if}}/>
+    <input id="full_name" name="full_name" type="text" {{#if user.full_name}} value="{{user.full_name}}" {{/if}}/>
   </label>
   <label for="github_handle">GitHub/Gitter Username *
-    <input id="github_handle" name="github_handle" type="text"  {{#if user.github_handle}} value="{{user.github_handle}}"{{/if}}/>
+    <input id="github_handle" name="github_handle" type="text" {{#if user.github_handle}} value="{{user.github_handle}}" {{/if}}/>
+  </label>
+  <label for="github_avatar_url">Avatar URL link {{#if user.github_avatar_url}}
+    <img src="{{user.github_avatar_url}}" alt="my profile picture" class="nav-avatar"> {{/if}}
+    <input id="github_avatar_url" name="github_avatar_url" type="text" {{#if user.github_avatar_url}} value="{{user.github_avatar_url}}"
+      {{/if}}/>
   </label>
   <label for="fac_campus">FAC Location *
     <select id="fac_campus" name="fac_campus">
@@ -15,14 +20,7 @@
     </select>
   </label>
   <label for="fac_number">FAC Cohort Number *
-    <input id="fac_number" name="fac_number" type="number"/>
-  </label>
-  <label for="tech_stack">Tech Stack
-    <select id="tech_stack" name="tech_stack">
-      <option value="JavaScript">JavaScript</option>
-      <option value="HTML">HTML</option>
-      <option value="CSS3">CSS3</option>
-    </select>
+    <input id="fac_number" name="fac_number" type="number" />
   </label>
   <label for="linkedin_url">LinkedIn URL
     <input id="linkedin_url" name="linkedin_url" type="text" />
