@@ -2,13 +2,16 @@ const test = require('tape');
 
 const runDbBuild = require('../model/database/db_build_test');
 const dbConnection = require('../model/database/db_connection');
-const postMemberInfo = require('../model/queries/postMemberInfo.js');
-const getMemberData = require('../model/queries/getMemberData.js');
-const getAllFacCodes = require('../model/queries/getAllFacCodes.js');
-const addFacCodeReturnID = require('../model/queries/addFacCodeReturnID');
-const getFacCodeID = require('../model/queries/getFacCodeID');
-const updateMemberDetails = require('../model/queries/updateMemberDetails');
-const saveProfileData = require('../model/queries/saveProfileData');
+const {
+  postMemberInfo,
+  getMemberData,
+  getAllFacCodes,
+  addFacCodeReturnID,
+  getFacCodeID,
+  updateMemberDetails,
+  saveProfileData,
+} = require('../model/queries/');
+
 
 const selectAllMembers = 'SELECT * FROM members';
 const getFilteredMembers = arg => dbConnection.query('SELECT * FROM members WHERE github_id = $1', [arg]).then(res => res[0]);
