@@ -1,4 +1,5 @@
 const { addUserStatus } = require('./middleware');
+
 exports.get = (req, res) => {
   let user;
   if (req.session.isPopulated) {

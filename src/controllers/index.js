@@ -15,11 +15,7 @@ router.get('/notmember', (req, res) => {
 
 // PROTECTED ROUTES //
 router.get('/myprofile/:github_id', ensureAuthenticated, profile.get);
-router.post('/saveDetails', ensureAuthenticated, (req, res) => {
-  // post user data (req.body) to database
-  console.log('form data: ', req.body);
-  res.redirect('/myprofile/:github_id');
-});
+router.post('/saveDetails', ensureAuthenticated, profile.postDetails);
 
 // AUTHENTICATION ROUTES //
 router.get(

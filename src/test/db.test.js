@@ -225,7 +225,8 @@ test('Test update members table', (t) => {
     });
 });
 
-test('Test saveProfileData', (t) => {
+
+test.only('Test saveProfileData', (t) => {
   const githubID = 1;
   let before;
   const expected = {
@@ -235,7 +236,7 @@ test('Test saveProfileData', (t) => {
     github_handle: 'helenzhou6',
     github_avatar_url: 'https://uk.linkedin.com/dbsmith',
     fac_campus: 'London',
-    fac_code_id: 1,
+    fac_code_id: 3,
     linkedin_url: 'knowwhere.com',
     twitter_handle: 'helenTweetz',
     member_type: 'admin',
@@ -256,7 +257,7 @@ test('Test saveProfileData', (t) => {
         full_name: 'Helen',
         github_handle: 'helenzhou6',
         fac_campus: 'London',
-        fac_number: '0',
+        fac_number: 123,
         linkedin_url: 'knowwhere.com',
         twitter_handle: 'helenTweetz',
       };
@@ -264,11 +265,14 @@ test('Test saveProfileData', (t) => {
       return Promise.resolve([formDataObj, githubID]);
     })
     .then(array => saveProfileData(...array))
-    .then(() => getFilteredMembers(githubID))
-    .then((res) => {
-      t.ok(res, 'we have db response');
-      t.notDeepEqual(before, res, 'members table has been changed');
-      t.deepEqual(res, expected, 'update was successful');
+    .then(() => Promise.all([getFilteredMembers(githubID), getFacCodeID('FAC123')]))
+    // .then(() => getFilteredMembers(githubID))
+    .then((resArr) => {
+      const [filteredRes, idRes] = resArr;
+      t.equal(filteredRes.fac_code_id, idRes.id, 'has added new FAC code');
+      t.ok(filteredRes, 'we have db response');
+      t.notDeepEqual(before, filteredRes, 'members table has been changed');
+      t.deepEqual(filteredRes, expected, 'update was successful');
       t.end();
     })
     .catch((error) => {
@@ -276,6 +280,18 @@ test('Test saveProfileData', (t) => {
       t.end();
     });
 });
+
+// .then(array => updateMemberDetails(...array))
+// .then(() => Promise.all([getFilteredMembers(githubID), getFacCodeID('FAC123')]))
+// .then((resArr) => {
+//   console.log('resArry: ', getFacCodeID('FAC123'));
+//   const [filteredRes, idRes] = resArr;
+//   t.ok(filteredRes, 'we have db response');
+//   t.notDeepEqual(before, filteredRes, 'members table has been changed');
+//   t.deepEqual(filteredRes, expected, 'update was successful');
+//   t.equal(filteredRes.fac_code_id, idRes, 'has added new FAC code');
+//   t.end();
+// })
 
 test.onFinish(() => {
   dbConnection.$pool.end();

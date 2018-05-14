@@ -8,7 +8,7 @@ const saveProfileData = (dataObj, githubID) => {
   const codeName = makeFacCodeName(objClone.fac_campus, objClone.fac_number);
   return getFacCodeID(codeName)
     .then((resObj) => {
-      if (Object.keys(resObj).length === 0) {
+      if (!resObj) {
         return addFacCodeReturnID(codeName);
       }
       return resObj;
