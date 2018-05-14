@@ -7,15 +7,12 @@ const getMemberData = require('./model/queries/getMemberData.js');
 
 //ensures member of F&C github org to allow sign up 
 function checkOrgMembership(accessToken) {
-  return request.get(`https://api.github.com/user/orgs?access_token=${accessToken}`).then((res) => {
-      if(res.data.some((org) => org.login === 'foundersandcoders')) {
-        return true
-      } else {
-        return false
-      }
-    })
-  .catch(error => { throw new Error(error.message) });
+  return request.get(`https://api.github.com/user/orgs?access_token=${accessToken}`).then((orgMembership) => {
+    return (orgMembership.data.some((org) => org.login === 'foundersandcoders'))
+  })
+    .catch(error => { throw new Error(error.message) });
 }
+
 
 passport.use(new Strategy(
   {
