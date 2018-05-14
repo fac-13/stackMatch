@@ -52,9 +52,7 @@
         Job Search
       </h1>
    {{#if user.job_view_pref}}
-      <i class="icon icon-visible">{{jobPrefIsPublic user.job_view_pref}}</i>
-{{else}}
-      <i class="icon icon-private">{{jobPrefIsPublic user.job_view_pref}}</i>{{/if}}
+      <i class="icon icon-visible">{{user.job_view_pref}}</i>{{/if}}
     </header>
     <button class="btn-open-modal" value="job">Edit</button>
     {{!-- job search status --}}

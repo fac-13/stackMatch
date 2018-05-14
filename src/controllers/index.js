@@ -18,13 +18,10 @@ router.get('/notmember', (req, res) => {
 router.get('/myprofile/:github_id', ensureAuthenticated, profile.get);
 router.post('/savePersonalDetails', ensureAuthenticated, (req, res) => {
   // post user data (req.body) to database
-  console.log('form data: ', req.body);
   res.redirect('/myprofile/:github_id');
 });
 router.post('/saveJobDetails', ensureAuthenticated, (req, res) => {
-  console.log('form data: ', req.body);
-
-  return saveJobDetails(req.body, req.user.github_id).then(() => {
+  saveJobDetails(req.body, req.user.github_id).then(() => {
     res.redirect('/myprofile/:github_id');
   })
     .catch(err => console.log('Error saving job details: ', err));

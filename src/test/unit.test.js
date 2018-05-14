@@ -84,7 +84,7 @@ test('Test jobStatusText', (t) => {
 // jobPrefIsPublic function tests
 
 test('Test jobPrefIsPublic', (t) => {
-  t.equals(jobPrefIsPublic('private'), 'lock icon', 'jobPrefIsPrivate(\'private\') returns correct result');
-  t.equals(jobPrefIsPublic('public'), 'eye icon', 'jobPrefIsPrivate(\'public\') returns correct result');
+  t.equals(jobPrefIsPublic('private'), 'private', 'jobPrefIsPrivate(\'private\') returns correct result');
+  t.equals(jobPrefIsPublic('public'), 'public', 'jobPrefIsPrivate(\'public\') returns correct result');
   t.end();
 });
