@@ -135,7 +135,7 @@ test('Test getAllMemberData query returns the correct format and number of rows'
     github_avatar_url: 'https://uk.linkedin.com/dbsmith',
     fac_cohort: 'FAC1',
     tech_stack: ['Node.js', 'JavaScript'],
-    job_search_status: 'yellow',
+    job_search_status: 'orange',
   }];
 
 
