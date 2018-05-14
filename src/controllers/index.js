@@ -3,9 +3,9 @@ const passport = require('passport');
 
 // import routes
 const home = require('./home');
-const profileDetails = require('./profileDetails');
+const profile = require('./profile');
 const error = require('./error');
-const { updateUserSession, protectedRoute } = require('./middleware');
+const { ensureAuthenticated } = require('./middleware');
 
 // UNPROTECTED ROUTES //
 router.get('/', home.get);
@@ -14,10 +14,12 @@ router.get('/notmember', (req, res) => {
 });
 
 // PROTECTED ROUTES //
-router.get('/myprofile', updateUserSession, protectedRoute, (req, res) => {
-  res.send('profile');
+router.get('/myprofile/:github_id', ensureAuthenticated, profile.get);
+router.post('/saveDetails', ensureAuthenticated, (req, res) => {
+  // post user data (req.body) to database
+  console.log('form data: ', req.body);
+  res.redirect('/myprofile/:github_id');
 });
-router.get('/myprofile/:github_id/mydetails/edit', updateUserSession, protectedRoute, profileDetails.get);
 
 // AUTHENTICATION ROUTES //
 router.get(
@@ -38,10 +40,10 @@ router.get(
           return res.redirect('/notmember');
         } else if (info.message === 'Login successful') {
           req.session.registeredProfile = true;
-          return res.redirect(`/myprofile/${req.user.github_id}/mydetails/edit`);
+          return res.redirect(`/myprofile/${req.user.github_id}`);
         } else if (info.message === 'Signup successful') {
           req.session.registeredProfile = false;
-          return res.redirect(`/myprofile/${req.user.github_id}/mydetails/edit`);
+          return res.redirect(`/myprofile/${req.user.github_id}`);
         }
       });
     })(req, res, next);

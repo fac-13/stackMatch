@@ -1,7 +1,8 @@
+const { addUserStatus } = require('./middleware');
 exports.get = (req, res) => {
+  let user;
   if (req.session.isPopulated) {
-    res.render('home', { activePage: { home: true }, loggedIn: true });
-  } else {
-    res.render('home', { activePage: { home: true } });
+    user = addUserStatus(req);
   }
+  res.render('home', { activePage: { home: true }, user });
 };

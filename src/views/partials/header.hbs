@@ -2,8 +2,24 @@
   <span>Stackmatch</span>
   <nav>
     <ul>
-      {{#if user.session}}<li><a href="/auth/github/logout" type="button" id="js-logout">Logout</a></li>{{/if}}
-      {{#if user.github_avatar_url}} <img src="{{user.github_avatar_url}}" alt="my profile picture" class="nav-avatar"> {{/if}}
+      {{#if user}} {{#if user.status}}
+      <li>
+        <a href="/allusers" class="" id="">All Users</a>
+      </li>
+      <li>
+        <img src="{{user.github_avatar_url}}" alt="my profile picture" class="nav-avatar"> {{/if}}
+        <a href="/myprofile/{{user.github_id}}" class="" id="">My Profile</a>
+      </li>
+      <li>
+        <a href="/auth/github/logout">Log Out</a>
+      </li> {{#if user.github_avatar_url}} {{/if}} {{else}}
+      <li>
+        <a href="/auth/github/signup">Sign Up</a>
+      </li>
+      <li>
+        <a href="/auth/github/signup">Log In</a>
+      </li>
+      {{/if}}
     </ul>
   </nav>
 </header>

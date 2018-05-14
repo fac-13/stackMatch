@@ -10,6 +10,9 @@ require('dotenv').config();
 // import route controllers
 const controllers = require('./controllers/index');
 
+// import helpers
+const helpers = require('./views/helpers/index');
+
 // github oauth 2.0 passport setup
 require('./oauth');
 
@@ -26,6 +29,7 @@ app.engine(
     layoutsDir: path.join(__dirname, 'views', 'layouts'),
     partialsDir: path.join(__dirname, 'views', 'partials'),
     defaultLayout: 'main',
+    helpers,
   }),
 );
 
