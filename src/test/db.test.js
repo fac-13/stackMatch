@@ -68,13 +68,12 @@ test('Test getMemberData query to ensure correct data received', (t) => {
     .then(() => getMemberData(1))
     .then((res) => {
       const correctResult = {
-        id: 1,
         github_id: 1,
         full_name: 'Helen',
         github_handle: 'helenzhou6',
         github_avatar_url: 'https://uk.linkedin.com/dbsmith',
         fac_campus: 'london',
-        fac_cohort_id: 1,
+        fac_cohort: 'FAC0',
         linkedin_url: 'https://uk.linkedin.com/',
         twitter_handle: 'hel_zhou',
         member_type: 'admin',
@@ -178,13 +177,12 @@ test('Test update members table', (t) => {
   const githubID = 1;
   let before;
   const expected = {
-    id: 1,
     github_id: 1,
     full_name: 'Helen',
     github_handle: 'helenzhou6',
     github_avatar_url: 'https://uk.linkedin.com/dbsmith',
     fac_campus: 'London',
-    fac_cohort_id: 1,
+    fac_cohort: 'FAC0',
     linkedin_url: 'knowwhere.com',
     twitter_handle: 'helenTweetz',
     member_type: 'admin',
@@ -230,13 +228,12 @@ test('Test saveProfileData', (t) => {
   const githubID = 1;
   let before;
   const expected = {
-    id: 1,
     github_id: 1,
     full_name: 'Helen',
     github_handle: 'helenzhou6',
     github_avatar_url: 'https://uk.linkedin.com/dbsmith',
     fac_campus: 'London',
-    fac_cohort_id: 3,
+    fac_cohort: 'FAC123',
     linkedin_url: 'knowwhere.com',
     twitter_handle: 'helenTweetz',
     member_type: 'admin',
@@ -267,7 +264,7 @@ test('Test saveProfileData', (t) => {
     .then(() => Promise.all([getMemberData(githubID), getFacCohortID('FAC123')]))
     .then((resArr) => {
       const [filteredRes, idRes] = resArr;
-      t.equal(filteredRes.fac_cohort_id, idRes.id, 'has added new FAC code');
+      t.ok(idRes, 'has added new FAC code');
       t.ok(filteredRes, 'we have db response');
       t.notDeepEqual(before, filteredRes, 'members table has been changed');
       t.deepEqual(filteredRes, expected, 'update was successful');
