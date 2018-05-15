@@ -226,7 +226,7 @@ test('Test update members table', (t) => {
     });
 });
 
-
+// saveProfileData
 test('Test saveProfileData', (t) => {
   const githubID = 1;
   let before;
@@ -282,6 +282,7 @@ test('Test saveProfileData', (t) => {
     });
 });
 
+// getAllMemberData
 test('Test getAllMemberData query returns the correct format and number of rows', (t) => {
   const correctResult =
   [{
@@ -304,7 +305,6 @@ test('Test getAllMemberData query returns the correct format and number of rows'
     tech_stack: ['Node.js', 'JavaScript'],
     job_search_status: 'orange',
   }];
-
 
   runDbBuild().then(() => {
     dbConnection.query(selectAllMembers)
