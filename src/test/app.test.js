@@ -79,9 +79,9 @@ test('Routes: Test for /myprofile/1 - unauthorised', (t) => {
     });
 });
 
-test('Routes: Test for /saveDetails (post request) - unauthorised', (t) => {
+test('Test for /savePersonalDetails (post request) - unauthorised', (t) => {
   request(app)
-    .post('/saveDetails')
+    .post('/savePersonalDetails')
     .expect(302)
     .end((err, res) => {
       if (err) console.log('ERROR', err.message);
