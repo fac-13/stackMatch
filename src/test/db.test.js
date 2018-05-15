@@ -4,6 +4,7 @@ const runDbBuild = require('../model/database/db_build_test');
 const dbConnection = require('../model/database/db_connection');
 const postMemberInfo = require('../model/queries/postMemberInfo.js');
 const getMemberData = require('../model/queries/getMemberData.js');
+const saveJobDetails = require('../model/queries/saveJobDetails.js');
 
 const selectAllMembers = 'SELECT * FROM members';
 
@@ -108,6 +109,36 @@ test('Test postMemberInfo adds a row', (t) => {
         t.error(error, 'postMemberInfo test error');
         t.end();
       });
+  });
+});
+
+// SAVE JOB DETAILS TEST
+
+test('Test saveJobDetails', (t) => {
+  runDbBuild().then(() => {
+    const jobData = {
+      job_view_pref: 'public',
+      job_search_status: 'orange',
+      years_experience: 2,
+      github_cv_url: 'https://github.com/helenzhou6/newCV',
+      cv_url: 'https://github.com/helenzhou6/newCV2',
+    };
+    saveJobDetails(jobData, 1).then(() => {
+      getMemberData(1).then((res) => {
+        console.log('this is res: ', res);
+        const dbJobData = (({
+          job_view_pref, job_search_status, years_experience, github_cv_url, cv_url,
+        }) => ({
+          job_view_pref, job_search_status, years_experience, github_cv_url, cv_url,
+        }))(res);
+        t.deepEqual(dbJobData, jobData, 'saveJobDetails added correct data to database');
+        t.end();
+      });
+    }).catch((error) => {
+      console.log(error);
+      t.error(error, 'postMemberInfo test error');
+      t.end();
+    });
   });
 });
 
