@@ -1,7 +1,8 @@
 const test = require('tape');
 
 const { addUserStatus } = require('../controllers/middleware');
-const { jobStatusText } = require('../views/helpers/index');
+const { jobStatusText, jobPrefIsPublic } = require('../views/helpers/index');
+const makeFacCodeName = require('../lib/makeFacCodeName');
 
 test('Test if tape is working', (t) => {
   t.ok(true, 'tape is working');
@@ -72,7 +73,6 @@ test('Test addUserStatus - registeredProfile: false', (t) => {
 // HANDLEBARS HELPERS
 
 // jobStatusText function tests
-
 test('Test jobStatusText', (t) => {
   t.equals(jobStatusText('red'), 'Not Looking', 'jobStatusText(red) returns correct result');
   t.equals(jobStatusText('orange'), 'Open to opportunities', 'jobStatusText(orange) returns correct result');
@@ -80,3 +80,11 @@ test('Test jobStatusText', (t) => {
   t.end();
 });
 
+
+// DATABASE HELPERS in Lib folder
+test('Test makeFacCodeName', (t) => {
+  t.equals(makeFacCodeName('london', 12), 'FAC12', 'makeFacCodeName(\'london\', 12) returns correct result');
+  t.equals(makeFacCodeName('gaza', 1), 'FACG1', 'makeFacCodeName(\'gaza\', 1) returns correct result');
+  t.equals(makeFacCodeName('nazareth', 3), 'FACN3', 'makeFacCodeName(\'nazareth\', 3) returns correct result');
+  t.end();
+});
