@@ -4,6 +4,7 @@ const passport = require('passport');
 // import routes
 const home = require('./home');
 const profile = require('./profile');
+const allMembers = require('./allMembers');
 const error = require('./error');
 const { ensureAuthenticated } = require('./middleware');
 
@@ -14,6 +15,7 @@ router.get('/notmember', (req, res) => {
 });
 
 // PROTECTED ROUTES //
+router.get('/allmembers', ensureAuthenticated, allMembers.get);
 router.get('/myprofile/:github_id', ensureAuthenticated, profile.get);
 router.post('/saveDetails', ensureAuthenticated, (req, res) => {
   // post user data (req.body) to database

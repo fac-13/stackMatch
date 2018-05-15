@@ -145,8 +145,8 @@ test('Test getAllMemberData query returns the correct format and number of rows'
         const testQuantity = res1.length;
         getAllMemberData()
           .then((res2) => {
-            if (typeof res2 === 'object') {
-              t.pass('getAllMemberData returns an object');
+            if (Array.isArray(res2)) {
+              t.pass('getAllMemberData returns an array of objects');
             }
             const newQuantity = res2.length;
             t.equal(testQuantity, newQuantity, 'getAllMemberData returns expected number of rows');

@@ -9,15 +9,15 @@ test('APP.JS & CONTROLLER TESTS', (t) => {
 
 test(`SERVER: Test if Express app is running on http://${process.env.HOST}:${
   process.env.PORT
-  } or http://localhost:3000/`, (t) => {
-    request(app)
-      .get('/')
-      .end((err, res) => {
-        t.ok(res, `response received with status code: ${res.status}`);
-        t.error(err, 'no server error');
-        t.end();
-      });
-  });
+} or http://localhost:3000/`, (t) => {
+  request(app)
+    .get('/')
+    .end((err, res) => {
+      t.ok(res, `response received with status code: ${res.status}`);
+      t.error(err, 'no server error');
+      t.end();
+    });
+});
 
 test('SERVER: Test if home route gets status code 200 and returns html content', (t) => {
   request(app)
@@ -66,7 +66,7 @@ test('OAUTH: Test if /auth/github/logout route redirects', (t) => {
 });
 
 // FOR PROTECTED ROUTES
-test('Test for /myprofile/1 - unauthorised', (t) => {
+test('Routes: Test for /myprofile/1 - unauthorised', (t) => {
   request(app)
     .get('/myprofile/1')
     .expect(302)
@@ -79,9 +79,37 @@ test('Test for /myprofile/1 - unauthorised', (t) => {
     });
 });
 
-test('Test for /saveDetails (post request) - unauthorised', (t) => {
+test('Routes: Test for /saveDetails (post request) - unauthorised', (t) => {
   request(app)
     .post('/saveDetails')
+    .expect(302)
+    .end((err, res) => {
+      if (err) console.log('ERROR', err.message);
+      t.equal(res.statusCode, 302, `should return 302, instead got: ${res.statusCode}`);
+      t.equal(res.headers.location, '/', 'should redirect to / when not logged in');
+      t.error(err, 'no server error');
+      t.end();
+    });
+});
+
+test('Routes: Test /allmembers routes is protected ', (t) => {
+  request(app)
+    .get('/allmembers')
+    .expect(302)
+    .end((err, res) => {
+      if (err) console.log('ERROR', err.message);
+      t.equal(res.statusCode, 302, `should return 302, instead got: ${res.statusCode}`);
+      t.equal(res.headers.location, '/', 'should redirect to / when not logged in');
+      t.error(err, 'no server error');
+      t.end();
+    });
+});
+
+
+// / USE NOCK to TEST THIS ROUTE AND GET ARROUND PASSPORT JS
+test('Routes: Test /allmembers routes returns allmember query data', (t) => {
+  request(app)
+    .get('/allmembers')
     .expect(302)
     .end((err, res) => {
       if (err) console.log('ERROR', err.message);
@@ -99,7 +127,7 @@ test('ERRORS: Test if server returns 404 on invalid route', (t) => {
     .expect(404)
     .end((err, res) => {
       t.equal(res.statusCode, 404, 'should return 404');
-      t.error(err, `no server error`);
+      t.error(err, 'no server error');
       t.end();
     });
 });
