@@ -4,6 +4,7 @@ const runDbBuild = require('../model/database/db_build_test');
 const dbConnection = require('../model/database/db_connection');
 const postMemberInfo = require('../model/queries/postMemberInfo.js');
 const getMemberData = require('../model/queries/getMemberData.js');
+const getAllMemberData = require('../model/queries/getAllMemberData.js');
 const saveJobDetails = require('../model/queries/saveJobDetails.js');
 
 const selectAllMembers = 'SELECT * FROM members';
@@ -107,6 +108,53 @@ test('Test postMemberInfo adds a row', (t) => {
       }).catch((error) => {
         console.log(error);
         t.error(error, 'postMemberInfo test error');
+        t.end();
+      });
+  });
+});
+
+// GET ALL USERS MEMBER DATA TEST
+test('Test getAllMemberData query returns the correct format and number of rows', (t) => {
+  const correctResult =
+  [{
+    id: 1,
+    github_id: 1,
+    full_name: 'Helen',
+    github_handle: 'helenzhou6',
+    github_avatar_url: 'https://uk.linkedin.com/dbsmith',
+    fac_cohort: 'FAC0',
+    tech_stack: ['JavaScript', 'Node.js'],
+    job_search_status: 'red',
+  },
+  {
+    id: 2,
+    github_id: 2,
+    full_name: 'Deborah',
+    github_handle: 'dsmith',
+    github_avatar_url: 'https://uk.linkedin.com/dbsmith',
+    fac_cohort: 'FAC1',
+    tech_stack: ['Node.js', 'JavaScript'],
+    job_search_status: 'orange',
+  }];
+
+
+  runDbBuild().then(() => {
+    dbConnection.query(selectAllMembers)
+      .then((res1) => {
+        const testQuantity = res1.length;
+        getAllMemberData()
+          .then((res2) => {
+            if (typeof res2 === 'object') {
+              t.pass('getAllMemberData returns an object');
+            }
+            const newQuantity = res2.length;
+            t.equal(testQuantity, newQuantity, 'getAllMemberData returns expected number of rows');
+            t.deepEqual(res2, correctResult, 'deepEquals of all member info');
+            t.end();
+          });
+      }).catch((error) => {
+        console.log(error);
+        t.error(error, 'getAllMemberData test error');
         t.end();
       });
   });
