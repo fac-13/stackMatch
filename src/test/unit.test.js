@@ -1,7 +1,7 @@
 const test = require('tape');
 
 const { addUserStatus } = require('../controllers/middleware');
-const { jobStatusText, jobPrefIsPublic } = require('../views/helpers/index');
+const { jobStatusText } = require('../views/helpers/index');
 
 test('Test if tape is working', (t) => {
   t.ok(true, 'tape is working');
@@ -16,24 +16,24 @@ test('Test addUserStatus - registeredProfile: true', (t) => {
     },
     session: {
       registeredProfile: true,
-    }
-  }
+    },
+  };
   const request = {
     user: {
       id: 1,
     },
     session: {
       registeredProfile: true,
-    }
-  }
+    },
+  };
   const actual = addUserStatus(request);
   const expected = {
     id: 1,
     status: {
       login: true,
       signup: false,
-    }
-  }
+    },
+  };
   t.deepEquals(actual, expected, 'returns expected result (deepequals)');
   t.deepEquals(request, originalRequest, 'not mutated original request object');
   t.end();
@@ -46,24 +46,24 @@ test('Test addUserStatus - registeredProfile: false', (t) => {
     },
     session: {
       registeredProfile: false,
-    }
-  }
+    },
+  };
   const request = {
     user: {
       id: 1,
     },
     session: {
       registeredProfile: false,
-    }
-  }
+    },
+  };
   const actual = addUserStatus(request);
   const expected = {
     id: 1,
     status: {
       login: false,
       signup: true,
-    }
-  }
+    },
+  };
   t.deepEquals(actual, expected, 'returns expected result (deepequals)');
   t.deepEquals(request, originalRequest, 'not mutated original request object');
   t.end();
@@ -80,11 +80,3 @@ test('Test jobStatusText', (t) => {
   t.end();
 });
 
-
-// jobPrefIsPublic function tests
-
-test('Test jobPrefIsPublic', (t) => {
-  t.equals(jobPrefIsPublic('private'), false, 'jobPrefIsPrivate(\'private\') returns correct result');
-  t.equals(jobPrefIsPublic('public'), true, 'jobPrefIsPrivate(\'public\') returns correct result');
-  t.end();
-});
