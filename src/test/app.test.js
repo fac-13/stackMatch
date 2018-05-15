@@ -66,7 +66,7 @@ test('OAUTH: Test if /auth/github/logout route redirects', (t) => {
 });
 
 // FOR PROTECTED ROUTES
-test('Test for /myprofile/1 - unauthorised', (t) => {
+test('Routes: Test for /myprofile/1 - unauthorised', (t) => {
   request(app)
     .get('/myprofile/1')
     .expect(302)
@@ -82,6 +82,34 @@ test('Test for /myprofile/1 - unauthorised', (t) => {
 test('Test for /savePersonalDetails (post request) - unauthorised', (t) => {
   request(app)
     .post('/savePersonalDetails')
+    .expect(302)
+    .end((err, res) => {
+      if (err) console.log('ERROR', err.message);
+      t.equal(res.statusCode, 302, `should return 302, instead got: ${res.statusCode}`);
+      t.equal(res.headers.location, '/', 'should redirect to / when not logged in');
+      t.error(err, 'no server error');
+      t.end();
+    });
+});
+
+test('Routes: Test /allmembers routes is protected ', (t) => {
+  request(app)
+    .get('/allmembers')
+    .expect(302)
+    .end((err, res) => {
+      if (err) console.log('ERROR', err.message);
+      t.equal(res.statusCode, 302, `should return 302, instead got: ${res.statusCode}`);
+      t.equal(res.headers.location, '/', 'should redirect to / when not logged in');
+      t.error(err, 'no server error');
+      t.end();
+    });
+});
+
+
+// / USE NOCK to TEST THIS ROUTE AND GET ARROUND PASSPORT JS
+test('Routes: Test /allmembers routes returns allmember query data', (t) => {
+  request(app)
+    .get('/allmembers')
     .expect(302)
     .end((err, res) => {
       if (err) console.log('ERROR', err.message);
