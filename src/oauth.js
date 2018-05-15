@@ -9,8 +9,7 @@ const getMemberData = require('./model/queries/getMemberData.js');
 function checkOrgMembership(accessToken) {
   return request.get(`https://api.github.com/user/orgs?access_token=${accessToken}`).then((orgMembership) => {
     return (orgMembership.data.some((org) => org.login === 'foundersandcoders'))
-  })
-    .catch(error => { throw new Error(error.message) });
+  });
 }
 
 
@@ -49,7 +48,7 @@ passport.use(new Strategy(
         })
       }
     })
-    .catch(error => { throw new Error(error.message) });
+    .catch(error => { next(error) });
   }),
 ));
 
