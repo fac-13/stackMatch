@@ -48,7 +48,10 @@ passport.use(new Strategy(
         })
       }
     })
-    .catch(error => { next(error) });
+    .catch(error => { 
+      console.log(error);
+      next(error) 
+    });
   }),
 ));
 
@@ -62,6 +65,7 @@ passport.deserializeUser((id, next) => {
     next(null, user);
   })
   .catch((error) => {
+    console.log(error)
     next(error);
   })
 });

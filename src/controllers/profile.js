@@ -6,8 +6,11 @@ exports.get = (req, res) => {
   res.render('profile', { activePage: { profile: true }, user });
 };
 
-exports.postDetails = (req, res) => {
+exports.postDetails = (req, res, next) => {
   saveProfileData(req.body, req.user.github_id)
     .then(() => res.redirect(`/myprofile/${req.user.github_id}`))
-    .catch(err => console.log(err));
+    .catch((err) => {
+      console.log(err);
+      next(err);
+    });
 };

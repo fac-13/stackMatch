@@ -19,11 +19,14 @@ router.get('/notmember', (req, res) => {
 router.get('/allmembers', ensureAuthenticated, allMembers.get);
 router.get('/myprofile/:github_id', ensureAuthenticated, profile.get);
 router.post('/savePersonalDetails', ensureAuthenticated, profile.postDetails);
-router.post('/saveJobDetails', ensureAuthenticated, (req, res) => {
+router.post('/saveJobDetails', ensureAuthenticated, (req, res, next) => {
   saveJobDetails(req.body, req.user.github_id).then(() => {
     res.redirect('/myprofile/:github_id');
   })
-    .catch(err => console.log('Error saving job details: ', err));
+    .catch((err) => {
+      console.log('Error saving job details: ', err);
+      next(err);
+    });
 });
 
 // AUTHENTICATION ROUTES //

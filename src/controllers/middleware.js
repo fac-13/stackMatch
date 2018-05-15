@@ -3,7 +3,7 @@ exports.ensureAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   }
-  res.redirect('/');
+  res.redirect('/auth/github/signup');
 };
 
 // Updates user object to include user session

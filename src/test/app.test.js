@@ -73,7 +73,7 @@ test('Routes: Test for /myprofile/1 - unauthorised', (t) => {
     .end((err, res) => {
       if (err) console.log('ERROR', err.message);
       t.equal(res.statusCode, 302, `should return 302, instead got: ${res.statusCode}`);
-      t.equal(res.headers.location, '/', 'should redirect to / when not logged in');
+      t.equal(res.headers.location, '/auth/github/signup', 'should redirect to /auth/github/signup when not logged in');
       t.error(err, 'no server error');
       t.end();
     });
@@ -86,7 +86,7 @@ test('Test for /savePersonalDetails (post request) - unauthorised', (t) => {
     .end((err, res) => {
       if (err) console.log('ERROR', err.message);
       t.equal(res.statusCode, 302, `should return 302, instead got: ${res.statusCode}`);
-      t.equal(res.headers.location, '/', 'should redirect to / when not logged in');
+      t.equal(res.headers.location, '/auth/github/signup', 'should redirect to /auth/github/signup when not logged in');
       t.error(err, 'no server error');
       t.end();
     });
@@ -99,7 +99,7 @@ test('Routes: Test /allmembers routes is protected ', (t) => {
     .end((err, res) => {
       if (err) console.log('ERROR', err.message);
       t.equal(res.statusCode, 302, `should return 302, instead got: ${res.statusCode}`);
-      t.equal(res.headers.location, '/', 'should redirect to / when not logged in');
+      t.equal(res.headers.location, '/auth/github/signup', 'should redirect to /auth/github/signup when not logged in');
       t.error(err, 'no server error');
       t.end();
     });
@@ -114,7 +114,7 @@ test('Routes: Test /allmembers routes returns allmember query data', (t) => {
     .end((err, res) => {
       if (err) console.log('ERROR', err.message);
       t.equal(res.statusCode, 302, `should return 302, instead got: ${res.statusCode}`);
-      t.equal(res.headers.location, '/', 'should redirect to / when not logged in');
+      t.equal(res.headers.location, '/auth/github/signup', 'should redirect to /auth/github/signup when not logged in');
       t.error(err, 'no server error');
       t.end();
     });
