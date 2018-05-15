@@ -1,7 +1,7 @@
 const test = require('tape');
 
 const { addUserStatus } = require('../controllers/middleware');
-const { jobStatusText, jobPrefIsPublic } = require('../views/helpers/index');
+const { jobStatusText } = require('../views/helpers/index');
 
 test('Test if tape is working', (t) => {
   t.ok(true, 'tape is working');
@@ -80,11 +80,3 @@ test('Test jobStatusText', (t) => {
   t.end();
 });
 
-
-// jobPrefIsPublic function tests
-
-test('Test jobPrefIsPublic', (t) => {
-  t.equals(jobPrefIsPublic('private'), 'private', 'jobPrefIsPrivate(\'private\') returns correct result');
-  t.equals(jobPrefIsPublic('public'), 'public', 'jobPrefIsPrivate(\'public\') returns correct result');
-  t.end();
-});

@@ -1,5 +1,6 @@
 /* eslint no-param-reassign: 0 */
 /* eslint prefer-const: 0 */
+/* code courtesy of Mike Griffin ref: http://doginthehat.com.au/2012/02/comparison-block-helper-for-handlebars-templates/#comment-44 */
 
 module.exports = (lvalue, operator, rvalue, options) => {
   let operators;
