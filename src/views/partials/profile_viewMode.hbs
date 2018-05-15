@@ -3,6 +3,7 @@
 </header>
 
 <article>
+
   <section>
     <header>
       <h1>
@@ -10,7 +11,7 @@
       </h1>
       <i class="icon icon-visible">eye icon</i>
     </header>
-    <button id="open-modal-details">Edit</button>
+    <button class="btn-open-modal" value="details">Edit</button>
     {{!-- github info --}}
     <div>
       {{#if user.github_avatar_url}}
@@ -37,7 +38,6 @@
       </li>
       {{/if}}
     </ul>
-
     {{!-- contact --}}
     <a>
       {{#if user.github_handle}}
@@ -56,25 +56,29 @@
       {{/if}} {{else}}
       <i class="icon icon-private">lock</i>{{/if}}
     </header>
-    <button id="open-modal-job">Edit</button>
-    <h2>Status</h2>
-    {{#if user.job_search_status}}
-    <i class="icon icon-jobstatus-{{user.job_search_status}}">{{user.job_search_status}} circle</i>
-    <p>{{jobStatusText user.job_search_status}}</p>
-    {{else}}
-    <i class="icon icon-jobstatus-red">red circle</i>
-    <p>Not Looking</p>
-    {{/if}} {{#if user.max_years_exp}}
-    <p>Has {{user.max_years_exp}} years experience</p>{{/if}} {{#if user.github_cv_url}}
-    <a href="{{user.github_cv_url}}" target="_blank">
-      <i class="icon icon-github">github icon</i>Github CV
-    </a>
-    {{/if}} {{#if user.cv_url}}
-    <a href="{{user.cv_url}}" target="_blank">
-      <i class="icon icon-cv">cv icon</i>PDF of CV
-    </a>
-    {{/if}}
+    <button class="btn-open-modal" value="job">Edit</button>
+    {{!-- job search status --}}
+    <div>
+      <h4>Status</h4>
+      {{#if user.job_search_status}}
+      <i class="icon icon-jobstatus-{{user.job_search_status}}">{{user.job_search_status}} circle</i>
+      <p>{{jobStatusText user.job_search_status}}</p>
+      {{else}}
+      <i class="icon icon-jobstatus-red">red circle</i>
+      <p>Not Looking</p>
+      {{/if}} {{#if user.max_years_exp}}
+      <p>Has {{user.max_years_exp}} years experience</p>{{/if}} {{#if user.github_cv_url}}
+      <a href="{{user.github_cv_url}}" target="_blank">
+        <i class="icon icon-github">github icon</i>Github CV
+      </a>
+      {{/if}} {{#if user.cv_url}}
+      <a href="{{user.cv_url}}" target="_blank">
+        <i class="icon icon-cv">cv icon</i>PDF of CV
+      </a>
+      {{/if}}
+    </div>
   </section>
+
 </article>
 
 <footer>
