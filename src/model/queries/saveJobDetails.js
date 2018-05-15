@@ -2,7 +2,6 @@ const db = require('../database/db_connection');
 
 const saveJobDetails = (formData, githubId) => {
   const objCopy = JSON.parse(JSON.stringify(formData));
-  console.log('objCopy: ', objCopy);
   const values = Object.values(objCopy);
   values.push(githubId);
 
