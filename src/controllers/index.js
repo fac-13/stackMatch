@@ -16,10 +16,7 @@ router.get('/notmember', (req, res) => {
 
 // PROTECTED ROUTES //
 router.get('/myprofile/:github_id', ensureAuthenticated, profile.get);
-router.post('/savePersonalDetails', ensureAuthenticated, (req, res) => {
-  // post user data (req.body) to database
-  res.redirect('/myprofile/:github_id');
-});
+router.post('/savePersonalDetails', ensureAuthenticated, profile.postDetails);
 router.post('/saveJobDetails', ensureAuthenticated, (req, res) => {
   saveJobDetails(req.body, req.user.github_id).then(() => {
     res.redirect('/myprofile/:github_id');
@@ -37,8 +34,9 @@ router.get(
   '/auth/github/callback',
   // passport.authenticate custom callback - see passport documentation
   (req, res, next) => {
-    passport.authenticate('github', (err, user, info) => {
-      if (err) { return next(err); }
+    /* eslint consistent-return: off */
+    passport.authenticate('github', (authErr, user, info) => {
+      if (authErr) { return next(authErr); }
       if (!user) { return res.redirect('/'); }
       req.logIn(user, (err) => {
         if (err) { return next(err); }

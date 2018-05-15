@@ -2,12 +2,21 @@ const test = require('tape');
 
 const runDbBuild = require('../model/database/db_build_test');
 const dbConnection = require('../model/database/db_connection');
-const postMemberInfo = require('../model/queries/postMemberInfo.js');
-const getMemberData = require('../model/queries/getMemberData.js');
-const getAllMemberData = require('../model/queries/getAllMemberData.js');
-const saveJobDetails = require('../model/queries/saveJobDetails.js');
+const {
+  postMemberInfo,
+  getMemberData,
+  getAllFacCodes,
+  addFacCodeReturnID,
+  getFacCodeID,
+  updateMemberDetails,
+  getAllMemberData,
+  saveProfileData,
+  saveJobDetails,
+} = require('../model/queries/');
+
 
 const selectAllMembers = 'SELECT * FROM members';
+
 
 test('DATABASE & QUERY TESTS', (t) => {
   t.ok(true, 'tape is working');
@@ -106,14 +115,171 @@ test('Test postMemberInfo adds a row', (t) => {
               t.end();
             }));
       }).catch((error) => {
-        console.log(error);
         t.error(error, 'postMemberInfo test error');
         t.end();
       });
   });
 });
 
-// GET ALL USERS MEMBER DATA TEST
+// ADD FACCODE
+test('Add fac code to fac_code table and return id', (t) => {
+  const facCode = 'FAC13';
+  let original;
+  runDbBuild()
+    .then(getAllFacCodes)
+    .then((res) => {
+      original = res;
+    })
+    .then(() => addFacCodeReturnID(facCode))
+    .then((res) => {
+      t.equal(typeof res, 'object', 'db response is an object');
+      t.deepEqual(Object.keys(res), ['id'], 'res is an object containing an id');
+      t.end();
+    })
+    .then(getAllFacCodes)
+    .then((res) => {
+      t.equal(res.length, original.length + 1, 'added one row to fac codes table');
+      t.deepEqual(res[res.length - 1].code, facCode, 'added FAC13');
+    })
+    .catch((error) => {
+      t.error(error, 'no db error');
+      t.end();
+    });
+});
+
+// getAllFacCodes
+test('Test get all FAC codes', (t) => {
+  runDbBuild()
+    .then(() => getAllFacCodes())
+    .then((res) => {
+      t.ok(Array.isArray(res), 'db response is an array');
+      t.end();
+    })
+    .catch((error) => {
+      t.error(error, 'no db error');
+      t.end();
+    });
+});
+
+// getFacCodeID
+test('Test get fac code id', (t) => {
+  const facCode = 'FAC0';
+  runDbBuild()
+    .then(() => getFacCodeID(facCode))
+    .then((res) => {
+      t.equal(typeof res, 'object', 'db response is an object');
+      t.deepEqual(Object.keys(res), ['id'], 'res is an object containing an id');
+      t.end();
+    });
+});
+
+// updateMemberDetails
+test('Test update members table', (t) => {
+  const githubID = 1;
+  let before;
+  const expected = {
+    id: 1,
+    github_id: 1,
+    full_name: 'Helen',
+    github_handle: 'helenzhou6',
+    github_avatar_url: 'https://uk.linkedin.com/dbsmith',
+    fac_campus: 'London',
+    fac_code_id: 1,
+    linkedin_url: 'knowwhere.com',
+    twitter_handle: 'helenTweetz',
+    member_type: 'admin',
+    job_view_pref: 'private',
+    job_search_status: 'red',
+    years_experience: 1,
+    github_cv_url: 'https://github.com/helenzhou6/CV',
+    cv_url: 'https://github.com/helenzhou6/CV',
+  };
+  runDbBuild()
+    .then(() => getMemberData(githubID))
+    .then((res) => {
+      before = res;
+    })
+    .then(() => {
+      const formDataObj = {
+        full_name: 'Helen',
+        github_handle: 'helenzhou6',
+        fac_campus: 'London',
+        fac_number: '0',
+        linkedin_url: 'knowwhere.com',
+        twitter_handle: 'helenTweetz',
+      };
+      // form obj
+      return Promise.resolve([formDataObj, 1, githubID]);
+    })
+    .then(array => updateMemberDetails(...array))
+    .then(() => getMemberData(githubID))
+    .then((res) => {
+      t.ok(res, 'we have db response');
+      t.notDeepEqual(before, res, 'members table has been changed');
+      t.deepEqual(res, expected, 'update was successful');
+      t.end();
+    })
+    .catch((error) => {
+      t.error(error, 'no db error');
+      t.end();
+    });
+});
+
+// saveProfileData
+test('Test saveProfileData', (t) => {
+  const githubID = 1;
+  let before;
+  const expected = {
+    id: 1,
+    github_id: 1,
+    full_name: 'Helen',
+    github_handle: 'helenzhou6',
+    github_avatar_url: 'https://uk.linkedin.com/dbsmith',
+    fac_campus: 'London',
+    fac_code_id: 3,
+    linkedin_url: 'knowwhere.com',
+    twitter_handle: 'helenTweetz',
+    member_type: 'admin',
+    job_view_pref: 'private',
+    job_search_status: 'red',
+    years_experience: 1,
+    github_cv_url: 'https://github.com/helenzhou6/CV',
+    cv_url: 'https://github.com/helenzhou6/CV',
+  };
+  runDbBuild()
+    .then(() => getMemberData(githubID))
+    .then((res) => {
+      before = res;
+    })
+    .then(() => {
+      const formDataObj = {
+        full_name: 'Helen',
+        github_handle: 'helenzhou6',
+        fac_campus: 'London',
+        fac_number: 123,
+        linkedin_url: 'knowwhere.com',
+        twitter_handle: 'helenTweetz',
+      };
+      // form obj
+      return Promise.resolve([formDataObj, githubID]);
+    })
+    .then(array => saveProfileData(...array))
+    .then(() => Promise.all([getMemberData(githubID), getFacCodeID('FAC123')]))
+    .then((resArr) => {
+      const [filteredRes, idRes] = resArr;
+      t.equal(filteredRes.fac_code_id, idRes.id, 'has added new FAC code');
+      t.ok(filteredRes, 'we have db response');
+      t.notDeepEqual(before, filteredRes, 'members table has been changed');
+      t.deepEqual(filteredRes, expected, 'update was successful');
+      t.end();
+    })
+    .catch((error) => {
+      t.error(error, 'no db error');
+      t.end();
+    });
+});
+
+// getAllMemberData
 test('Test getAllMemberData query returns the correct format and number of rows', (t) => {
   const correctResult =
   [{
@@ -136,7 +302,6 @@ test('Test getAllMemberData query returns the correct format and number of rows'
     tech_stack: ['Node.js', 'JavaScript'],
     job_search_status: 'orange',
   }];
-
 
   runDbBuild().then(() => {
     dbConnection.query(selectAllMembers)
@@ -173,7 +338,6 @@ test('Test saveJobDetails', (t) => {
     };
     saveJobDetails(jobData, 1).then(() => {
       getMemberData(1).then((res) => {
-        console.log('this is res: ', res);
         const dbJobData = (({
           job_view_pref, job_search_status, years_experience, github_cv_url, cv_url,
         }) => ({
