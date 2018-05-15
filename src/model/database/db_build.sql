@@ -23,12 +23,11 @@ CREATE TABLE members (
   linkedin_url VARCHAR(4000),
   twitter_handle VARCHAR(255),
   member_type VARCHAR(255),
+  job_view_pref VARCHAR(255),  
   job_search_status VARCHAR(255),
-  min_years_exp INTEGER,
-  max_years_exp INTEGER,
+  years_experience INTEGER,
   github_cv_url VARCHAR(4000),
   cv_url VARCHAR(4000),
-  job_view_pref VARCHAR(255),
   FOREIGN KEY (fac_code_id) REFERENCES fac_code(id)
 );
 

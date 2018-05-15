@@ -73,7 +73,6 @@ test('Test addUserStatus - registeredProfile: false', (t) => {
 // HANDLEBARS HELPERS
 
 // jobStatusText function tests
-
 test('Test jobStatusText', (t) => {
   t.equals(jobStatusText('red'), 'Not Looking', 'jobStatusText(red) returns correct result');
   t.equals(jobStatusText('orange'), 'Open to opportunities', 'jobStatusText(orange) returns correct result');
@@ -82,16 +81,7 @@ test('Test jobStatusText', (t) => {
 });
 
 
-// jobPrefIsPublic function tests
-
-test('Test jobPrefIsPublic', (t) => {
-  t.equals(jobPrefIsPublic('private'), false, 'jobPrefIsPrivate(\'private\') returns correct result');
-  t.equals(jobPrefIsPublic('public'), true, 'jobPrefIsPrivate(\'public\') returns correct result');
-  t.end();
-});
-
 // DATABASE HELPERS in Lib folder
-
 test('Test makeFacCodeName', (t) => {
   t.equals(makeFacCodeName('london', 12), 'FAC12', 'makeFacCodeName(\'london\', 12) returns correct result');
   t.equals(makeFacCodeName('gaza', 1), 'FACG1', 'makeFacCodeName(\'gaza\', 1) returns correct result');

@@ -1,47 +1,35 @@
-<h1 class="sg-heading">My Details</h1>
-<form method="POST" action="/saveDetails" novalidate>
-  <span class="sg-subtext">* Required</span>
-  <br>
-  <label for="full_name" class="sg-title">Full Name *
-    <br>
-    <input id="full_name" name="full_name" type="text" {{#if user.full_name}} value="{{user.full_name}}" {{/if}}/>
-  </label>
-  <br>
-  <label for="github_handle" class="sg-title">GitHub/Gitter Username *
-    <br>
-    <input id="github_handle" name="github_handle" type="text" {{#if user.github_handle}} value="{{user.github_handle}}" {{/if}}/>
-  </label>
-  <br>
-  <label for="github_avatar_url" class="sg-title">Avatar URL link
-    <br>{{#if user.github_avatar_url}}
-    <img src="{{user.github_avatar_url}}" alt="my profile picture" class="avatar--is-small"> {{/if}}
-    <input id="github_avatar_url" name="github_avatar_url" type="text" {{#if user.github_avatar_url}} value="{{user.github_avatar_url}}"
-      {{/if}}/>
-  </label>
-  <br>
-  <label for="fac_campus" class="sg-title">FAC Location *
-    <br>
-    <select id="fac_campus" name="fac_campus">
-      <option value="London">London</option>
-      <option value="Nazareth">Nazareth</option>
-      <option value="Gaza">Gaza</option>
-    </select>
-  </label>
-  <br>
-  <label for="fac_number" class="sg-title">FAC Cohort Number *
-    <br>
-    <input id="fac_number" name="fac_number" type="number" />
-  </label>
-  <br>
-  <label for="linkedin_url" class="sg-title">LinkedIn URL
-    <br>
-    <input id="linkedin_url" name="linkedin_url" type="text" />
-  </label>
-  <br>
-  <label for="twitter_handle" class="sg-title">Twitter Handle
-    <br>
-    <input id="twitter_handle" name="twitter_handle" type="text" />
-  </label>
-  <br>
-  <button>Submit</button>
-</form>
+<div class="modal-background">
+  <h1 class="sg-heading>My Details</h1>
+  <form method="POST" action="/savePersonalDetails" novalidate>
+    <span class="sg-subtext>* Required</span>
+    <label for="full_name" class="sg-title">Full Name *
+      <input id="full_name" name="full_name" type="text" {{#if user.full_name}} value="{{user.full_name}}" {{/if}}/>
+    </label>
+    <label for="github_handle" class="sg-title">GitHub/Gitter Username *
+      <input id="github_handle" name="github_handle" type="text" {{#if user.github_handle}} value="{{user.github_handle}}" {{/if}}/>
+    </label>
+    <label for="github_avatar_url" class="sg-title">Avatar URL link {{#if user.github_avatar_url}}
+      <img src="{{user.github_avatar_url}}" alt="my profile picture" class="nav-avatar"> {{/if}}
+      <input id="github_avatar_url" name="github_avatar_url" type="text" {{#if user.github_avatar_url}} value="{{user.github_avatar_url}}"
+        {{/if}}/>
+    </label>
+    <label for="fac_campus" class="sg-title">FAC Location *
+      <select id="fac_campus" name="fac_campus">
+        <option value="London" {{#compare user.years_experience "===" 'London'}}selected{{/compare}}>London</option>
+        <option value="Nazareth" {{#compare user.years_experience "===" 'Nazareth'}}selected{{/compare}}>Nazareth</option>
+        <option value="Gaza" {{#compare user.years_experience "===" 'Gaza'}}selected{{/compare}}>Gaza</option>
+      </select>
+    </label>
+    <label for="fac_number" class="sg-title">FAC Cohort Number *
+      <input id="fac_number" name="fac_number" type="number" />
+    </label>
+    <label for="linkedin_url" >LinkedIn URL
+      <input id="linkedin_url" name="linkedin_url" type="text" />
+    </label>
+    <label for="twitter_handle" class="sg-title">Twitter Handle
+      <input id="twitter_handle" name="twitter_handle" type="text" />
+    </label>
+    <button>Submit</button>
+  </form>
+  <button class="btn-close-modal">Close without saving</button>  
+</div>
