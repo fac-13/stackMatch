@@ -1,5 +1,5 @@
 const { addUserStatus } = require('./middleware');
-const { saveProfileData } = require('../model/queries/');
+const { saveProfileData, saveJobDetails } = require('../model/queries/');
 
 exports.get = (req, res) => {
   const user = addUserStatus(req);
@@ -10,7 +10,16 @@ exports.postDetails = (req, res, next) => {
   saveProfileData(req.body, req.user.github_id)
     .then(() => res.redirect(`/myprofile/${req.user.github_id}`))
     .catch((err) => {
-      console.log(err);
+      console.log('Error saving user details: ', err);
+      next(err);
+    });
+};
+
+exports.postJobDetails = (req, res, next) => {
+  saveJobDetails(req.body, req.user.github_id)
+    .then(() => res.redirect(`/myprofile/${req.user.github_id}`))
+    .catch((err) => {
+      console.log('Error saving job details: ', err);
       next(err);
     });
 };

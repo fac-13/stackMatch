@@ -7,7 +7,6 @@ const profile = require('./profile');
 const allMembers = require('./allMembers');
 const error = require('./error');
 const { ensureAuthenticated } = require('./middleware');
-const saveJobDetails = require('../model/queries/saveJobDetails');
 
 // UNPROTECTED ROUTES //
 router.get('/', home.get);
@@ -19,15 +18,7 @@ router.get('/notmember', (req, res) => {
 router.get('/allmembers', ensureAuthenticated, allMembers.get);
 router.get('/myprofile/:github_id', ensureAuthenticated, profile.get);
 router.post('/savePersonalDetails', ensureAuthenticated, profile.postDetails);
-router.post('/saveJobDetails', ensureAuthenticated, (req, res, next) => {
-  saveJobDetails(req.body, req.user.github_id).then(() => {
-    res.redirect('/myprofile/:github_id');
-  })
-    .catch((err) => {
-      console.log('Error saving job details: ', err);
-      next(err);
-    });
-});
+router.post('/saveJobDetails', ensureAuthenticated, profile.postJobDetails);
 
 // AUTHENTICATION ROUTES //
 router.get(
