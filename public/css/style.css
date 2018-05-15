@@ -27,7 +27,8 @@ a {
 .profile__card {
   background-color: #F2F2F2;
   color: #223241;
-  padding: 2rem; }
+  padding: 2rem;
+  margin: 1rem 0; }
 
 .sg-main-heading {
   font-weight: 900;
