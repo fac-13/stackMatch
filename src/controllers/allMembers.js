@@ -5,7 +5,6 @@ exports.get = (req, res) => {
   const user = addUserStatus(req);
   getAllMemberData()
     .then((allMembersData) => {
-      console.log(allMembersData);
       res.render('allmembers', { activePage: { allmembers: true }, user, allMembersData });
     })
     .catch(err => console.log(err));
