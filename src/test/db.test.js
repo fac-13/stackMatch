@@ -14,7 +14,7 @@ const {
 
 
 const selectAllMembers = 'SELECT * FROM members';
-const getFilteredMembers = arg => dbConnection.query('SELECT * FROM members WHERE github_id = $1', [arg]).then(res => res[0]);
+
 
 test('DATABASE & QUERY TESTS', (t) => {
   t.ok(true, 'tape is working');
@@ -195,7 +195,7 @@ test('Test update members table', (t) => {
     job_view_pref: 'private',
   };
   runDbBuild()
-    .then(() => getFilteredMembers(githubID))
+    .then(() => getMemberData(githubID))
     .then((res) => {
       before = res;
     })
@@ -212,7 +212,7 @@ test('Test update members table', (t) => {
       return Promise.resolve([formDataObj, 1, githubID]);
     })
     .then(array => updateMemberDetails(...array))
-    .then(() => getFilteredMembers(githubID))
+    .then(() => getMemberData(githubID))
     .then((res) => {
       t.ok(res, 'we have db response');
       t.notDeepEqual(before, res, 'members table has been changed');
@@ -248,7 +248,7 @@ test('Test saveProfileData', (t) => {
     job_view_pref: 'private',
   };
   runDbBuild()
-    .then(() => getFilteredMembers(githubID))
+    .then(() => getMemberData(githubID))
     .then((res) => {
       before = res;
     })
@@ -265,8 +265,8 @@ test('Test saveProfileData', (t) => {
       return Promise.resolve([formDataObj, githubID]);
     })
     .then(array => saveProfileData(...array))
-    .then(() => Promise.all([getFilteredMembers(githubID), getFacCodeID('FAC123')]))
-    // .then(() => getFilteredMembers(githubID))
+    .then(() => Promise.all([getMemberData(githubID), getFacCodeID('FAC123')]))
+    // .then(() => getMemberData(githubID))
     .then((resArr) => {
       const [filteredRes, idRes] = resArr;
       t.equal(filteredRes.fac_code_id, idRes.id, 'has added new FAC code');
