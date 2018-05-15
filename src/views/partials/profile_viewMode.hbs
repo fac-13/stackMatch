@@ -16,7 +16,7 @@
       {{#if user.github_avatar_url}}
       <img src="{{user.github_avatar_url}}" alt="my profile picture" class="profile__avatar"> {{/if}}
       <p class="sg-main-heading">{{user.full_name}}</p>
-      <p>{{#if user.fac_code_id}}{{user.fac_code_id}}{{/if}}</p>
+      <p>{{#if user.fac_cohort_id}}{{user.fac_cohort_id}}{{/if}}</p>
     </div>
     {{!-- links --}}
     <ul class="remove-list-style">
@@ -58,7 +58,7 @@
       <h1 class="sg-main-link">
         Job Search
       </h1>
-   {{#if user.job_view_pref}}
+      {{#if user.job_view_pref}}
       <i class="icon icon-visible">{{user.job_view_pref}}</i>{{/if}}
     </header>
     <button id="open-modal-job" class="btn-open-modal" value="job">Edit</button>
@@ -77,7 +77,8 @@
       </a>
       {{/if}} {{#if user.cv_url}}
       <a href="{{user.cv_url}}" target="_blank">
-        <i class="icon icon-cv">cv icon</i><span class="sg-subtext">PDF of CV</span>
+        <i class="icon icon-cv">cv icon</i>
+        <span class="sg-subtext">PDF of CV</span>
       </a>
       {{/if}}
     </div>

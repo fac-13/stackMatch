@@ -1,19 +1,19 @@
-const addFacCodeReturnID = require('./addFacCodeReturnID');
-const getFacCodeID = require('./getFacCodeID');
+const addFacCohortReturnID = require('./addFacCohortReturnID');
+const getFacCohortID = require('./getFacCohortID');
 const updateMemberDetails = require('./updateMemberDetails');
-const makeFacCodeName = require('../../lib/makeFacCodeName');
+const makeFacCohortName = require('../../lib/makeFacCohortName');
 
 const saveProfileData = (dataObj, githubID) => {
   const objClone = JSON.parse(JSON.stringify(dataObj));
-  const codeName = makeFacCodeName(objClone.fac_campus, objClone.fac_number);
-  return getFacCodeID(codeName)
+  const cohortName = makeFacCohortName(objClone.fac_campus, objClone.fac_number);
+  return getFacCohortID(cohortName)
     .then((resObj) => {
       if (!resObj) {
-        return addFacCodeReturnID(codeName);
+        return addFacCohortReturnID(cohortName);
       }
       return resObj;
     })
-    .then(facCodeID => updateMemberDetails(objClone, facCodeID.id, githubID));
+    .then(facCohortID => updateMemberDetails(objClone, facCohortID.id, githubID));
 };
 
 module.exports = saveProfileData;

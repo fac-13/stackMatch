@@ -2,7 +2,7 @@ const test = require('tape');
 
 const { addUserStatus } = require('../controllers/middleware');
 const { jobStatusText, jobPrefIsPublic } = require('../views/helpers/index');
-const makeFacCodeName = require('../lib/makeFacCodeName');
+const makeFacCohortName = require('../lib/makeFacCohortName');
 
 test('Test if tape is working', (t) => {
   t.ok(true, 'tape is working');
@@ -82,9 +82,9 @@ test('Test jobStatusText', (t) => {
 
 
 // DATABASE HELPERS in Lib folder
-test('Test makeFacCodeName', (t) => {
-  t.equals(makeFacCodeName('london', 12), 'FAC12', 'makeFacCodeName(\'london\', 12) returns correct result');
-  t.equals(makeFacCodeName('gaza', 1), 'FACG1', 'makeFacCodeName(\'gaza\', 1) returns correct result');
-  t.equals(makeFacCodeName('nazareth', 3), 'FACN3', 'makeFacCodeName(\'nazareth\', 3) returns correct result');
+test('Test makeFacCohortName', (t) => {
+  t.equals(makeFacCohortName('london', 12), 'FAC12', 'makeFacCohortName(\'london\', 12) returns correct result');
+  t.equals(makeFacCohortName('gaza', 1), 'FACG1', 'makeFacCohortName(\'gaza\', 1) returns correct result');
+  t.equals(makeFacCohortName('nazareth', 3), 'FACN3', 'makeFacCohortName(\'nazareth\', 3) returns correct result');
   t.end();
 });

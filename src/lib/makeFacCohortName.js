@@ -1,4 +1,4 @@
-const makeFacCodeName = (facCampus, facNumber) => {
+const makeFacCohortName = (facCampus, facNumber) => {
   const prefix = {
     london: 'FAC',
     nazareth: 'FACN',
@@ -7,4 +7,4 @@ const makeFacCodeName = (facCampus, facNumber) => {
   return `${prefix}${facNumber}`;
 };
 
-module.exports = makeFacCodeName;
+module.exports = makeFacCohortName;

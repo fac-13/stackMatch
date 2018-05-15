@@ -41,7 +41,7 @@ CREATE TABLE member_tech_stack (
 );
 
 INSERT INTO fac_cohort
-  (code)
+  (cohort)
 VALUES
   ('FAC0'),
   ('FAC1');
