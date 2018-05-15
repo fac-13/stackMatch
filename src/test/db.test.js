@@ -9,8 +9,9 @@ const {
   addFacCodeReturnID,
   getFacCodeID,
   updateMemberDetails,
-  saveProfileData,
   getAllMemberData,
+  saveProfileData,
+  saveJobDetails,
 } = require('../model/queries/');
 
 
@@ -78,13 +79,12 @@ test('Test getMemberData query to ensure correct data received', (t) => {
         twitter_handle: 'hel_zhou',
         member_type: 'admin',
         job_search_status: 'red',
-        min_years_exp: 0,
-        max_years_exp: 1,
+        years_experience: 1,
         github_cv_url: 'https://github.com/helenzhou6/CV',
         cv_url: 'https://github.com/helenzhou6/CV',
         job_view_pref: 'private',
       };
-      t.equal(Object.keys(res).length, 16, 'correct array length');
+      t.equal(Object.keys(res).length, Object.keys(correctResult).length, 'correct array length');
       t.deepEqual(res, correctResult, 'deepEquals of first test member');
       t.end();
     })
@@ -188,12 +188,11 @@ test('Test update members table', (t) => {
     linkedin_url: 'knowwhere.com',
     twitter_handle: 'helenTweetz',
     member_type: 'admin',
+    job_view_pref: 'private',
     job_search_status: 'red',
-    min_years_exp: 0,
-    max_years_exp: 1,
+    years_experience: 1,
     github_cv_url: 'https://github.com/helenzhou6/CV',
     cv_url: 'https://github.com/helenzhou6/CV',
-    job_view_pref: 'private',
   };
   runDbBuild()
     .then(() => getMemberData(githubID))
@@ -241,12 +240,11 @@ test('Test saveProfileData', (t) => {
     linkedin_url: 'knowwhere.com',
     twitter_handle: 'helenTweetz',
     member_type: 'admin',
+    job_view_pref: 'private',
     job_search_status: 'red',
-    min_years_exp: 0,
-    max_years_exp: 1,
+    years_experience: 1,
     github_cv_url: 'https://github.com/helenzhou6/CV',
     cv_url: 'https://github.com/helenzhou6/CV',
-    job_view_pref: 'private',
   };
   runDbBuild()
     .then(() => getMemberData(githubID))
@@ -267,7 +265,6 @@ test('Test saveProfileData', (t) => {
     })
     .then(array => saveProfileData(...array))
     .then(() => Promise.all([getMemberData(githubID), getFacCodeID('FAC123')]))
-    // .then(() => getMemberData(githubID))
     .then((resArr) => {
       const [filteredRes, idRes] = resArr;
       t.equal(filteredRes.fac_code_id, idRes.id, 'has added new FAC code');
@@ -328,6 +325,34 @@ test('Test getAllMemberData query returns the correct format and number of rows'
   });
 });
 
+// SAVE JOB DETAILS TEST
+
+test('Test saveJobDetails', (t) => {
+  runDbBuild().then(() => {
+    const jobData = {
+      job_view_pref: 'public',
+      job_search_status: 'orange',
+      years_experience: 2,
+      github_cv_url: 'https://github.com/helenzhou6/newCV',
+      cv_url: 'https://github.com/helenzhou6/newCV2',
+    };
+    saveJobDetails(jobData, 1).then(() => {
+      getMemberData(1).then((res) => {
+        const dbJobData = (({
+          job_view_pref, job_search_status, years_experience, github_cv_url, cv_url,
+        }) => ({
+          job_view_pref, job_search_status, years_experience, github_cv_url, cv_url,
+        }))(res);
+        t.deepEqual(dbJobData, jobData, 'saveJobDetails added correct data to database');
+        t.end();
+      });
+    }).catch((error) => {
+      console.log(error);
+      t.error(error, 'postMemberInfo test error');
+      t.end();
+    });
+  });
+});
 
 test.onFinish(() => {
   dbConnection.$pool.end();

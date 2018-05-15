@@ -6,6 +6,7 @@ module.exports = {
   addFacCodeReturnID: require('./addFacCodeReturnID'),
   getFacCodeID: require('./getFacCodeID'),
   updateMemberDetails: require('./updateMemberDetails'),
-  saveProfileData: require('./saveProfileData'),
   getAllMemberData: require('./getAllMemberData'),
+  saveProfileData: require('./saveProfileData'),
+  saveJobDetails: require('./saveJobDetails'),
 };
