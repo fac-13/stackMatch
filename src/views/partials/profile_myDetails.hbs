@@ -1,7 +1,7 @@
 <div class="modal-background">
-  <h1 class="sg-heading>My Details</h1>
+  <h1 class="sg-heading">My Details</h1>
   <form method="POST" action="/savePersonalDetails" novalidate>
-    <span class="sg-subtext>* Required</span>
+    <span class="sg-subtext">* Required</span>
     <label for="full_name" class="sg-title">Full Name *
       <input id="full_name" name="full_name" type="text" {{#if user.full_name}} value="{{user.full_name}}" {{/if}}/>
     </label>
@@ -31,5 +31,5 @@
     </label>
     <button>Submit</button>
   </form>
-  <button class="btn-close-modal">Close without saving</button>  
+  <button class="btn-close-modal">Close without saving</button>
 </div>
