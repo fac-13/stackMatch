@@ -29,14 +29,14 @@ passport.use(new Strategy(
         return getMemberData(memberProfile.github_id)
         .then((userDataObj) => {
           if(!userDataObj){
-            postMemberInfo(memberProfile)
-            .then(() => {
+            getGitHubRepoLanguages(accessToken, memberProfile.github_handle)
+            .then(languages => {
+              memberProfile.tech_stack = languages;
+              console.log(memberProfile)
+              postMemberInfo(memberProfile)
+              .then(() => {
               getMemberData(memberProfile.github_id)
               .then((newUserDataObj) => {
-                getGitHubRepoLanguages(accessToken, newUserDataObj.github_handle).then(languages => {
-                  newUserDataObj.tech_stack = languages;
-                  return newUserDataObj
-                }).then((newUserDataObj) => {
                   return next(null, newUserDataObj, { message: 'Signup successful' })
                 })
               })
