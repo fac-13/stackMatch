@@ -9,7 +9,7 @@
       <input type="radio" id="job_pref_private" name="job_view_pref" value="private" {{#compare user.job_view_pref "===" 'private'}}checked{{/compare}}{{#unless user.job_view_pref}}checked{{/unless}}>
       <label for="job_pref_private">Private</label>
     </label>
-    <label for="job_search_status" class="sg-title">Job Search Status *
+    <label for="job_search_status" class="sg-title">Job Interest Status *
       <select id="job_search_status" name="job_search_status">
         <option value="green" {{#compare user.job_search_status "===" 'green'}}selected{{/compare}}>Currently Looking</option>
         <option value="orange" {{#compare user.job_search_status "===" 'orange'}}selected{{/compare}}>Maybe Interested</option>
