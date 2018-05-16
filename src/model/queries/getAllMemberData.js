@@ -14,8 +14,7 @@ ON mem.fac_code_id = code.id`;
 
 const getAllMemberData = () =>
   dbConnection
-    .query(allMembersQuery)
-    .then(allMemberDetails => allMemberDetails);
+    .query(allMembersQuery);
 
 module.exports = getAllMemberData;
 
