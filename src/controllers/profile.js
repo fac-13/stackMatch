@@ -35,8 +35,8 @@ exports.postJobDetails = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-  console.log('delete');
-  console.log('req.user: ', req.user.github_id);
   const { github_id } = req.user;
+  console.log('delete');
+  console.log('github id: ', github_id);
   res.status(200);
 };

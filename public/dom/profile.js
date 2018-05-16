@@ -61,7 +61,11 @@ deleteBtn.addEventListener('click', (e) => {
   e.preventDefault();
 
   const xhr = new XMLHttpRequest();
+  // xhr.addEventListener('load', () => {
+  // });
   xhr.open('DELETE', '/deleteAccount');
   xhr.send();
+  document.location.assign('/goodbye'); // after deletion take user a different page
+
 // window location href here
 });

@@ -13,6 +13,9 @@ router.get('/', home.get);
 router.get('/notmember', (req, res) => {
   res.send('You are not a member of the Founders and Coders Github organization. You must be a member in order to sign up and use StackMatch');
 });
+router.get('/goodbye', (req, res) => {
+  res.send('goodbye');
+});
 
 // PROTECTED ROUTES //
 router.get('/allmembers', ensureAuthenticated, allMembers.get);
