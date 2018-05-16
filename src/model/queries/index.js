@@ -14,4 +14,5 @@ module.exports = {
   getTechStackID: require('./getTechStackID'),
   addMemberTechStack: require('./addMemberTechStack'),
   getMemberTechStack: require('./getMemberTechStack'),
+  deleteMemberTech: require('./deleteMemberTech'),
 };

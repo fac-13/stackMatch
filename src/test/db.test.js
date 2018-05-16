@@ -17,6 +17,7 @@ const {
   getTechStackID,
   addMemberTechStack,
   getMemberTechStack,
+  deleteMemberTech,
 } = require('../model/queries/');
 
 
@@ -478,7 +479,32 @@ test('Test addMemberTechStack adds a tech stack', (t) => {
   });
 });
 
-// ADD LOWER()
+
+
+// deleteMemberTech
+test('Test deleteMemberTech deletes a tech stack based on the name and github_id', (t) => {
+  runDbBuild().then(() => {
+    const techName = 'javascript'
+    let oldTechStack;
+    getMemberTechStack(1)
+      .then((res) => {
+        oldTechStack = res;
+      })
+      .then(() => deleteMemberTech(1, techName))
+      .then(() => getMemberTechStack(1))
+      .then((res) => {
+        t.pass(oldTechStack.tech_stack.indexOf(techName) > 0, `Old tech stack includes ${techName}`)
+        t.equal(res.tech_stack.indexOf(techName), -1, `${techName} has been deleted`)
+        t.equal(oldTechStack.tech_stack.length - 1, res.tech_stack.length, 'a row from members_tech_stack has been deleted')
+        t.end();
+      }).catch((err) => {
+        console.log(err.message);
+        t.error(err, 'addMemberTechStack test error');
+        t.end();
+      });
+  });
+});
+
 
 test.onFinish(() => {
   dbConnection.$pool.end();
