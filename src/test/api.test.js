@@ -1,6 +1,5 @@
 const test = require('tape');
-// const request = require('supertest');
-const { getGitHubRepos, getGitHubStack } = require('../lib/getGitHubStack');
+const { getGitHubRepoLanguages } = require('../lib/getGitHubStack');
 require('dotenv').config();
 
 
@@ -12,12 +11,10 @@ test('GITHUB API TESTS', (t) => {
 
 // GITHUB API UNIT TESTS
 test('Test getGitHubRepos', (t) => {
-  getGitHubRepos(process.env.APIKEY, 'vlbee').then((actual) => {
-    console.log(typeof actual);
+  getGitHubRepoLanguages(process.env.APIKEY, 'octocat').then((actual) => {
     t.ok(Array.isArray(actual), 'returns an array');
+    t.equal(typeof actual[0], 'string', 'returns an array of strings');
+    t.equal(actual.indexOf('JavaScript'), actual.lastIndexOf('JavaScript'), 'no duplicates');
     t.end();
   }).catch(err => console.log(err.message));
-
-  // argument passed in - accessToken and github_id
-  // return an array of languages used in github Repos
 });
