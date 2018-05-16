@@ -11,4 +11,5 @@ module.exports = {
   saveJobDetails: require('./saveJobDetails'),
   addTechStack: require('./addTechStack'),
   getAllTechStack: require('./getAllTechStack'),
+  getTechStackID: require('./getTechStackID'),
 };

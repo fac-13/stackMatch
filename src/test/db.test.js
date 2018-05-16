@@ -14,6 +14,7 @@ const {
   saveJobDetails,
   addTechStack,
   getAllTechStack,
+  getTechStackID,
 } = require('../model/queries/');
 
 
@@ -398,6 +399,38 @@ test('Test addTechStack saves a new techstack', (t) => {
         t.pass(Array.isArray(res), 'response is an array')
         t.equals(oldStack.length + 1, res.length, 'has added another row to tech_stack table')
         t.deepEqual(expected, res, 'added "PostgreSQL" to the tech_stack table')
+        t.end();
+      }).catch((err) => {
+        console.log(err.message);
+        t.error(err, 'saveJobDetails test error');
+        t.end();
+      });
+  });
+});
+
+// getTechStackID
+
+test('Test getTechStackID returns the correct ID', (t) => {
+  runDbBuild().then(() => {
+    getTechStackID('JavaScript')
+      .then((res) => {
+        t.equals(typeof res, 'object', 'response is an object')
+        t.equals(1, res.id, 'has returned the correct ID')
+        t.deepEquals({ id: 1 }, res, 'has returned the correct response object')
+        t.end();
+      }).catch((err) => {
+        console.log(err.message);
+        t.error(err, 'saveJobDetails test error');
+        t.end();
+      });
+  });
+});
+
+test('Test getTechStackID returns undefined if not in tech_stack table', (t) => {
+  runDbBuild().then(() => {
+    getTechStackID('PostgreSQL')
+      .then((res) => {
+        if (!res) t.pass('has returned undefined')
         t.end();
       }).catch((err) => {
         console.log(err.message);
