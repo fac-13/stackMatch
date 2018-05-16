@@ -5,9 +5,9 @@ const dbConnection = require('../model/database/db_connection');
 const {
   postMemberInfo,
   getMemberData,
-  getAllFacCodes,
-  addFacCodeReturnID,
-  getFacCodeID,
+  getAllFacCohorts,
+  addFacCohortReturnID,
+  getFacCohortID,
   updateMemberDetails,
   getAllMemberData,
   saveProfileData,
@@ -68,13 +68,12 @@ test('Test getMemberData query to ensure correct data received', (t) => {
     .then(() => getMemberData(1))
     .then((res) => {
       const correctResult = {
-        id: 1,
         github_id: 1,
         full_name: 'Helen',
         github_handle: 'helenzhou6',
         github_avatar_url: 'https://uk.linkedin.com/dbsmith',
         fac_campus: 'london',
-        fac_code_id: 1,
+        fac_cohort: 'FAC0',
         linkedin_url: 'https://uk.linkedin.com/',
         twitter_handle: 'hel_zhou',
         member_type: 'admin',
@@ -123,24 +122,24 @@ test('Test postMemberInfo adds a row', (t) => {
 });
 
 // ADD FACCODE
-test('Add fac code to fac_code table and return id', (t) => {
-  const facCode = 'FAC13';
+test('Add fac cohort to fac_cohort table and return id', (t) => {
+  const facCohort = 'FAC13';
   let original;
   runDbBuild()
-    .then(getAllFacCodes)
+    .then(getAllFacCohorts)
     .then((res) => {
       original = res;
     })
-    .then(() => addFacCodeReturnID(facCode))
+    .then(() => addFacCohortReturnID(facCohort))
     .then((res) => {
       t.equal(typeof res, 'object', 'db response is an object');
       t.deepEqual(Object.keys(res), ['id'], 'res is an object containing an id');
       t.end();
     })
-    .then(getAllFacCodes)
+    .then(getAllFacCohorts)
     .then((res) => {
       t.equal(res.length, original.length + 1, 'added one row to fac codes table');
-      t.deepEqual(res[res.length - 1].code, facCode, 'added FAC13');
+      t.deepEqual(res[res.length - 1].cohort, facCohort, 'added FAC13');
     })
     .catch((err) => {
       console.log(err.message);
@@ -149,10 +148,10 @@ test('Add fac code to fac_code table and return id', (t) => {
     });
 });
 
-// getAllFacCodes
+// getAllFacCohorts
 test('Test get all FAC codes', (t) => {
   runDbBuild()
-    .then(() => getAllFacCodes())
+    .then(() => getAllFacCohorts())
     .then((res) => {
       t.ok(Array.isArray(res), 'db response is an array');
       t.end();
@@ -164,11 +163,11 @@ test('Test get all FAC codes', (t) => {
     });
 });
 
-// getFacCodeID
+// getFacCohortID
 test('Test get fac code id', (t) => {
   const facCode = 'FAC0';
   runDbBuild()
-    .then(() => getFacCodeID(facCode))
+    .then(() => getFacCohortID(facCode))
     .then((res) => {
       t.equal(typeof res, 'object', 'db response is an object');
       t.deepEqual(Object.keys(res), ['id'], 'res is an object containing an id');
@@ -186,13 +185,12 @@ test('Test update members table', (t) => {
   const githubID = 1;
   let before;
   const expected = {
-    id: 1,
     github_id: 1,
     full_name: 'Helen',
     github_handle: 'helenzhou6',
     github_avatar_url: 'https://uk.linkedin.com/dbsmith',
     fac_campus: 'London',
-    fac_code_id: 1,
+    fac_cohort: 'FAC0',
     linkedin_url: 'knowwhere.com',
     twitter_handle: 'helenTweetz',
     member_type: 'admin',
@@ -239,13 +237,12 @@ test('Test saveProfileData', (t) => {
   const githubID = 1;
   let before;
   const expected = {
-    id: 1,
     github_id: 1,
     full_name: 'Helen',
     github_handle: 'helenzhou6',
     github_avatar_url: 'https://uk.linkedin.com/dbsmith',
     fac_campus: 'London',
-    fac_code_id: 3,
+    fac_cohort: 'FAC123',
     linkedin_url: 'knowwhere.com',
     twitter_handle: 'helenTweetz',
     member_type: 'admin',
@@ -273,10 +270,10 @@ test('Test saveProfileData', (t) => {
       return Promise.resolve([formDataObj, githubID]);
     })
     .then(array => saveProfileData(...array))
-    .then(() => Promise.all([getMemberData(githubID), getFacCodeID('FAC123')]))
+    .then(() => Promise.all([getMemberData(githubID), getFacCohortID('FAC123')]))
     .then((resArr) => {
       const [filteredRes, idRes] = resArr;
-      t.equal(filteredRes.fac_code_id, idRes.id, 'has added new FAC code');
+      t.ok(idRes, 'has added new FAC code');
       t.ok(filteredRes, 'we have db response');
       t.notDeepEqual(before, filteredRes, 'members table has been changed');
       t.deepEqual(filteredRes, expected, 'update was successful');
@@ -292,26 +289,26 @@ test('Test saveProfileData', (t) => {
 // getAllMemberData
 test('Test getAllMemberData query returns the correct format and number of rows', (t) => {
   const correctResult =
-  [{
-    id: 1,
-    github_id: 1,
-    full_name: 'Helen',
-    github_handle: 'helenzhou6',
-    github_avatar_url: 'https://uk.linkedin.com/dbsmith',
-    fac_cohort: 'FAC0',
-    tech_stack: ['JavaScript', 'Node.js'],
-    job_search_status: 'red',
-  },
-  {
-    id: 2,
-    github_id: 2,
-    full_name: 'Deborah',
-    github_handle: 'dsmith',
-    github_avatar_url: 'https://uk.linkedin.com/dbsmith',
-    fac_cohort: 'FAC1',
-    tech_stack: ['Node.js', 'JavaScript'],
-    job_search_status: 'orange',
-  }];
+    [{
+      id: 1,
+      github_id: 1,
+      full_name: 'Helen',
+      github_handle: 'helenzhou6',
+      github_avatar_url: 'https://uk.linkedin.com/dbsmith',
+      fac_cohort: 'FAC0',
+      tech_stack: ['JavaScript', 'Node.js'],
+      job_search_status: 'red',
+    },
+    {
+      id: 2,
+      github_id: 2,
+      full_name: 'Deborah',
+      github_handle: 'dsmith',
+      github_avatar_url: 'https://uk.linkedin.com/dbsmith',
+      fac_cohort: 'FAC1',
+      tech_stack: ['Node.js', 'JavaScript'],
+      job_search_status: 'orange',
+    }];
 
   runDbBuild().then(() => {
     dbConnection.query(selectAllMembers)

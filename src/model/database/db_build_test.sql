@@ -1,10 +1,10 @@
 BEGIN;
 
-DROP TABLE IF EXISTS members, fac_code, member_tech_stack, tech_stack CASCADE;
+DROP TABLE IF EXISTS members, fac_cohort, member_tech_stack, tech_stack CASCADE;
 
-CREATE TABLE fac_code (
+CREATE TABLE fac_cohort (
   id SERIAL PRIMARY KEY,
-  code VARCHAR(255)
+  cohort VARCHAR(255)
 );
 
 CREATE TABLE tech_stack (
@@ -19,7 +19,7 @@ CREATE TABLE members (
   github_handle VARCHAR(255) NOT NULL,
   github_avatar_url VARCHAR(4000),
   fac_campus VARCHAR(255),
-  fac_code_id INTEGER,
+  fac_cohort_id INTEGER,
   linkedin_url VARCHAR(4000),
   twitter_handle VARCHAR(255),
   member_type VARCHAR(255),
@@ -28,7 +28,7 @@ CREATE TABLE members (
   years_experience INTEGER,
   github_cv_url VARCHAR(4000),
   cv_url VARCHAR(4000),
-  FOREIGN KEY (fac_code_id) REFERENCES fac_code(id)
+  FOREIGN KEY (fac_cohort_id) REFERENCES fac_cohort(id)
 );
 
 CREATE TABLE member_tech_stack (
@@ -40,8 +40,8 @@ CREATE TABLE member_tech_stack (
   FOREIGN KEY (stack_id) REFERENCES tech_stack(id)
 );
 
-INSERT INTO fac_code
-  (code)
+INSERT INTO fac_cohort
+  (cohort)
 VALUES
   ('FAC0'),
   ('FAC1');
@@ -53,7 +53,7 @@ VALUES
   ('Node.js');
 
 INSERT INTO members
-  (github_id, full_name, github_handle, github_avatar_url, fac_campus, fac_code_id, linkedin_url, twitter_handle, member_type, job_view_pref, job_search_status, years_experience, github_cv_url, cv_url)
+  (github_id, full_name, github_handle, github_avatar_url, fac_campus, fac_cohort_id, linkedin_url, twitter_handle, member_type, job_view_pref, job_search_status, years_experience, github_cv_url, cv_url)
 VALUES
   (1, 'Helen', 'helenzhou6', 'https://uk.linkedin.com/dbsmith', 'london', 1, 'https://uk.linkedin.com/', 'hel_zhou', 'admin', 'private', 'red', 1, 'https://github.com/helenzhou6/CV', 'https://github.com/helenzhou6/CV'),
   (2, 'Deborah', 'dsmith', 'https://uk.linkedin.com/dbsmith', 'gaza', 2, 'https://uk.linkedin.com/dbsmith', 'dbsmith', 'member', 'public', 'orange', 5, NULL, NULL);

@@ -1,10 +1,10 @@
 BEGIN;
 
-DROP TABLE IF EXISTS members, fac_code, member_tech_stack, tech_stack CASCADE;
+DROP TABLE IF EXISTS members, fac_cohort, member_tech_stack, tech_stack CASCADE;
 
-CREATE TABLE fac_code (
+CREATE TABLE fac_cohort (
   id SERIAL PRIMARY KEY,
-  code VARCHAR(255)
+  cohort VARCHAR(255)
 );
 
 CREATE TABLE tech_stack (
@@ -19,7 +19,7 @@ CREATE TABLE members (
   github_handle VARCHAR(255) NOT NULL,
   github_avatar_url VARCHAR(4000),
   fac_campus VARCHAR(255),
-  fac_code_id INTEGER,
+  fac_cohort_id INTEGER,
   linkedin_url VARCHAR(4000),
   twitter_handle VARCHAR(255),
   member_type VARCHAR(255),
@@ -28,7 +28,7 @@ CREATE TABLE members (
   years_experience INTEGER,
   github_cv_url VARCHAR(4000),
   cv_url VARCHAR(4000),
-  FOREIGN KEY (fac_code_id) REFERENCES fac_code(id)
+  FOREIGN KEY (fac_cohort_id) REFERENCES fac_cohort(id)
 );
 
 CREATE TABLE member_tech_stack (
