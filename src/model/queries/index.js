@@ -9,4 +9,6 @@ module.exports = {
   updateMemberDetails: require('./updateMemberDetails'),
   saveProfileData: require('./saveProfileData'),
   saveJobDetails: require('./saveJobDetails'),
+  addTechStack: require('./addTechStack'),
+  getAllTechStack: require('./getAllTechStack'),
 };
