@@ -12,13 +12,17 @@ const {
   getAllMemberData,
   saveProfileData,
   saveJobDetails,
-  addTechStack,
-  getAllTechStack,
-  getTechStackID,
-  addMemberTechStack,
-  getMemberTechStack,
-  deleteMemberTech,
 } = require('../model/queries/');
+
+const {
+  addMemberTechStack,
+  getTechStackID,
+  getAllTechStack,
+  addTechStack,
+  deleteMemberTech,
+  getMemberTechStack,
+} = require('../model/queries/query_tech-stack');
+
 
 
 const selectAllMembers = 'SELECT * FROM members';
