@@ -43,6 +43,15 @@ const getMemberTechStack = (github_id) => db.query(
   [github_id],
 ).then((res) => res[0]);
 
+const updateTechOrderNum = (github_id, order_num, tech) => db.query(
+  `UPDATE member_tech_stack
+  SET order_num = $2
+  WHERE member_id = (SELECT id FROM members WHERE github_id = $1)
+  AND stack_id = (SELECT id FROM tech_stack WHERE LOWER(tech) = LOWER($3))`,
+  [github_id, order_num, tech],
+)
+
+
 module.exports = {
   addMemberTechStack,
   getTechStackID,
@@ -50,4 +59,5 @@ module.exports = {
   addTechStack,
   deleteMemberTech,
   getMemberTechStack,
+  updateTechOrderNum,
 };

@@ -21,7 +21,8 @@ const {
   addTechStack,
   deleteMemberTech,
   getMemberTechStack,
-} = require('../model/queries/query_tech-stack');
+  updateTechOrderNum,
+} = require('../model/queries/query_techStack');
 
 
 
@@ -483,8 +484,6 @@ test('Test addMemberTechStack adds a tech stack', (t) => {
   });
 });
 
-
-
 // deleteMemberTech
 test('Test deleteMemberTech deletes a tech stack based on the name and github_id', (t) => {
   runDbBuild().then(() => {
@@ -509,6 +508,29 @@ test('Test deleteMemberTech deletes a tech stack based on the name and github_id
   });
 });
 
+// updateTechOrderNum
+test('Test updateTechOrderNum to ensure edit order number based on params', (t) => {
+  runDbBuild().then(() => {
+    const techName = 'javascript'
+    let oldTechStack;
+    getMemberTechStack(1)
+      .then((res) => {
+        oldTechStack = res;
+      })
+      .then(() => updateTechOrderNum(1, 4, techName))
+      .then(() => getMemberTechStack(1))
+      .then((res) => {
+        const expected = { tech_stack: ['Node.js', 'JavaScript'] };
+        t.notEqual(oldTechStack.tech_stack.indexOf('JavaScript'), res.tech_stack.indexOf('JavaScript'), `${techName} has changed position`);
+        t.deepEqual(expected, res, 'response is as expected')
+        t.end();
+      }).catch((err) => {
+        console.log(err.message);
+        t.error(err, 'updateTechOrderNum test error');
+        t.end();
+      });
+  });
+});
 
 test.onFinish(() => {
   dbConnection.$pool.end();
