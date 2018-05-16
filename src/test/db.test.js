@@ -27,9 +27,9 @@ test('Test runDBBuild is working', (t) => {
   runDbBuild().then((build) => {
     t.ok(build, 'runDbBuild is working');
     t.end();
-  }).catch((error) => {
-    console.log(error);
-    t.error(error, 'build error');
+  }).catch((err) => {
+    console.log(err);
+    t.error(err, 'build error');
     t.end();
   });
 });
@@ -38,9 +38,9 @@ test('Test database has content', (t) => {
   runDbBuild().then(() => dbConnection.query(selectAllMembers)).then((res) => {
     t.ok(res.length > 0, 'Content received from test database');
     t.end();
-  }).catch((error) => {
-    console.log(error);
-    t.error(error, 'build error');
+  }).catch((err) => {
+    console.log(err);
+    t.error(err, 'build error');
     t.end();
   });
 });
@@ -57,9 +57,9 @@ test('Test getMemberData query and returns the correct format', (t) => {
       t.equals(typeof res, 'object', 'type of res should be an object');
       t.end();
     })
-    .catch((error) => {
-      console.log(error.message);
-      t.error(error, 'build error');
+    .catch((err) => {
+      console.log(err.message);
+      t.error(err, 'build error');
     });
 });
 
@@ -88,9 +88,9 @@ test('Test getMemberData query to ensure correct data received', (t) => {
       t.deepEqual(res, correctResult, 'deepEquals of first test member');
       t.end();
     })
-    .catch((error) => {
-      console.log(error.message);
-      t.error(error, 'build error');
+    .catch((err) => {
+      console.log(err.message);
+      t.error(err, 'build error');
     });
 });
 
@@ -114,8 +114,9 @@ test('Test postMemberInfo adds a row', (t) => {
               t.equal(newQuantity, quantity + 1, 'postMemberInfo added one row to database');
               t.end();
             }));
-      }).catch((error) => {
-        t.error(error, 'postMemberInfo test error');
+      }).catch((err) => {
+        console.log(err.message);
+        t.error(err, 'postMemberInfo test error');
         t.end();
       });
   });
@@ -141,8 +142,9 @@ test('Add fac code to fac_code table and return id', (t) => {
       t.equal(res.length, original.length + 1, 'added one row to fac codes table');
       t.deepEqual(res[res.length - 1].code, facCode, 'added FAC13');
     })
-    .catch((error) => {
-      t.error(error, 'no db error');
+    .catch((err) => {
+      console.log(err.message);
+      t.error(err, 'no db error');
       t.end();
     });
 });
@@ -155,8 +157,9 @@ test('Test get all FAC codes', (t) => {
       t.ok(Array.isArray(res), 'db response is an array');
       t.end();
     })
-    .catch((error) => {
-      t.error(error, 'no db error');
+    .catch((err) => {
+      console.log(err.message);
+      t.error(err, 'no db error');
       t.end();
     });
 });
@@ -169,6 +172,11 @@ test('Test get fac code id', (t) => {
     .then((res) => {
       t.equal(typeof res, 'object', 'db response is an object');
       t.deepEqual(Object.keys(res), ['id'], 'res is an object containing an id');
+      t.end();
+    })
+    .catch((err) => {
+      console.log(err.message);
+      t.error(err, 'no db error');
       t.end();
     });
 });
@@ -219,8 +227,9 @@ test('Test update members table', (t) => {
       t.deepEqual(res, expected, 'update was successful');
       t.end();
     })
-    .catch((error) => {
-      t.error(error, 'no db error');
+    .catch((err) => {
+      console.log(err.message);
+      t.error(err, 'no db error');
       t.end();
     });
 });
@@ -273,8 +282,9 @@ test('Test saveProfileData', (t) => {
       t.deepEqual(filteredRes, expected, 'update was successful');
       t.end();
     })
-    .catch((error) => {
-      t.error(error, 'no db error');
+    .catch((err) => {
+      console.log(err.message);
+      t.error(err, 'no db error');
       t.end();
     });
 });
@@ -317,9 +327,9 @@ test('Test getAllMemberData query returns the correct format and number of rows'
             t.deepEqual(res2, correctResult, 'deepEquals of all member info');
             t.end();
           });
-      }).catch((error) => {
-        console.log(error);
-        t.error(error, 'getAllMemberData test error');
+      }).catch((err) => {
+        console.log(err.message);
+        t.error(err, 'getAllMemberData test error');
         t.end();
       });
   });
@@ -327,7 +337,7 @@ test('Test getAllMemberData query returns the correct format and number of rows'
 
 // SAVE JOB DETAILS TEST
 
-test('Test saveJobDetails', (t) => {
+test('Test saveJobDetails saves job details', (t) => {
   runDbBuild().then(() => {
     const jobData = {
       job_view_pref: 'public',
@@ -346,9 +356,9 @@ test('Test saveJobDetails', (t) => {
         t.deepEqual(dbJobData, jobData, 'saveJobDetails added correct data to database');
         t.end();
       });
-    }).catch((error) => {
-      console.log(error);
-      t.error(error, 'postMemberInfo test error');
+    }).catch((err) => {
+      console.log(err.message);
+      t.error(err, 'saveJobDetails test error');
       t.end();
     });
   });
