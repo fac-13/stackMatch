@@ -33,3 +33,10 @@ exports.postJobDetails = (req, res, next) => {
       next(err);
     });
 };
+
+exports.delete = (req, res, next) => {
+  console.log('delete');
+  console.log('req.user: ', req.user.github_id);
+  const { github_id } = req.user;
+  res.status(200);
+};
