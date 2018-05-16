@@ -1,0 +1,12 @@
+<div class="modal-background">
+  <h1 class="sg-heading">Are you sure you want to delete your profile?</h1>
+  <p class="sg-text">This action cannot be <b>undone</b>. This will permanently delete <b>{{ user.github_handle }}</b></p>
+  <form method="DELETE" action='/deleteAccount' novalidate>
+    <label for="delete_account_input" class="sg-title">
+      Please Enter Your GitHub Username To Confirm
+      <input type="text" name="delete_github_handle" id="delete_account_input" data-githubHandle="{{user.github_handle}}" >
+    </label>
+    <button id="delete-account-btn" disabled>Submit 👋</button>
+  </form>
+  <button class="btn-close-modal">I Want To Stay</button>
+</div>
