@@ -9,6 +9,7 @@ var modalIsOpen = document.querySelectorAll('.modal');
 var modalDetails = document.getElementById('modal-details');
 var modalJob = document.getElementById('modal-job');
 var modalDelete = document.getElementById('modal-delete');
+var deleteConfirmInput = document.querySelector('#delete_account_input');
 
 
 function closeModal() {
@@ -43,3 +44,12 @@ openModalBtn.forEach(btn => btn.addEventListener('click', (e) => {
 closeModalBtn.forEach(btn => btn.addEventListener('click', (e) => {
   closeModal();
 }));
+
+// validation
+
+// delete profile validation
+deleteConfirmInput.addEventListener('keyup', (e) => {
+  var userGithubHandle = e.target.dataset.githubhandle;
+  var confirmGithubHandle = e.target.value;
+  document.querySelector('#delete-account-btn').disabled = confirmGithubHandle !== userGithubHandle;
+});
