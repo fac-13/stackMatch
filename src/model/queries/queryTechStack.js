@@ -16,7 +16,12 @@ const getTechStackID = (techName) => {
 
 const getAllTechStack = () => db.query(
   'SELECT * FROM tech_stack'
-);
+).then((res) => {
+  return res.reduce((acc, curr) => {
+    acc.push(curr.tech)
+    return acc
+  }, [])
+});
 
 const addTechStack = (techName) => db.query(
   'INSERT INTO tech_stack (tech) VALUES ($1)',

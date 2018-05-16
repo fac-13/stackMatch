@@ -357,7 +357,7 @@ test('Test saveJobDetails saves job details', (t) => {
 test('Test getAllTechStack gets all stack', (t) => {
   runDbBuild().then(() => {
     getAllTechStack().then((res) => {
-      const expected = [{ id: 1, tech: 'JavaScript' }, { id: 2, tech: 'Node.js' }];
+      const expected = ['JavaScript', 'Node.js'];
       t.pass(Array.isArray(res), 'response is an array')
       t.equal(expected.length, res.length, 'response contains appropriate number of entries')
       t.deepEquals(expected, res, 'gets all the values in tech_stach table')
@@ -382,9 +382,7 @@ test('Test addTechStack saves a new techstack', (t) => {
       .then(() => addTechStack('PostgreSQL'))
       .then(() => getAllTechStack())
       .then((res) => {
-        const expected = [{ id: 1, tech: 'JavaScript' },
-        { id: 2, tech: 'Node.js' },
-        { id: 3, tech: 'PostgreSQL' }];
+        const expected = ['JavaScript', 'Node.js', 'PostgreSQL'];
         t.pass(Array.isArray(res), 'response is an array')
         t.equals(oldStack.length + 1, res.length, 'has added another row to tech_stack table')
         t.deepEqual(expected, res, 'added "PostgreSQL" to the tech_stack table')
