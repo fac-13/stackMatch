@@ -3,8 +3,6 @@ const test = require('tape');
 const { addUserStatus } = require('../controllers/middleware');
 const { jobStatusText, jobPrefIsPublic } = require('../views/helpers/index');
 const makeFacCohortName = require('../lib/makeFacCohortName');
-const getGitHubStack = require('../lib/getGitHubStack');
-
 
 test('UNIT TESTS', (t) => {
   t.ok(true, 'tape is working');

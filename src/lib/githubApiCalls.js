@@ -1,5 +1,9 @@
 const request = require('axios');
 
+// ensures member of F&C github org to allow sign up
+const checkOrgMembership = accessToken => request.get(`https://api.github.com/user/orgs?access_token=${accessToken}`).then(orgMembership => (orgMembership.data.some(org => org.login === 'foundersandcoders')));
+
+
 // argument passed in - accessToken and github_id
 // return an array of strings of the languages used in user's repos
 const getGitHubRepoLanguages = (accessToken, github_handle) => request.get(`https://api.github.com/users/${github_handle}/repos?type=all&sort=updated&direction=desc&access_token=${accessToken}`)
@@ -17,5 +21,6 @@ const getGitHubRepoLanguages = (accessToken, github_handle) => request.get(`http
   });
 
 module.exports = {
+  checkOrgMembership,
   getGitHubRepoLanguages,
 };
