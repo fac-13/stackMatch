@@ -25,7 +25,8 @@ router.get('/allmembers', ensureAuthenticated, allMembers.get);
 router.get('/myprofile/:github_id', ensureAuthenticated, profile.get);
 router.post('/savePersonalDetails', ensureAuthenticated, profile.postDetails);
 router.post('/saveJobDetails', ensureAuthenticated, profile.postJobDetails);
-
+router.delete('/deleteAccount', ensureAuthenticated, profile.delete);
+// middleware to take user to goodbye page after deletion
 // AUTHENTICATION ROUTES //
 router.get(
   '/auth/github/signup',
