@@ -14,6 +14,16 @@ const {
   saveJobDetails,
 } = require('../model/queries/');
 
+const {
+  addMemberTechStack,
+  getTechStackID,
+  getAllTechStack,
+  addTechStack,
+  deleteMemberTech,
+  getMemberTechStack,
+} = require('../model/queries/query_tech-stack');
+
+
 
 const selectAllMembers = 'SELECT * FROM members';
 
@@ -289,27 +299,7 @@ test('Test saveProfileData', (t) => {
 // getAllMemberData
 test('Test getAllMemberData query returns the correct format and number of rows', (t) => {
   const correctResult =
-    [{
-      id: 1,
-      github_id: 1,
-      full_name: 'Helen',
-      github_handle: 'helenzhou6',
-      github_avatar_url: 'https://uk.linkedin.com/dbsmith',
-      fac_cohort: 'FAC0',
-      tech_stack: ['JavaScript', 'Node.js'],
-      job_search_status: 'red',
-    },
-    {
-      id: 2,
-      github_id: 2,
-      full_name: 'Deborah',
-      github_handle: 'dsmith',
-      github_avatar_url: 'https://uk.linkedin.com/dbsmith',
-      fac_cohort: 'FAC1',
-      tech_stack: ['Node.js', 'JavaScript'],
-      job_search_status: 'orange',
-    }];
-
+    [{ id: 3, github_id: 3, full_name: 'Lawrence', github_handle: 'lawRES', github_avatar_url: 'https://uk.linkedin.com/law', fac_cohort: 'FAC0', tech_stack: null, job_search_status: 'red' }, { id: 1, github_id: 1, full_name: 'Helen', github_handle: 'helenzhou6', github_avatar_url: 'https://uk.linkedin.com/dbsmith', fac_cohort: 'FAC0', tech_stack: ['JavaScript', 'Node.js'], job_search_status: 'red' }, { id: 2, github_id: 2, full_name: 'Deborah', github_handle: 'dsmith', github_avatar_url: 'https://uk.linkedin.com/dbsmith', fac_cohort: 'FAC1', tech_stack: ['Node.js', 'JavaScript'], job_search_status: 'orange' }];
   runDbBuild().then(() => {
     dbConnection.query(selectAllMembers)
       .then((res1) => {
@@ -360,6 +350,165 @@ test('Test saveJobDetails saves job details', (t) => {
     });
   });
 });
+
+// getAllTechStack
+
+test('Test getAllTechStack gets all stack', (t) => {
+  runDbBuild().then(() => {
+    getAllTechStack().then((res) => {
+      const expected = [{ id: 1, tech: 'JavaScript' }, { id: 2, tech: 'Node.js' }];
+      t.pass(Array.isArray(res), 'response is an array')
+      t.equal(expected.length, res.length, 'response contains appropriate number of entries')
+      t.deepEquals(expected, res, 'gets all the values in tech_stach table')
+      t.end();
+    }).catch((err) => {
+      console.log(err.message);
+      t.error(err, 'getAllTechStack test error');
+      t.end();
+    });
+  });
+});
+
+// addTechStack
+
+test('Test addTechStack saves a new techstack', (t) => {
+  runDbBuild().then(() => {
+    let oldStack;
+    getAllTechStack()
+      .then((res) => {
+        oldStack = res;
+      })
+      .then(() => addTechStack('PostgreSQL'))
+      .then(() => getAllTechStack())
+      .then((res) => {
+        const expected = [{ id: 1, tech: 'JavaScript' },
+        { id: 2, tech: 'Node.js' },
+        { id: 3, tech: 'PostgreSQL' }];
+        t.pass(Array.isArray(res), 'response is an array')
+        t.equals(oldStack.length + 1, res.length, 'has added another row to tech_stack table')
+        t.deepEqual(expected, res, 'added "PostgreSQL" to the tech_stack table')
+        t.end();
+      }).catch((err) => {
+        console.log(err.message);
+        t.error(err, 'addTechStack test error');
+        t.end();
+      });
+  });
+});
+
+// getTechStackID
+
+test('Test getTechStackID returns the correct ID', (t) => {
+  runDbBuild().then(() => {
+    getTechStackID('JavaScript')
+      .then((res) => {
+        t.equals(typeof res, 'object', 'response is an object')
+        t.equals(1, res.id, 'has returned the correct ID')
+        t.deepEquals({ id: 1 }, res, 'has returned the correct response object')
+        t.end();
+      }).catch((err) => {
+        console.log(err.message);
+        t.error(err, 'getTechStackID test error');
+        t.end();
+      });
+  });
+});
+
+test('Test getTechStackID returns undefined if not in tech_stack table', (t) => {
+  runDbBuild().then(() => {
+    getTechStackID('PostgreSQL')
+      .then((res) => {
+        if (!res) t.pass('has returned undefined')
+        t.end();
+      }).catch((err) => {
+        console.log(err.message);
+        t.error(err, 'getTechStackID test error');
+        t.end();
+      });
+  });
+});
+
+// getMemberTechStack
+test('Test getMemberTechStack returns an object containing an array of the tech stack', (t) => {
+  runDbBuild().then(() => {
+    getMemberTechStack(1)
+      .then((res) => {
+        const expected = { tech_stack: ['JavaScript', 'Node.js'] };
+        t.equal(typeof res, 'object', 'response is an object')
+        t.deepEquals(Object.keys(res), ['tech_stack'], 'response has a key of tech_stack')
+        t.pass(Array.isArray(res.tech_stack), 'response contains an array of tech stack')
+        t.deepEquals(expected, res, 'response is the correct response')
+        t.end();
+      }).catch((err) => {
+        console.log(err.message);
+        t.error(err, 'getMemberTechStack test error');
+        t.end();
+      });
+  });
+});
+
+test('Test getMemberTechStack does not cause an error when a user doesn\'t have a tech stack', (t) => {
+  runDbBuild().then(() => {
+    getMemberTechStack(3)
+      .then((res) => {
+        if (!res.tech_stack) t.pass('tech stack returns as null')
+        t.end();
+      }).catch((err) => {
+        console.log(err.message);
+        t.error(err, 'getMemberTechStack test error');
+        t.end();
+      });
+  });
+});
+
+// addMemberTechStack
+test('Test addMemberTechStack adds a tech stack', (t) => {
+  runDbBuild().then(() => {
+    let oldTechStack;
+    getMemberTechStack(3)
+      .then((res) => {
+        oldTechStack = res;
+      })
+      .then(() => addMemberTechStack(3, 'javascript', 1))
+      .then(() => getMemberTechStack(3))
+      .then((res) => {
+        t.notEquals(oldTechStack, res, 'Tech stack of that member has been changed')
+        t.equals(res.tech_stack[res.tech_stack.length - 1], 'JavaScript', 'JavaScript has been added to the member')
+        t.end();
+      }).catch((err) => {
+        console.log(err.message);
+        t.error(err, 'addMemberTechStack test error');
+        t.end();
+      });
+  });
+});
+
+
+
+// deleteMemberTech
+test('Test deleteMemberTech deletes a tech stack based on the name and github_id', (t) => {
+  runDbBuild().then(() => {
+    const techName = 'javascript'
+    let oldTechStack;
+    getMemberTechStack(1)
+      .then((res) => {
+        oldTechStack = res;
+      })
+      .then(() => deleteMemberTech(1, techName))
+      .then(() => getMemberTechStack(1))
+      .then((res) => {
+        t.pass(oldTechStack.tech_stack.indexOf(techName) > 0, `Old tech stack includes ${techName}`)
+        t.equal(res.tech_stack.indexOf(techName), -1, `${techName} has been deleted`)
+        t.equal(oldTechStack.tech_stack.length - 1, res.tech_stack.length, 'a row from members_tech_stack has been deleted')
+        t.end();
+      }).catch((err) => {
+        console.log(err.message);
+        t.error(err, 'addMemberTechStack test error');
+        t.end();
+      });
+  });
+});
+
 
 test.onFinish(() => {
   dbConnection.$pool.end();

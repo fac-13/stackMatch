@@ -1,9 +1,13 @@
 <header>
-  <h1 class="sg-heading">My Profile</h1>
+  {{#if profileUser.myProfile }}
+  <h1 class="sg-heading">My Profile</h1> {{else}}
+  <h1 class="sg-heading">{{ profileUser.full_name }}'s Profile</h1>
+  {{/if}}
 </header>
 
 <article class="profile__card">
   <section>
+    {{#if profileUser.myProfile }}
     <header>
       <h1 class="sg-main-link">
         My Details
@@ -11,42 +15,43 @@
       <i class="icon icon-visible">Public</i>
     </header>
     <button class="btn-open-modal" value="details">Edit</button>
+    {{/if}}
     {{!-- github info --}}
     <div>
-      {{#if user.github_avatar_url}}
-      <img src="{{user.github_avatar_url}}" alt="my profile picture" class="profile__avatar"> {{/if}}
-      <p class="sg-main-heading">{{user.full_name}}</p>
-      <p>{{#if user.fac_cohort}}{{user.fac_cohort}}{{/if}}</p>
+      {{#if profileUser.github_avatar_url}}
+      <img src="{{profileUser.github_avatar_url}}" alt="my profile picture" class="profile__avatar"> {{/if}}
+      <p class="sg-main-heading">{{profileUser.full_name}}</p>
+      <p>{{#if profileUser.fac_cohort}}{{profileUser.fac_cohort}}{{/if}}</p>
     </div>
     {{!-- links --}}
     <ul class="remove-list-style">
-      {{#if user.github_handle}}
+      {{#if profileUser.github_handle}}
       <li>
-        <a href="https://github.com/{{user.github_handle}}" target="_blank">
+        <a href="https://github.com/{{profileUser.github_handle}}" target="_blank">
           <i class="icon icon-github">github icon</i>
-          <span class="sg-subtext">{{user.github_handle}}</span>
+          <span class="sg-subtext">{{profileUser.github_handle}}</span>
         </a>
       </li>
-      {{/if}} {{#if user.linkedin_url}}
+      {{/if}} {{#if profileUser.linkedin_url}}
       <li>
-        <a href="https://github.com/{{user.linkedin_url}}" target="_blank">
+        <a href="https://github.com/{{profileUser.linkedin_url}}" target="_blank">
           <i class="icon icon-linkedin">linkedin icon</i>
-          <span class="sg-subtext">{{user.linkedin_url}}</span>
+          <span class="sg-subtext">{{profileUser.linkedin_url}}</span>
         </a>
       </li>
-      {{/if}} {{#if user.linkedin_url}}
+      {{/if}} {{#if profileUser.linkedin_url}}
       <li>
-        <a href="https://github.com/{{user.twitter_handle}}" target="_blank">
+        <a href="https://github.com/{{profileUser.twitter_handle}}" target="_blank">
           <i class="icon icon-twitter">Twitter icon</i>
-          <span class="sg-subtext">{{user.twitter_handle}}</span>
+          <span class="sg-subtext">{{profileUser.twitter_handle}}</span>
         </a>
       </li>
       {{/if}}
     </ul>
     {{!-- contact --}}
     <a>
-      {{#if user.github_handle}}
-      <a href="https://gitter.im/{{user.github_handle}}" target="_blank">
+      {{#if profileUser.github_handle}}
+      <a href="https://gitter.im/{{profileUser.github_handle}}" target="_blank">
         <i class="icon icon-gitter">gitter icon</i>
         <span class="sg-subtext">Contact me on Gitter</span>
       </a>
@@ -56,27 +61,29 @@
   <section>
     <header>
       <h1 class="sg-main-link">
-        Job Search
+        Job Interest
       </h1>
-      {{#if user.job_view_pref}}
-      <i class="icon icon-visible">{{user.job_view_pref}}</i>{{/if}}
+      {{#if profileUser.myProfile }}
+      {{#if profileUser.job_view_pref}}
+      <i class="icon icon-visible">{{profileUser.job_view_pref}}</i>{{/if}}
     </header>
     <button id="open-modal-job" class="btn-open-modal" value="job">Edit</button>
     {{!-- job search status --}}
+    {{/if}}
     <div>
-      {{#if user.job_search_status}}
-      <i class="icon icon-jobstatus-{{user.job_search_status}}">{{user.job_search_status}} circle</i>
-      <p>{{jobStatusText user.job_search_status}}</p>
+      {{#if profileUser.job_search_status}}
+      <i class="icon icon-jobstatus-{{profileUser.job_search_status}}">{{profileUser.job_search_status}} circle</i>
+      <p>{{jobStatusText profileUser.job_search_status}}</p>
       {{else}}
       <i class="icon icon-jobstatus-red">red circle</i>
       <p class="sg-text">Not Looking</p>
-      {{/if}} {{#if user.max_years_exp}}
-      <p>Has {{user.max_years_exp}} years experience</p>{{/if}} {{#if user.github_cv_url}}
-      <a href="{{user.github_cv_url}}" target="_blank">
+      {{/if}} {{#if profileUser.max_years_exp}}
+      <p>Has {{profileUser.max_years_exp}} years experience</p>{{/if}} {{#if profileUser.github_cv_url}}
+      <a href="{{profileUser.github_cv_url}}" target="_blank">
         <i class="icon icon-github">github icon</i>Github CV
       </a>
-      {{/if}} {{#if user.cv_url}}
-      <a href="{{user.cv_url}}" target="_blank">
+      {{/if}} {{#if profileUser.cv_url}}
+      <a href="{{profileUser.cv_url}}" target="_blank">
         <i class="icon icon-cv">cv icon</i>
         <span class="sg-subtext">PDF of CV</span>
       </a>
@@ -87,5 +94,7 @@
 </article>
 
 <footer>
+  {{#if profileUser.myProfile }}
   <button id="open-modal-delete" class="btn-open-modal" value="delete">Delete Account</button>
+  {{/if}}
 </footer>
