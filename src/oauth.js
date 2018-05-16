@@ -33,7 +33,12 @@ passport.use(new Strategy(
             .then(() => {
               getMemberData(memberProfile.github_id)
               .then((newUserDataObj) => {
-                return next(null, newUserDataObj, { message: 'Signup successful' })
+                getGitHubRepoLanguages(accessToken, newUserDataObj.github_handle).then(languages => {
+                  newUserDataObj.tech_stack = languages;
+                  return newUserDataObj
+                }).then((newUserDataObj) => {
+                  return next(null, newUserDataObj, { message: 'Signup successful' })
+                })
               })
             })
           } else {
