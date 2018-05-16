@@ -3,7 +3,7 @@ const test = require('tape');
 const { addUserStatus } = require('../controllers/middleware');
 const { jobStatusText, jobPrefIsPublic } = require('../views/helpers/index');
 const makeFacCohortName = require('../lib/makeFacCohortName');
-const getGitHubStack = require('../lib/getGitHubStack');
+const { checkOrgMembership, getGitHubRepoLanguages } = require('../lib/githubApiCalls');
 
 
 test('UNIT TESTS', (t) => {

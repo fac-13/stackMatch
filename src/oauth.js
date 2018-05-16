@@ -4,13 +4,7 @@ const Strategy = require('passport-github2').Strategy;
 const request = require('axios'); // alternative to request module
 const postMemberInfo = require('./model/queries/postMemberInfo.js');
 const getMemberData = require('./model/queries/getMemberData.js');
-
-//ensures member of F&C github org to allow sign up 
-function checkOrgMembership(accessToken) {
-  return request.get(`https://api.github.com/user/orgs?access_token=${accessToken}`).then((orgMembership) => {
-    return (orgMembership.data.some((org) => org.login === 'foundersandcoders'))
-  });
-}
+const { checkOrgMembership, getGitHubRepoLanguages } = require('./lib/githubApiCalls');
 
 
 passport.use(new Strategy(
