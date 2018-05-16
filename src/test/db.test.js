@@ -464,7 +464,7 @@ test('Test addMemberTechStack adds a tech stack', (t) => {
       .then((res) => {
         oldTechStack = res;
       })
-      .then(() => addMemberTechStack(3, 'JavaScript', 1))
+      .then(() => addMemberTechStack(3, 'javascript', 1))
       .then(() => getMemberTechStack(3))
       .then((res) => {
         t.notEquals(oldTechStack, res, 'Tech stack of that member has been changed')
