@@ -8,7 +8,6 @@ test('GITHUB API TESTS', (t) => {
   t.end();
 });
 
-
 // GITHUB API UNIT TESTS
 test('Test getGitHubRepos', (t) => {
   getGitHubRepoLanguages(process.env.APIKEY, 'octocat').then((actual) => {
