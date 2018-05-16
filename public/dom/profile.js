@@ -8,6 +8,7 @@ var closeModalBtn = document.querySelectorAll('.btn-close-modal');
 var modalIsOpen = document.querySelectorAll('.modal');
 var modalDetails = document.getElementById('modal-details');
 var modalJob = document.getElementById('modal-job');
+var modalDelete = document.getElementById('modal-delete');
 
 
 function closeModal() {
@@ -24,6 +25,9 @@ function openModal(profileSection) {
       break;
     case 'job':
       modalJob.style.display = 'block';
+      break;
+    case 'delete':
+      modalDelete.style.display = 'block';
       break;
     default:
       break;
