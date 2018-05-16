@@ -3,8 +3,10 @@ const test = require('tape');
 const { addUserStatus } = require('../controllers/middleware');
 const { jobStatusText, jobPrefIsPublic } = require('../views/helpers/index');
 const makeFacCohortName = require('../lib/makeFacCohortName');
+const getGitHubStack = require('../lib/getGitHubStack');
 
-test('Test if tape is working', (t) => {
+
+test('UNIT TESTS', (t) => {
   t.ok(true, 'tape is working');
   t.end();
 });
@@ -88,3 +90,4 @@ test('Test makeFacCohortName', (t) => {
   t.equals(makeFacCohortName('nazareth', 3), 'FACN3', 'makeFacCohortName(\'nazareth\', 3) returns correct result');
   t.end();
 });
+
