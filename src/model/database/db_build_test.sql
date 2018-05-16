@@ -56,7 +56,8 @@ INSERT INTO members
   (github_id, full_name, github_handle, github_avatar_url, fac_campus, fac_cohort_id, linkedin_url, twitter_handle, member_type, job_view_pref, job_search_status, years_experience, github_cv_url, cv_url)
 VALUES
   (1, 'Helen', 'helenzhou6', 'https://uk.linkedin.com/dbsmith', 'london', 1, 'https://uk.linkedin.com/', 'hel_zhou', 'admin', 'private', 'red', 1, 'https://github.com/helenzhou6/CV', 'https://github.com/helenzhou6/CV'),
-  (2, 'Deborah', 'dsmith', 'https://uk.linkedin.com/dbsmith', 'gaza', 2, 'https://uk.linkedin.com/dbsmith', 'dbsmith', 'member', 'public', 'orange', 5, NULL, NULL);
+  (2, 'Deborah', 'dsmith', 'https://uk.linkedin.com/dbsmith', 'gaza', 2, 'https://uk.linkedin.com/dbsmith', 'dbsmith', 'member', 'public', 'orange', 5, NULL, NULL),
+  (3, 'Lawrence', 'lawRES', 'https://uk.linkedin.com/law', 'london', 1, 'https://uk.linkedin.com/lawres', 'lawres', 'admin', 'private', 'red', 1, 'https://github.com/lawres/CV', 'https://github.com/lawres/CV');
   
 INSERT INTO member_tech_stack
   (member_id, stack_id, order_num)
