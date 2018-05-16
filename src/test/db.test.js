@@ -15,6 +15,8 @@ const {
   addTechStack,
   getAllTechStack,
   getTechStackID,
+  addMemberTechStack,
+  getMemberTechStack,
 } = require('../model/queries/');
 
 
@@ -376,7 +378,7 @@ test('Test getAllTechStack gets all stack', (t) => {
       t.end();
     }).catch((err) => {
       console.log(err.message);
-      t.error(err, 'saveJobDetails test error');
+      t.error(err, 'getAllTechStack test error');
       t.end();
     });
   });
@@ -402,7 +404,7 @@ test('Test addTechStack saves a new techstack', (t) => {
         t.end();
       }).catch((err) => {
         console.log(err.message);
-        t.error(err, 'saveJobDetails test error');
+        t.error(err, 'addTechStack test error');
         t.end();
       });
   });
@@ -420,7 +422,7 @@ test('Test getTechStackID returns the correct ID', (t) => {
         t.end();
       }).catch((err) => {
         console.log(err.message);
-        t.error(err, 'saveJobDetails test error');
+        t.error(err, 'getTechStackID test error');
         t.end();
       });
   });
@@ -434,7 +436,26 @@ test('Test getTechStackID returns undefined if not in tech_stack table', (t) => 
         t.end();
       }).catch((err) => {
         console.log(err.message);
-        t.error(err, 'saveJobDetails test error');
+        t.error(err, 'getTechStackID test error');
+        t.end();
+      });
+  });
+});
+
+// getMemberTechStack
+test('Test getMemberTechStack returns an object containing an array of the tech stack', (t) => {
+  runDbBuild().then(() => {
+    getMemberTechStack(1)
+      .then((res) => {
+        const expected = { tech_stack: ['JavaScript', 'Node.js'] };
+        t.equal(typeof res, 'object', 'response is an object')
+        t.deepEquals(Object.keys(res), ['tech_stack'], 'response has a key of tech_stack')
+        t.pass(Array.isArray(res.tech_stack), 'response contains an array of tech stack')
+        t.deepEquals(expected, res, 'response is the correct response')
+        t.end();
+      }).catch((err) => {
+        console.log(err.message);
+        t.error(err, 'getMemberTechStack test error');
         t.end();
       });
   });
