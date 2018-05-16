@@ -10,6 +10,7 @@
     "test:app": "NODE_ENV=test nodemon src/test/app.test.js | tap-spec",
     "test:db": "NODE_ENV=test nodemon src/test/db.test.js | tap-spec",
     "test:unit": "NODE_ENV=test nodemon src/test/unit.test.js | tap-spec",
+    "test:api": "NODE_ENV=test nodemon src/test/api.test.js | tap-spec",
     "test:coverage": "NODE_ENV=test nyc --reporter=lcov --reporter=text-lcov tape src/test/*.test.js | tap-spec && open -a \"Google Chrome\" ./coverage/lcov-report/index.html",
     "build": "node src/model/database/db_build.js",
     "lint": "./node_modules/.bin/eslint **/*.js --ignore-pattern node_modules/"
