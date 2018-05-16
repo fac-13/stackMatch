@@ -1,9 +1,19 @@
 const { addUserStatus } = require('./middleware');
-const { saveProfileData, saveJobDetails } = require('../model/queries/');
+const { saveProfileData, saveJobDetails, getMemberData } = require('../model/queries/');
 
 exports.get = (req, res) => {
-  const user = addUserStatus(req);
-  res.render('profile', { activePage: { profile: true }, user });
+  // this checks if the :github_id in req.params matches (and it's your profile)
+  if (+req.params.github_id === +req.user.github_id) {
+    const user = addUserStatus(req);
+    const profileUser = user;
+    profileUser.myProfile = true;
+    return res.render('profile', { activePage: { profile: true }, user, profileUser });
+  }
+  // this renders someone else's profile
+  getMemberData(req.params.github_id).then((profileUser) => {
+    const user = addUserStatus(req);
+    res.render('profile', { activePage: { profile: true }, user, profileUser });
+  });
 };
 
 exports.postDetails = (req, res, next) => {
