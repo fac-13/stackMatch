@@ -7,12 +7,8 @@
     * As a user, I can create an account and display my skills and technical stack. I can search for and connect with other FACers based on their skills - for example, if I’m interested in learning more about a specific technology or looking for a potential partner to work with on a project.
 
 * [Inspiration Board](https://hackmd.io/slQRHTO0TLCcGcsFrLM1Qg) set up and used for design inspiration
-* Decided on team roles:
-    * @laweks - QA
-    * @vlbee - DevOpts
-    * @helenzhou6 - Scrum Master
-    * @tdoran - UX
-* [Gitter channel](https://gitter.im/fac-13/stackMatch) set up to for any discussions
+
+* Gitter channel set up to for any discussions
 
 ## Week One - Design Sprint
 
