@@ -538,10 +538,10 @@ test('Test updateTechOrderNum to ensure edit order number based on params', (t) 
 
 // addUniqueTech
 
-test('Test addUniqueTech to ensure added unique tech', (t) => {
+test('Test addUniqueTech to ensure added unique tech, and no duplicate additions', (t) => {
   runDbBuild().then(() => {
     let oldTechStackList;
-    const formData = ['javascript', 'Node.js', 'PostgreSQL', 'HTML'];
+    const formData = ['javascript', 'Node.js', 'PostgreSQL', 'HTML', 'html'];
     getAllTechStack()
       .then((res) => oldTechStackList = JSON.parse(JSON.stringify(res)))
       .then(() => addUniqueTech(formData))
@@ -584,10 +584,10 @@ test('Test processMemberTechStack to ensure added new tech', (t) => {
   });
 });
 
-test('Test processMemberTechStack to ensure changed order of tech', (t) => {
+test('Test processMemberTechStack to ensure changed order of tech and no duplicates', (t) => {
   runDbBuild().then(() => {
     const github_id = 1;
-    const formData = ['node.js', 'javascript'];
+    const formData = ['node.js', 'javascript', 'JAVASCRIPT'];
     getMemberTechStack(github_id)
       .then((res) => oldTechStackList = JSON.parse(JSON.stringify(res)))
       .then(() => processMemberTechStack(github_id, formData))

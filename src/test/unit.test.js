@@ -3,6 +3,7 @@ const test = require('tape');
 const { addUserStatus } = require('../controllers/middleware');
 const { jobStatusText, jobPrefIsPublic } = require('../views/helpers/index');
 const makeFacCohortName = require('../lib/makeFacCohortName');
+const remDupsFromArray = require('../lib/remDupsFromArray');
 const getGitHubStack = require('../lib/getGitHubStack');
 
 
@@ -91,3 +92,10 @@ test('Test makeFacCohortName', (t) => {
   t.end();
 });
 
+// DUPLICATE HELPER in Lib folder
+test('Test remDupsFromArray', (t) => {
+  const arrayInput = ['javascript', 'javascript', 'JavaScript', 'Node.js']
+  const expected = ['javascript', 'Node.js']
+  t.deepEquals(remDupsFromArray(arrayInput), expected, 'removed');
+  t.end();
+});
