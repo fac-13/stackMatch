@@ -16,6 +16,7 @@ var deleteBtn = document.querySelector('#delete-account-btn');
 var stackAddBtn = document.querySelector('#stack__addbutton');
 var stack__list = document.querySelector('#stack__list');
 var stack__input = document.querySelector('#stack__input');
+var stackValidation = document.querySelector('#stack__validation');
 
 function closeModal() {
   modalIsOpen.forEach((modal) => {
@@ -73,20 +74,39 @@ deleteBtn.addEventListener('click', (e) => {
 
 
 // TECH STACK FUNCTIONS
+function checkTechDuplicates() {
+  var liArr = [];
+  var listIds = document.querySelectorAll('#stack__list li[id]');
+  for (var i = 0; i < listIds.length; i++) {
+    liArr.push(listIds[i].id);
+  }
+  return liArr;
+}
+
+function removeLi(liId) {
+  var liToBeRemoved = document.getElementById(liId);
+  liToBeRemoved.remove();
+}
 
 stackAddBtn.addEventListener('click', (e) => {
   e.preventDefault();
   e.stopPropagation();
-  console.log(stack__input.value);
+
+  var listOfTech = checkTechDuplicates();
+
   var tech = stack__input.value;
-  stack__list.insertAdjacentHTML('beforeend', `<li>
-  <input type="hidden" name="tech" value=${tech}>
-  <div>${tech}</div>
-  <button class="stack__removebutton">Remove</button>
-</li>`);
+  if(!tech){
+    return;
+  }
+  if (!listOfTech.includes(tech)) {
+    stackValidation.classList.add('is-hidden');
+    stack__list.insertAdjacentHTML('beforeend', `<li id="${tech}">
+    <input type="hidden" name="tech" value=${tech}>
+    <div>${tech}</div>
+    <button onclick="removeLi('${tech}')" class="stack__removebutton">Remove</button>
+  </li>`);
+  } else {
+    stackValidation.classList.remove('is-hidden');
+  }
 });
 
-stack__list.addEventListener('click', (e) => {
-  e.preventDefault();
-  e.srcElement.parentElement.remove();
-});

@@ -1,13 +1,13 @@
 <div class="modal-background">
   <h1 class="sg-heading">Tech Stack</h1>
-  <form method="POST" action="/saveTechStack" novalidate>
-    <label for="tech_stack" class="sg-title">Tech Name
+  <label for="tech_stack" class="sg-title">Tech Name
       <input id="stack__input" name="tech_stack" type="text" value="" />
       <button id="stack__addbutton">Add</button>
+      <span id="stack__validation" class="sg-subtext is-hidden">Already entered this tech</span>
     </label>
-
-    {{#if user.tech_stack}}
+  <form method="POST" action="/saveTechStack" novalidate>
     <ul class="remove-list-style" id="stack__list">
+    {{#if user.tech_stack}}
       {{#each}}
       <li>
         <input type="hidden" name="tech" value="{{this}}">
@@ -15,8 +15,8 @@
         <button>Remove</button>
       </li>
       {{/each}}
-    </ul>
     {{/if}}
+    </ul>
     <button>Submit</button>
   </form>
   <button class="btn-close-modal">Close without saving</button>
