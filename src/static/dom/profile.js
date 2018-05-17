@@ -7,6 +7,7 @@ var openModalBtn = document.querySelectorAll('.btn-open-modal');
 var closeModalBtn = document.querySelectorAll('.btn-close-modal');
 var modalIsOpen = document.querySelectorAll('.modal');
 var modalDetails = document.getElementById('modal-details');
+var modalStack = document.getElementById('modal-stack');
 var modalJob = document.getElementById('modal-job');
 var modalDelete = document.getElementById('modal-delete');
 var deleteConfirmInput = document.querySelector('#delete_account_input');
@@ -24,6 +25,9 @@ function openModal(profileSection) {
   switch (profileSection) {
     case 'details':
       modalDetails.style.display = 'block';
+      break;
+    case 'stack':
+      modalStack.style.display = 'block';
       break;
     case 'job':
       modalJob.style.display = 'block';
