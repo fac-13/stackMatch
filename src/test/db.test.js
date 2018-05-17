@@ -22,7 +22,13 @@ const {
   deleteMemberTech,
   getMemberTechStack,
   updateTechOrderNum,
-} = require('../model/queries/query_techStack');
+  deleteMemberTechStack,
+} = require('../model/queries/queryTechStack');
+
+const {
+  processMemberTechStack,
+  addUniqueTech,
+} = require('../model/queries/processMemberTechStack');
 
 
 
@@ -377,14 +383,14 @@ test('Test addTechStack saves a new techstack', (t) => {
     let oldStack;
     getAllTechStack()
       .then((res) => {
-        oldStack = res;
+        oldTechStack = JSON.parse(JSON.stringify(res));
       })
       .then(() => addTechStack('PostgreSQL'))
       .then(() => getAllTechStack())
       .then((res) => {
         const expected = ['JavaScript', 'Node.js', 'PostgreSQL'];
         t.pass(Array.isArray(res), 'response is an array')
-        t.equals(oldStack.length + 1, res.length, 'has added another row to tech_stack table')
+        t.equals(oldTechStack.length + 1, res.length, 'has added another row to tech_stack table')
         t.deepEqual(expected, res, 'added "PostgreSQL" to the tech_stack table')
         t.end();
       }).catch((err) => {
@@ -466,7 +472,7 @@ test('Test addMemberTechStack adds a tech stack', (t) => {
     let oldTechStack;
     getMemberTechStack(3)
       .then((res) => {
-        oldTechStack = res;
+        oldTechStack = JSON.parse(JSON.stringify(res));
       })
       .then(() => addMemberTechStack(3, 'javascript', 1))
       .then(() => getMemberTechStack(3))
@@ -489,7 +495,7 @@ test('Test deleteMemberTech deletes a tech stack based on the name and github_id
     let oldTechStack;
     getMemberTechStack(1)
       .then((res) => {
-        oldTechStack = res;
+        oldTechStack = JSON.parse(JSON.stringify(res));
       })
       .then(() => deleteMemberTech(1, techName))
       .then(() => getMemberTechStack(1))
@@ -513,9 +519,9 @@ test('Test updateTechOrderNum to ensure edit order number based on params', (t) 
     let oldTechStack;
     getMemberTechStack(1)
       .then((res) => {
-        oldTechStack = res;
+        oldTechStack = JSON.parse(JSON.stringify(res));
       })
-      .then(() => updateTechOrderNum(1, 4, techName))
+      .then(() => updateTechOrderNum(1, techName, 4))
       .then(() => getMemberTechStack(1))
       .then((res) => {
         const expected = { tech_stack: ['Node.js', 'JavaScript'] };
@@ -525,6 +531,138 @@ test('Test updateTechOrderNum to ensure edit order number based on params', (t) 
       }).catch((err) => {
         console.log(err.message);
         t.error(err, 'updateTechOrderNum test error');
+        t.end();
+      });
+  });
+});
+
+// addUniqueTech
+
+test('Test addUniqueTech to ensure added unique tech', (t) => {
+  runDbBuild().then(() => {
+    let oldTechStackList;
+    const formData = ['javascript', 'Node.js', 'PostgreSQL', 'HTML'];
+    getAllTechStack()
+      .then((res) => oldTechStackList = JSON.parse(JSON.stringify(res)))
+      .then(() => addUniqueTech(formData))
+      .then(() => getAllTechStack())
+      .then((res) => {
+        const expected = ['JavaScript', 'Node.js', 'PostgreSQL', 'HTML'];
+        t.equal(oldTechStackList.length + 2, res.length, 'added two new items to tech stack')
+        t.deepEqual(expected, res, 'added PostgreSQL and HTML to tech stack')
+        t.end();
+      }).catch((err) => {
+        console.log(err.message);
+        t.error(err, 'addUniqueTech test error');
+        t.end();
+      });
+  });
+});
+
+// processMemberTechStack
+
+test('Test processMemberTechStack to ensure added new tech', (t) => {
+  runDbBuild().then(() => {
+    const github_id = 1;
+    const formData = ['Node.js', 'javascript', 'PostgreSQL', 'HTML'];
+    getMemberTechStack(github_id)
+      .then((res) => oldTechStackList = JSON.parse(JSON.stringify(res)))
+      .then(() => processMemberTechStack(github_id, formData))
+      .then(() => getMemberTechStack(github_id))
+      .then((res) => {
+        const expected = { tech_stack: ['Node.js', 'JavaScript', 'PostgreSQL', 'HTML'] };
+        t.notEqual(oldTechStackList.tech_stack.indexOf('Node.js'), res.tech_stack.indexOf('Node.js'), 'order of Node.js has been changed')
+        t.pass(oldTechStackList.tech_stack.length < res.tech_stack.length, 'more rows added to member\'s tech stack')
+        t.notDeepEqual(oldTechStackList.tech_stack, res.tech_stack, 'member\'s tech stack has been changed')
+        t.deepEqual(expected, res, 'expected response (deepEqual)')
+        t.end();
+      }).catch((err) => {
+        console.log(err.message);
+        t.error(err, 'addUniqueTech test error');
+        t.end();
+      });
+  });
+});
+
+test('Test processMemberTechStack to ensure changed order of tech', (t) => {
+  runDbBuild().then(() => {
+    const github_id = 1;
+    const formData = ['node.js', 'javascript'];
+    getMemberTechStack(github_id)
+      .then((res) => oldTechStackList = JSON.parse(JSON.stringify(res)))
+      .then(() => processMemberTechStack(github_id, formData))
+      .then(() => getMemberTechStack(github_id))
+      .then((res) => {
+        const expected = { tech_stack: ['Node.js', 'JavaScript'] };
+        t.notEqual(oldTechStackList.tech_stack.indexOf('Node.js'), res.tech_stack.indexOf('Node.js'), 'order of Node.js has been changed')
+        t.notDeepEqual(oldTechStackList.tech_stack, res.tech_stack, 'member\'s tech stack has been changed')
+        t.deepEqual(expected, res, 'expected response (deepEqual)')
+        t.end();
+      }).catch((err) => {
+        console.log(err.message);
+        t.error(err, 'addUniqueTech test error');
+        t.end();
+      });
+  });
+});
+
+
+test('Test processMemberTechStack to ensure removed tech that has not been included', (t) => {
+  runDbBuild().then(() => {
+    const github_id = 1;
+    const formData = ['node.js'];
+    getMemberTechStack(github_id)
+      .then((res) => oldTechStackList = JSON.parse(JSON.stringify(res)))
+      .then(() => processMemberTechStack(github_id, formData))
+      .then(() => getMemberTechStack(github_id))
+      .then((res) => {
+        const expected = { tech_stack: ['Node.js'] };
+        t.deepEqual(expected, res, 'expected response (deepEqual)')
+        t.end();
+      }).catch((err) => {
+        console.log(err.message);
+        t.error(err, 'addUniqueTech test error');
+        t.end();
+      });
+  });
+});
+
+test('Test processMemberTechStack to ensure added a tech stack when previously had none', (t) => {
+  runDbBuild().then(() => {
+    const github_id = 3;
+    const formData = ['javascript', 'Node.js', 'PostgreSQL', 'HTML'];
+    getMemberTechStack(github_id)
+      .then((res) => oldTechStackList = JSON.parse(JSON.stringify(res)))
+      .then(() => processMemberTechStack(github_id, formData))
+      .then(() => getMemberTechStack(github_id))
+      .then((res) => {
+        const expected = { tech_stack: ['JavaScript', 'Node.js', 'PostgreSQL', 'HTML'] };
+        t.notDeepEqual(oldTechStackList.tech_stack, res.tech_stack, 'member\'s tech stack has been changed')
+        t.deepEqual(expected, res, 'expected response (deepEqual)')
+        t.end();
+      }).catch((err) => {
+        console.log(err.message);
+        t.error(err, 'addUniqueTech test error');
+        t.end();
+      });
+  });
+});
+
+// deleteMemberTechStack
+test('Test deleteMemberTechStack deletes tech stack of member', (t) => {
+  runDbBuild().then(() => {
+    const github_id = 1;
+    getMemberTechStack(github_id)
+      .then((res) => oldTechStackList = JSON.parse(JSON.stringify(res)))
+      .then(() => deleteMemberTechStack(github_id))
+      .then(() => getMemberTechStack(github_id))
+      .then((res) => {
+        t.pass(!res.tech_stack, 'tech stack associated with member deleted')
+        t.notDeepEqual(oldTechStackList.tech_stack, res.tech_stack, 'member\'s tech stack has been changed')
+        t.end();
+      }).catch((err) => {
+        console.log(err.message);
+        t.error(err, 'addUniqueTech test error');
         t.end();
       });
   });
