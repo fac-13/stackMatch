@@ -36,7 +36,7 @@ CREATE TABLE member_tech_stack (
   stack_id INTEGER NOT NULL,
   order_num INTEGER,
   PRIMARY KEY (stack_id, member_id),
-  FOREIGN KEY (member_id) REFERENCES members(id),
+  FOREIGN KEY (member_id) REFERENCES members(id) ON DELETE CASCADE,
   FOREIGN KEY (stack_id) REFERENCES tech_stack(id)
 );
 
