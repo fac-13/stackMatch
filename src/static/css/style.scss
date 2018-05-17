@@ -58,6 +58,7 @@ a {
 
 .avatar--is-large {
   max-width: 5rem;
+  max-height: 5rem;
 }
 
 .remove-list-style {
@@ -66,12 +67,20 @@ a {
   padding: 0;
 }
 
+.is-horizontally-spaced {
+  display: flex;
+}
+
+p {
+  margin: 0;
+}
+
 // CARDS
 
 .profile__card {
   background-color: $offwhite;
   color: $dark;
-  padding: 2rem;
+  padding: 1.8rem;
 
   margin: 1rem 0;
 }
@@ -79,6 +88,7 @@ a {
 // STYLE GUIDE
 
 .sg-main-heading {
+  margin: 0;
   font-weight: 900;
   font-size: 2rem;
 }
@@ -110,7 +120,7 @@ a {
 
 .sg-subtext {
   font-weight: 400;
-  font-size: .6rem;
+  font-size: .8rem;
 }
 
 
