@@ -8,10 +8,8 @@ const passport = require('passport');
 const cookieSession = require('cookie-session');
 require('dotenv').config();
 
-// import route controllers
+// import route controllers & helpers
 const controllers = require('./controllers/index');
-
-// import helpers
 const helpers = require('./views/helpers/index');
 
 // github oauth 2.0 passport setup
