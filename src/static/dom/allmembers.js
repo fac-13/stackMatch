@@ -2,8 +2,6 @@
 
 const allUsers = document.getElementsByClassName('profile__card');
 const allUserIds = Array.from(allUsers).map(card => card.id);
-console.log('this is allUsers', allUsers);
-console.log('this is allUsersids', allUserIds);
 
 allUserIds.forEach((cardId) => {
   const userCard = document.getElementById(cardId);
