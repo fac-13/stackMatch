@@ -1,4 +1,4 @@
-const dbConnection = require('../database/db_connection.js');
+const db = require('../database/db_connection.js');
 
 const allMembersQuery =
   `SELECT mem.id, mem.github_id, mem.full_name, mem.github_handle, github_avatar_url, cohort.cohort AS fac_cohort, 
@@ -13,7 +13,7 @@ LEFT JOIN fac_cohort cohort
 ON mem.fac_cohort_id = cohort.id`;
 
 const getAllMemberData = () =>
-  dbConnection
+  db
     .query(allMembersQuery);
 
 module.exports = getAllMemberData;

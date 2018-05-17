@@ -1,13 +1,10 @@
 /* eslint global-require: off */
 module.exports = {
   getAllMemberData: require('./getAllMemberData'),
-  postMemberInfo: require('./postMemberInfo'),
   getMemberData: require('./getMemberData'),
-  getAllFacCohorts: require('./getAllFacCohorts'),
-  addFacCohortReturnID: require('./addFacCohortReturnID'),
-  getFacCohortID: require('./getFacCohortID'),
-  updateMemberDetails: require('./updateMemberDetails'),
+  postMemberInfo: require('./postMemberInfo'),
+  processMemberTechStack: require('./processMemberTechStack'),
   saveProfileData: require('./saveProfileData'),
   saveJobDetails: require('./saveJobDetails'),
-  processMemberTechStack: require('./processMemberTechStack'),
+  updateMemberDetails: require('./updateMemberDetails'),
 };

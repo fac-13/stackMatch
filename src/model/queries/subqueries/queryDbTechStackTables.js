@@ -1,4 +1,4 @@
-const db = require('../database/db_connection');
+const db = require('../../database/db_connection');
 
 const addMemberTechStack = (github_id, techName, orderNum) => db.query(
   `INSERT INTO member_tech_stack VALUES
@@ -7,17 +7,17 @@ const addMemberTechStack = (github_id, techName, orderNum) => db.query(
   [github_id, techName, orderNum],
 );
 
-const getTechStackID = techName => db.query(
+const getTechIDFromTechStackTable = techName => db.query(
   'SELECT id FROM tech_stack WHERE LOWER(tech) = LOWER($1)',
   [techName],
 ).then(res => res[0]);
 
-const getAllTechStack = () => db.query('SELECT * FROM tech_stack').then(res => res.reduce((acc, curr) => {
+const getAllTechFromTechStackTable = () => db.query('SELECT * FROM tech_stack').then(res => res.reduce((acc, curr) => {
   acc.push(curr.tech);
   return acc;
 }, []));
 
-const addTechStack = techName => db.query(
+const addNewTechIntoTechStackTable = techName => db.query(
   'INSERT INTO tech_stack (tech) VALUES ($1)',
   [techName],
 );
@@ -59,9 +59,9 @@ const updateTechOrderNum = (github_id, techName, order_num) => db.query(
 
 module.exports = {
   addMemberTechStack,
-  getTechStackID,
-  getAllTechStack,
-  addTechStack,
+  getTechIDFromTechStackTable,
+  getAllTechFromTechStackTable,
+  addNewTechIntoTechStackTable,
   deleteMemberTech,
   getMemberTechStack,
   updateTechOrderNum,

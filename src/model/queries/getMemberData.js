@@ -1,7 +1,7 @@
-const dbConnection = require('../database/db_connection.js');
+const db = require('../database/db_connection.js');
 
 const getMemberData = githubID =>
-  dbConnection
+  db
     .query(`SELECT github_id, full_name, github_handle, github_avatar_url, fac_campus, fac_cohort.cohort AS fac_cohort, linkedin_url, twitter_handle, member_type, job_view_pref, job_search_status, years_experience, github_cv_url, cv_url 
     FROM members
     LEFT JOIN fac_cohort 
