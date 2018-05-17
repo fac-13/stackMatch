@@ -9,6 +9,7 @@ const {
   getAllMemberData,
   saveProfileData,
   saveJobDetails,
+  deleteMemberFromDB,
 } = require('../model/queries/');
 
 const {
@@ -32,7 +33,6 @@ const {
   processMemberTechStack,
   addUniqueTech,
 } = require('../model/queries/processMemberTechStack');
-
 
 const selectAllMembers = 'SELECT * FROM members';
 
@@ -690,6 +690,55 @@ test('Test deleteMemberTechStack deletes tech stack of member', (t) => {
         t.end();
       });
   });
+});
+
+// DELETE ACCOUNT
+const formatCount = res => +res[0].count;
+const countMemberFromMembers = id => dbConnection.query(
+  'SELECT COUNT(id) FROM members WHERE id = $1',
+  [id],
+).then(formatCount);
+
+const countMemberFromMemberTechStack = id => dbConnection.query(
+  'SELECT COUNT(member_id) FROM member_tech_stack WHERE member_id = $1',
+  [id],
+).then(formatCount);
+
+const getMemberIdFromMembers = githubId => dbConnection.query(
+  'SELECT id FROM members WHERE github_id = $1',
+  [githubId],
+).then(res => res[0].id);
+
+test('Test deleteMemberFromDB', (t) => {
+  const githubId = 3;
+  let memberId;
+  runDbBuild()
+    .then(() => getMemberIdFromMembers(githubId))
+    .then((id) => {
+      memberId = id;
+      return deleteMemberFromDB(githubId);
+    })
+    .then(() =>
+      Promise.all([
+        countMemberFromMembers(githubId),
+        countMemberFromMemberTechStack(memberId),
+      ]))
+    .then(([membersCount, memberTechStackCount]) => {
+      t.ok(
+        membersCount === 0,
+        `there are ${membersCount} of occurrences of github_id: ${githubId} in members table`,
+      );
+
+      t.ok(
+        memberTechStackCount === 0,
+        `there are ${memberTechStackCount} of occurrences of id: ${memberId} in member_tech_stack table`,
+      );
+      t.end();
+    })
+    .catch((err) => {
+      t.error(err, 'member was successfully deleted');
+      t.end();
+    });
 });
 
 test.onFinish(() => {

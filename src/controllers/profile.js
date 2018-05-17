@@ -1,5 +1,7 @@
 const { addUserStatus } = require('./middleware');
-const { saveProfileData, saveJobDetails, getMemberData } = require('../model/queries/');
+const {
+  saveProfileData, saveJobDetails, getMemberData, deleteMemberFromDB,
+} = require('../model/queries/');
 const { processMemberTechStack } = require('../model/queries/processMemberTechStack');
 
 exports.get = (req, res) => {
@@ -8,12 +10,10 @@ exports.get = (req, res) => {
     const user = addUserStatus(req);
     const profileUser = user;
     profileUser.myProfile = true;
-    console.log(profileUser);
     return res.render('profile', { activePage: { profile: true }, user, profileUser });
   }
   // this renders someone else's profile
   getMemberData(req.params.github_id).then((profileUser) => {
-    console.log('profileUser', profileUser);
     const user = addUserStatus(req);
     res.render('profile', { activePage: { profile: true }, user, profileUser });
   });
@@ -51,7 +51,11 @@ exports.postJobDetails = (req, res, next) => {
 
 exports.delete = (req, res, next) => {
   const { github_id } = req.user;
-  console.log('delete');
-  console.log('github id: ', github_id);
-  res.status(200);
+  deleteMemberFromDB(github_id)
+    .then(() => {
+      res.status(200);
+    })
+    .catch((err) => {
+      next(err);
+    });
 };

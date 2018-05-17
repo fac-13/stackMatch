@@ -66,30 +66,32 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 3:
+/***/ 5:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-/* eslint no-var: 0 */
-/* eslint prefer-arrow-callback: 0 */
-/* eslint func-names: 0 */
-/* eslint no-undef: 0 */
+/* eslint wrap-iife: 0 */
 
-var signupButton = document.getElementById('js-signup');
+var allUsers = document.getElementsByClassName('profile__card');
+var allUserIds = Array.from(allUsers).map(function (card) {
+  return card.id;
+});
 
-// signupButton.addEventListener('click', function (e) {
-//   e.preventDefault();
-//   clientRequest('GET', '/auth/github/signup', null, function (response) {
-//     console.log(response);
-//   });
-// });
+allUserIds.forEach(function (cardId) {
+  var userCard = document.getElementById(cardId);
+  userCard.addEventListener('click', function (e) {
+    // currently directing to profile page when you click their gitter link (needs fixing)
+    e.stopPropagation();
+    window.location.assign('/myprofile/' + cardId);
+  });
+});
 
 /***/ })
 

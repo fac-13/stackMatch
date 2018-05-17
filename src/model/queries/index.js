@@ -6,5 +6,6 @@ module.exports = {
   processMemberTechStack: require('./processMemberTechStack'),
   saveProfileData: require('./saveProfileData'),
   saveJobDetails: require('./saveJobDetails'),
+  deleteMemberFromDB: require('./deleteMemberFromDB'),
   updateMemberDetails: require('./updateMemberDetails'),
 };
