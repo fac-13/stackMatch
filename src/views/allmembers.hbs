@@ -3,8 +3,7 @@
 </header>
 
 {{#each allMembersData}}
-<a href="/myprofile/{{this.github_id}}" style="">
-      <article class="profile__card">
+      <article class="profile__card" id="{{this.github_id}}">
             {{!-- github info --}} {{!-- NEED TO ADD JOB STATUS - for admin users --}}
             <div>
                   {{#if this.github_avatar_url}}
@@ -32,5 +31,4 @@
                   {{/if}}
 
       </article>
-</a>
 {{/each}}
