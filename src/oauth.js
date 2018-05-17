@@ -29,10 +29,10 @@ passport.use(new Strategy(
         return getMemberData(memberProfile.github_id)
         .then((userDataObj) => {
           if(!userDataObj){
-            getGitHubRepoLanguages(accessToken, memberProfile.github_handle)
-            .then(languages => {
-              memberProfile.tech_stack = languages;
-              console.log(memberProfile)
+            // getGitHubRepoLanguages(accessToken, memberProfile.github_handle)
+            // .then(languages => {
+            //   memberProfile.tech_stack = languages;
+            //   console.log(memberProfile)
               postMemberInfo(memberProfile)
               .then(() => {
               getMemberData(memberProfile.github_id)
@@ -40,7 +40,7 @@ passport.use(new Strategy(
                   return next(null, newUserDataObj, { message: 'Signup successful' })
                 })
               })
-            })
+            // })
           } else {
             return next(null, userDataObj, { message: 'Login successful' })
           }

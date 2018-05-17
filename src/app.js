@@ -43,8 +43,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieSession({
   name: 'sessionstack',
-  secure: true,
-  httpOnly: true,
+  // secure: true,
+  // httpOnly: true,
   maxAge: 24 * 60 * 60 * 1000,
   keys: [process.env.COOKIE_KEY],
 }));
