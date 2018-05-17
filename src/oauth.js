@@ -14,43 +14,38 @@ passport.use(new Strategy(
     callbackURL: `${process.env.BASE_URL}/auth/github/callback`,
   },
   ((accessToken, refreshToken, profile, next) => {
-  
+
     let memberProfile = {
       github_id: profile._json.id,
-      github_handle: profile._json.login,        
+      github_handle: profile._json.login,
       full_name: profile._json.name,
       github_avatar_url: profile._json.avatar_url,
     }
-    
+
     checkOrgMembership(accessToken).then((res) => {
       if (res === false) {
         return next(null, false, { message: 'Not FAC member' });
       } else {
         return getMemberData(memberProfile.github_id)
-        .then((userDataObj) => {
-          if(!userDataObj){
-            // getGitHubRepoLanguages(accessToken, memberProfile.github_handle)
-            // .then(languages => {
-            //   memberProfile.tech_stack = languages;
-            //   console.log(memberProfile)
+          .then((userDataObj) => {
+            if (!userDataObj) {
               postMemberInfo(memberProfile)
-              .then(() => {
-              getMemberData(memberProfile.github_id)
-              .then((newUserDataObj) => {
-                  return next(null, newUserDataObj, { message: 'Signup successful' })
+                .then(() => {
+                  getMemberData(memberProfile.github_id)
+                    .then((newUserDataObj) => {
+                      return next(null, newUserDataObj, { message: 'Signup successful' })
+                    })
                 })
-              })
-            // })
-          } else {
-            return next(null, userDataObj, { message: 'Login successful' })
-          }
-        })
+            } else {
+              return next(null, userDataObj, { message: 'Login successful' })
+            }
+          })
       }
     })
-    .catch(err => { 
-      console.log(err.message);
-      next(err) 
-    });
+      .catch(err => {
+        console.log(err.message);
+        next(err)
+      });
   }),
 ));
 
@@ -60,12 +55,12 @@ passport.serializeUser((userDataObj, next) => {
 
 passport.deserializeUser((id, next) => {
   getMemberData(id)
-  .then((user) => {
-    next(null, user);
-  })
-  .catch((err) => {
-    console.log(err.message)
-    next(err);
-  })
+    .then((user) => {
+      next(null, user);
+    })
+    .catch((err) => {
+      console.log(err.message)
+      next(err);
+    })
 });
 
