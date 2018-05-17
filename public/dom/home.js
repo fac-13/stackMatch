@@ -1,14 +1,1 @@
-/* eslint no-var: 0 */
-/* eslint prefer-arrow-callback: 0 */
-/* eslint func-names: 0 */
-/* eslint no-undef: 0 */
-
-var signupButton = document.getElementById('js-signup');
-
-// signupButton.addEventListener('click', function (e) {
-//   e.preventDefault();
-//   clientRequest('GET', '/auth/github/signup', null, function (response) {
-//     console.log(response);
-//   });
-// });
-
+!function(e){var t={};function n(r){if(t[r])return t[r].exports;var o=t[r]={i:r,l:!1,exports:{}};return e[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}n.m=e,n.c=t,n.d=function(e,t,r){n.o(e,t)||Object.defineProperty(e,t,{configurable:!1,enumerable:!0,get:r})},n.r=function(e){Object.defineProperty(e,"__esModule",{value:!0})},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="",n(n.s=1)}([,function(e,t,n){"use strict";document.getElementById("js-signup")}]);
