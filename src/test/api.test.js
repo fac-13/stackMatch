@@ -1,5 +1,5 @@
 const test = require('tape');
-const { getGitHubRepoLanguages } = require('../lib/getGitHubStack');
+const { checkOrgMembership, getGitHubRepoLanguages } = require('../lib/githubApiCalls');
 require('dotenv').config();
 
 

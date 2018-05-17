@@ -3,6 +3,7 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const path = require('path');
 const bodyParser = require('body-parser');
+const helmet = require('helmet');
 const passport = require('passport');
 const cookieSession = require('cookie-session');
 require('dotenv').config();
@@ -18,6 +19,10 @@ require('./oauth');
 
 // express app
 const app = express();
+
+// security
+app.disable('x-powered-by');
+app.use(helmet());
 
 // config view engine
 app.set('views', path.join(__dirname, 'views'));
@@ -37,6 +42,9 @@ app.engine(
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieSession({
+  name: 'sessionstack',
+  secure: true,
+  httpOnly: true,
   maxAge: 24 * 60 * 60 * 1000,
   keys: [process.env.COOKIE_KEY],
 }));
