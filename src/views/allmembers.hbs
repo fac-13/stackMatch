@@ -8,7 +8,7 @@
             {{!-- github info --}} {{!-- NEED TO ADD JOB STATUS - for admin users --}}
             <div>
                   {{#if this.github_avatar_url}}
-                  <img src="{{this.github_avatar_url}}" alt="my profile picture" class="profile__avatar"> {{/if}}
+                  <img src="{{this.github_avatar_url}}" alt="my profile picture" class="avatar--is-large"> {{/if}}
                   <p class="sg-main-heading">{{this.full_name}}</p>
                   <p>{{#if this.this.fac_cohort}}{{this.this.fac_cohort}}{{/if}}</p>
             </div>
@@ -32,5 +32,5 @@
                   {{/if}}
 
       </article>
-</a>
-{{/each}}
+      </a>
+      {{/each}}

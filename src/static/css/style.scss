@@ -5,7 +5,7 @@ $dark: #223241;
 $grey: #E9E3E3;
 $offwhite: #F2F2F2;
 
-@mixin media ($width) {
+@mixin min-media-w ($width) {
   @media (min-width: $width) {
     @content;
   }
@@ -28,6 +28,11 @@ body {
   font-weight: 300;
 
   margin: 2rem;
+
+  @include min-media-w(900px) {
+    max-width: 48rem;
+    margin: 2rem auto;
+  }
 }
 
 a {
@@ -40,8 +45,19 @@ a {
   display: none;
 }
 
+.text--is-orange {
+  color: $highlight;
+}
 .avatar--is-small {
   max-width: .5rem;
+}
+
+.avatar--is-medium {
+  max-width: 1.2rem;
+}
+
+.avatar--is-large {
+  max-width: 5rem;
 }
 
 .remove-list-style {
@@ -82,6 +98,8 @@ a {
   text-transform: uppercase;
   letter-spacing: .08rem;
   font-size: .7rem;
+  background-color: transparent;
+  border: none;
 }
 .sg-title {
   font-weight: 700;
@@ -93,6 +111,92 @@ a {
 .sg-subtext {
   font-weight: 400;
   font-size: .6rem;
+}
+
+
+.sg-button {
+  background-color: $highlight;
+  padding: .8rem 2rem;
+  border-radius: .7rem;
+  color: $dark;
+  font-weight: 700;
+  box-shadow: none;
+  
+  border: none;
+  font-size: 1rem;
+  
+  &:hover {
+    opacity: .85;
+  }
+  
+}
+
+.sg-node {
+  background-color: $dark;
+  padding: 1rem 2rem;
+  border-radius: .7rem;
+  color: $offwhite;
+  
+  font-size: 1rem;
+}
+
+.sg-node-remove {
+  border: none;
+  background-color: transparent;
+  color: $highlight;
+  font-weight: 900;
+  font-size: 1rem;
+  margin-right: .2rem;
+}
+
+.sg-input-text {
+  background-color: $grey;
+  padding: .8rem 1.2rem;
+  border-radius: .7rem;
+  width: 100%;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  font-weight: 300;
+}
+
+.sg-dropdown {
+  width: 100%;
+  box-shadow: none;
+  border-radius: 0;
+  padding: .8rem 1.2rem;
+  background-color: $grey;
+  border: 1px solid $dark;
+  
+  & select {
+    
+    box-shadow: none;
+    border-radius: 0;
+    background-color: $grey;
+    border: none;
+    width: 100%;
+    height: 100%;
+    font-size: 1rem;
+    font-weight: 300;
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.sg-close {
+  color: $highlight;
+  // font-weight: 300;
+  font-size: 3rem;
+  background-color: transparent;
+  border: none;
+
+  position: absolute;
+  top: 3rem;
+  right: 2rem;
+  padding: 0;
+  margin: 0;
+  line-height: 1rem;
 }
 
 // -- PROFILE PAGE
@@ -148,6 +252,7 @@ a {
   /* Fallback color */
   background-color: rgba(0, 0, 0, 0.4);
   /* Black w/ opacity */
+  
 }
 .modal-background {
     background-color: $offwhite;

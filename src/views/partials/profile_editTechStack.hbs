@@ -1,29 +1,22 @@
 <div class="modal-background">
   <h1 class="sg-heading">Tech Stack</h1>
   <label for="tech_stack" class="sg-title">Tech Name
-      <input id="stack__input" name="tech_stack" type="text" value="" />
-      <button id="stack__addbutton">Add</button>
-      <span id="stack__validation" class="sg-subtext is-hidden">Already entered this tech</span>
-    </label>
+    <br>
+    <input class="sg-input-text" id="stack__input" name="tech_stack" type="text" value="" />
+    <button class="sg-button" id="stack__addbutton">Add</button>
+    <span id="stack__validation" class="sg-subtext is-hidden">Already entered this tech</span>
+  </label>
   <form method="POST" action="/saveStackDetails" novalidate>
     <ul class="remove-list-style" id="stack__list">
-    {{#if user.tech_stack}}
-      {{#each}}
+      {{#if user.tech_stack}} {{#each}}
       <li id={{this}}>
         <input type="hidden" name="tech" value={{this}}>
         <div>{{this}}</div>
         <button onclick="removeLi({{this}})" class="stack__removebutton">Remove</button>
       </li>
-      {{/each}}
-    {{/if}}
+      <br> {{/each}} {{/if}}
     </ul>
-    <button>Submit</button>
+    <button class="sg-button">Submit</button>
   </form>
-  <button class="btn-close-modal">Close without saving</button>
+  <button class="btn-close-modal sg-close">x</button>
 </div>
-{{!--
-<li>
-  <input type="hidden" name="tech" value=${tech}>
-  <div>${tech}</div>
-  <buttonnp>Remove</buttonnp>
-</li> --}}

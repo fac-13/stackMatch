@@ -104,8 +104,8 @@ stackAddBtn.addEventListener('click', (e) => {
     <label for="tech" class="sg-title">
       <input type="hidden" name="tech" value="${tech}">
     </label>
-    <div>${tech}</div>
-    <button onclick="removeLi('${tech}')" class="stack__removebutton">Remove</button>
+    <span class="sg-node">${tech}<button onclick="removeLi('${tech}')" class="stack__removebutton sg-node-remove">Remove</button></span>
+    
   </li>`);
   } else {
     stackValidation.classList.remove('is-hidden');
