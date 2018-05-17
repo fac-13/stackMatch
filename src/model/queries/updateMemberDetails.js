@@ -1,6 +1,6 @@
-const dbConnection = require('../database/db_connection');
+const db = require('../database/db_connection');
 
-const updateMemberDetails = (formDataObj, facCohortID, githubID) => dbConnection.query(`
+const updateMemberDetails = (formDataObj, facCohortID, githubID) => db.query(`
     UPDATE members
     SET full_name = $/full_name/,
         github_handle = $/github_handle/,
