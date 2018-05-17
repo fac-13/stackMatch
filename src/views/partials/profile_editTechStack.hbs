@@ -8,11 +8,12 @@
   </label>
   <form method="POST" action="/saveStackDetails" novalidate>
     <ul class="remove-list-style" id="stack__list">
-      {{#if user.tech_stack}} {{#each}}
+      {{#if user.tech_stack}} {{#each user.tech_stack}}
       <li id={{this}}>
         <input type="hidden" name="tech" value={{this}}>
         <div>{{this}}</div>
-        <button onclick="removeLi({{this}})" class="stack__removebutton">Remove</button>
+        {{!-- NEED TO ADD EVENT LISTENER TO REMOVE SOMEHOW --}}
+        <button class="stack__removebutton">Remove</button>
       </li>
       <br> {{/each}} {{/if}}
     </ul>

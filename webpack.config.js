@@ -6,6 +6,7 @@ module.exports = {
     index: './src/static/dom/index.js',
     home: './src/static/dom/home.js',
     profile: './src/static/dom/profile.js',
+    allmembers: './src/static/dom/allmembers.js',
   },
   output: {
     path: path.resolve(__dirname, 'public'),
