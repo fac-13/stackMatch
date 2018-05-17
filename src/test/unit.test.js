@@ -3,6 +3,10 @@ const test = require('tape');
 const { addUserStatus } = require('../controllers/middleware');
 const { jobStatusText, jobPrefIsPublic } = require('../views/helpers/index');
 const makeFacCohortName = require('../lib/makeFacCohortName');
+const removeArrayDuplicates = require('../lib/removeArrayDuplicates');
+const githubApiCalls = require('../lib/githubApiCalls');
+const lowerCaseArray = require('../lib/lowerCaseArray');
+
 
 test('UNIT TESTS', (t) => {
   t.ok(true, 'tape is working');
@@ -89,3 +93,18 @@ test('Test makeFacCohortName', (t) => {
   t.end();
 });
 
+// DUPLICATE HELPER in Lib folder
+test('Test removeArrayDuplicates', (t) => {
+  const arrayInput = ['javascript', 'javascript', 'JavaScript', 'Node.js']
+  const expected = ['javascript', 'Node.js']
+  t.deepEquals(removeArrayDuplicates(arrayInput), expected, 'removed');
+  t.end();
+});
+
+// LOWERCASE HELPER in Lib folder
+test('Test lowerCaseArray', (t) => {
+  const arrayInput = ['JAVASCRIPT', 'javascript', 'JavaScript', 'Node.js'];
+  const expected = ['javascript', 'javascript', 'javascript', 'node.js'];
+  t.deepEquals(lowerCaseArray(arrayInput), expected, 'changed to lowercase');
+  t.end();
+});

@@ -8,10 +8,8 @@ const passport = require('passport');
 const cookieSession = require('cookie-session');
 require('dotenv').config();
 
-// import route controllers
+// import route controllers & helpers
 const controllers = require('./controllers/index');
-
-// import helpers
 const helpers = require('./views/helpers/index');
 
 // github oauth 2.0 passport setup
@@ -43,8 +41,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieSession({
   name: 'sessionstack',
-  secure: true,
-  httpOnly: true,
+  // secure: true,
+  // httpOnly: true,
   maxAge: 24 * 60 * 60 * 1000,
   keys: [process.env.COOKIE_KEY],
 }));

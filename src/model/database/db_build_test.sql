@@ -14,7 +14,7 @@ CREATE TABLE tech_stack (
 
 CREATE TABLE members (
   id SERIAL PRIMARY KEY,
-  github_id INTEGER NOT NULL,
+  github_id INTEGER UNIQUE NOT NULL,
   full_name VARCHAR(255),
   github_handle VARCHAR(255) NOT NULL,
   github_avatar_url VARCHAR(4000),
