@@ -5,14 +5,14 @@
       <button id="stack__addbutton">Add</button>
       <span id="stack__validation" class="sg-subtext is-hidden">Already entered this tech</span>
     </label>
-  <form method="POST" action="/saveTechStack" novalidate>
+  <form method="POST" action="/saveStackDetails" novalidate>
     <ul class="remove-list-style" id="stack__list">
     {{#if user.tech_stack}}
       {{#each}}
-      <li>
-        <input type="hidden" name="tech" value="{{this}}">
+      <li id={{this}}>
+        <input type="hidden" name="tech" value={{this}}>
         <div>{{this}}</div>
-        <button>Remove</button>
+        <button onclick="removeLi({{this}})" class="stack__removebutton">Remove</button>
       </li>
       {{/each}}
     {{/if}}

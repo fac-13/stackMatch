@@ -95,13 +95,15 @@ stackAddBtn.addEventListener('click', (e) => {
   var listOfTech = checkTechDuplicates();
 
   var tech = stack__input.value;
-  if(!tech){
+  if (!tech) {
     return;
   }
-  if (!listOfTech.includes(tech)) {
+  if (!listOfTech.includes(/tech/i)) {
     stackValidation.classList.add('is-hidden');
     stack__list.insertAdjacentHTML('beforeend', `<li id="${tech}">
-    <input type="hidden" name="tech" value=${tech}>
+    <label for="tech" class="sg-title">
+      <input type="hidden" name="tech" value="${tech}">
+    </label>
     <div>${tech}</div>
     <button onclick="removeLi('${tech}')" class="stack__removebutton">Remove</button>
   </li>`);
