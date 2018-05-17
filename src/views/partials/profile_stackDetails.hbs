@@ -1,0 +1,23 @@
+<div class="modal-background">
+  <h1 class="sg-heading">Tech Stack</h1>
+  <label for="tech_stack" class="sg-title">Tech Name
+      <input id="stack__input" name="tech_stack" type="text" value="" />
+      <button id="stack__addbutton">Add</button>
+      <span id="stack__validation" class="sg-subtext is-hidden">Already entered this tech</span>
+    </label>
+  <form method="POST" action="/saveStackDetails" novalidate>
+    <ul class="remove-list-style" id="stack__list">
+    {{#if profileUser.tech_stack}}
+      {{#each profileUser.tech_stack}}
+      <li id={{this}}>
+        <input type="hidden" name="tech" value={{this}}>
+        <div>{{this}}</div>
+        <button onclick="removeLi({{this}})" class="stack__removebutton">Remove</button>
+      </li>
+      {{/each}}
+    {{/if}}
+    </ul>
+    <button>Submit</button>
+  </form>
+  <button class="btn-close-modal">Close without saving</button>
+</div>

@@ -5,9 +5,6 @@ const dbConnection = require('../model/database/db_connection');
 const {
   postMemberInfo,
   getMemberData,
-  getAllFacCohorts,
-  addFacCohortReturnID,
-  getFacCohortID,
   updateMemberDetails,
   getAllMemberData,
   saveProfileData,
@@ -17,14 +14,20 @@ const {
 
 const {
   addMemberTechStack,
-  getTechStackID,
-  getAllTechStack,
-  addTechStack,
+  getTechIDFromTechStackTable,
+  getAllTechFromTechStackTable,
+  addNewTechIntoTechStackTable,
   deleteMemberTech,
   getMemberTechStack,
   updateTechOrderNum,
   deleteMemberTechStack,
-} = require('../model/queries/queryDb_TechStackTables');
+} = require('../model/queries/subqueries/queryDbTechStackTables');
+
+const {
+  addFacCohortReturnID,
+  getAllFacCohorts,
+  getFacCohortID,
+} = require('../model/queries/subqueries/queryDbFacCohortTable');
 
 const {
   processMemberTechStack,
@@ -90,6 +93,7 @@ test('Test getMemberData query to ensure correct data received', (t) => {
         github_avatar_url: 'https://uk.linkedin.com/dbsmith',
         fac_campus: 'london',
         fac_cohort: 'FAC0',
+        tech_stack: ['JavaScript', 'Node.js'],
         linkedin_url: 'https://uk.linkedin.com/',
         twitter_handle: 'hel_zhou',
         member_type: 'admin',
@@ -207,6 +211,7 @@ test('Test update members table', (t) => {
     github_avatar_url: 'https://uk.linkedin.com/dbsmith',
     fac_campus: 'London',
     fac_cohort: 'FAC0',
+    tech_stack: ['JavaScript', 'Node.js'],
     linkedin_url: 'knowwhere.com',
     twitter_handle: 'helenTweetz',
     member_type: 'admin',
@@ -259,6 +264,7 @@ test('Test saveProfileData', (t) => {
     github_avatar_url: 'https://uk.linkedin.com/dbsmith',
     fac_campus: 'London',
     fac_cohort: 'FAC123',
+    tech_stack: ['JavaScript', 'Node.js'],
     linkedin_url: 'knowwhere.com',
     twitter_handle: 'helenTweetz',
     member_type: 'admin',
@@ -363,11 +369,11 @@ test('Test saveJobDetails saves job details', (t) => {
   });
 });
 
-// getAllTechStack
+// getAllTechFromTechStackTable
 
-test('Test getAllTechStack gets all stack', (t) => {
+test('Test getAllTechFromTechStackTable gets all stack', (t) => {
   runDbBuild().then(() => {
-    getAllTechStack().then((res) => {
+    getAllTechFromTechStackTable().then((res) => {
       const expected = ['JavaScript', 'Node.js'];
       t.pass(Array.isArray(res), 'response is an array');
       t.equal(expected.length, res.length, 'response contains appropriate number of entries');
@@ -375,23 +381,23 @@ test('Test getAllTechStack gets all stack', (t) => {
       t.end();
     }).catch((err) => {
       console.log(err.message);
-      t.error(err, 'getAllTechStack test error');
+      t.error(err, 'getAllTechFromTechStackTable test error');
       t.end();
     });
   });
 });
 
-// addTechStack
+// addNewTechIntoTechStackTable
 
-test('Test addTechStack saves a new techstack', (t) => {
+test('Test addNewTechIntoTechStackTable saves a new techstack', (t) => {
   runDbBuild().then(() => {
     let oldStack;
-    getAllTechStack()
+    getAllTechFromTechStackTable()
       .then((res) => {
         oldTechStack = JSON.parse(JSON.stringify(res));
       })
-      .then(() => addTechStack('PostgreSQL'))
-      .then(() => getAllTechStack())
+      .then(() => addNewTechIntoTechStackTable('PostgreSQL'))
+      .then(() => getAllTechFromTechStackTable())
       .then((res) => {
         const expected = ['JavaScript', 'Node.js', 'PostgreSQL'];
         t.pass(Array.isArray(res), 'response is an array');
@@ -401,17 +407,17 @@ test('Test addTechStack saves a new techstack', (t) => {
       })
       .catch((err) => {
         console.log(err.message);
-        t.error(err, 'addTechStack test error');
+        t.error(err, 'addNewTechIntoTechStackTable test error');
         t.end();
       });
   });
 });
 
-// getTechStackID
+// getTechIDFromTechStackTable
 
-test('Test getTechStackID returns the correct ID', (t) => {
+test('Test getTechIDFromTechStackTable returns the correct ID', (t) => {
   runDbBuild().then(() => {
-    getTechStackID('JavaScript')
+    getTechIDFromTechStackTable('JavaScript')
       .then((res) => {
         t.equals(typeof res, 'object', 'response is an object');
         t.equals(1, res.id, 'has returned the correct ID');
@@ -419,21 +425,21 @@ test('Test getTechStackID returns the correct ID', (t) => {
         t.end();
       }).catch((err) => {
         console.log(err.message);
-        t.error(err, 'getTechStackID test error');
+        t.error(err, 'getTechIDFromTechStackTable test error');
         t.end();
       });
   });
 });
 
-test('Test getTechStackID returns undefined if not in tech_stack table', (t) => {
+test('Test getTechIDFromTechStackTable returns undefined if not in tech_stack table', (t) => {
   runDbBuild().then(() => {
-    getTechStackID('PostgreSQL')
+    getTechIDFromTechStackTable('PostgreSQL')
       .then((res) => {
         if (!res) t.pass('has returned undefined');
         t.end();
       }).catch((err) => {
         console.log(err.message);
-        t.error(err, 'getTechStackID test error');
+        t.error(err, 'getTechIDFromTechStackTable test error');
         t.end();
       });
   });
@@ -551,10 +557,10 @@ test('Test addUniqueTech to ensure added unique tech, and no duplicate additions
   runDbBuild().then(() => {
     let oldTechStackList;
     const formData = ['javascript', 'Node.js', 'PostgreSQL', 'HTML', 'html'];
-    getAllTechStack()
+    getAllTechFromTechStackTable()
       .then(res => oldTechStackList = JSON.parse(JSON.stringify(res)))
       .then(() => addUniqueTech(formData))
-      .then(() => getAllTechStack())
+      .then(() => getAllTechFromTechStackTable())
       .then((res) => {
         const expected = ['JavaScript', 'Node.js', 'PostgreSQL', 'HTML'];
         t.equal(oldTechStackList.length + 2, res.length, 'added two new items to tech stack');
