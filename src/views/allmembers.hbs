@@ -1,0 +1,36 @@
+<header>
+      <h1 class="sg-heading">All Members</h1>
+</header>
+
+{{#each allMembersData}}
+<a href="/myprofile/{{this.github_id}}" style="">
+      <article class="profile__card">
+            {{!-- github info --}} {{!-- NEED TO ADD JOB STATUS - for admin users --}}
+            <div>
+                  {{#if this.github_avatar_url}}
+                  <img src="{{this.github_avatar_url}}" alt="my profile picture" class="profile__avatar"> {{/if}}
+                  <p class="sg-main-heading">{{this.full_name}}</p>
+                  <p>{{#if this.this.fac_cohort}}{{this.this.fac_cohort}}{{/if}}</p>
+            </div>
+            {{#if this.tech_stack}}
+            <div>
+                  <ul class="remove-list-style">
+                        {{#each this.tech_stack}}
+                        <li>
+                              {{this}}
+                        </li>
+                        {{/each}}
+                  </ul>
+            </div>
+            {{/if}} {{!-- contact --}}
+            <a>
+                  {{#if this.github_handle}}
+                  <a href="https://gitter.im/{{this.github_handle}}" target="_blank">
+                        <i class="icon icon-gitter">gitter icon</i>
+                        <span class="sg-subtext">Make contact on Gitter</span>
+                  </a>
+                  {{/if}}
+
+      </article>
+</a>
+{{/each}}

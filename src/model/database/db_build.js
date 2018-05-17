@@ -8,6 +8,4 @@ const dbBuild = sql('./db_build.sql');
 
 db
   .query(dbBuild)
-  .then((res) => {})
   .catch(err => console.error('error', err));
-

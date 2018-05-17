@@ -11,7 +11,7 @@ if (process.env.TRAVIS === 'true') {
     user: 'postgres',
   };
 } else {
-  let DB_URL = process.env.DB_URL;
+  let { DB_URL } = process.env;
 
   if (process.env.NODE_ENV === 'test') {
     DB_URL = process.env.TEST_DB_URL;

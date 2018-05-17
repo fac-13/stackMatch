@@ -1,0 +1,38 @@
+<div class="modal-background">
+  <h1 class="sg-heading">Job Status</h1>
+  <form method="POST" action="/saveJobDetails" novalidate>
+    <span class="sg-subtext">* Required</span>
+    <label for="job_view_pref" class="sg-title">Preferred
+      <input type="radio" id="job_pref_public" name="job_view_pref" value="public" {{#compare user.job_view_pref "===" 'public'}}checked{{/compare}}>
+      <label for="job_pref_public">Public</label>
+
+      <input type="radio" id="job_pref_private" name="job_view_pref" value="private" {{#compare user.job_view_pref "===" 'private'}}checked{{/compare}}{{#unless user.job_view_pref}}checked{{/unless}}>
+      <label for="job_pref_private">Private</label>
+    </label>
+    <label for="job_search_status" class="sg-title">Job Interest Status *
+      <select id="job_search_status" name="job_search_status">
+        <option value="green" {{#compare user.job_search_status "===" 'green'}}selected{{/compare}}>Currently Looking</option>
+        <option value="orange" {{#compare user.job_search_status "===" 'orange'}}selected{{/compare}}>Maybe Interested</option>
+        <option value="red" {{#compare user.job_search_status "===" 'red'}}selected{{/compare}}>Not Looking</option>
+      </select>
+    </label>
+    <label for="years_experience" class="sg-title">Years experience
+      <select id="years_experience" name="years_experience">
+        <option value="0" {{#compare user.years_experience "===" 0}}selected{{/compare}}>Less than 1 year </option>
+        <option value="1" {{#compare user.years_experience "===" 1}}selected{{/compare}}>1-2 years</option>
+        <option value="2" {{#compare user.years_experience "===" 2}}selected{{/compare}}>2-3 years</option>
+        <option value="3" {{#compare user.years_experience "===" 3}}selected{{/compare}}>3-4 years</option>
+        <option value="4" {{#compare user.years_experience "===" 4}}selected{{/compare}}>4-5 years</option>
+        <option value="5" {{#compare user.years_experience "===" 5}}selected{{/compare}}>5+ years</option>
+      </select>
+    </label>
+    <label for="github_cv_url" class="sg-title">GitHub CV URL
+      <input id="github_cv_url" name="github_cv_url" type="text" />
+    </label>
+    <label for="cv_url" class="sg-title">URL to CV (pdf)
+      <input id="cv_url" name="cv_url" type="text" />
+    </label>
+    <button>Submit</button>
+  </form>
+  <button class="btn-close-modal">Close without saving</button>
+</div>

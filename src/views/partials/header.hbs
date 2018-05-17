@@ -1,0 +1,25 @@
+<header class="main-nav">
+  <span class="sg-main-link">Stackmatch</span>
+  <nav>
+    <ul class="main-nav__list remove-list-style">
+      {{#if user}} {{#if user.status}}
+      <li class="main-nav__link">
+        <a href="/allmembers" class="sg-main-link" id="">All Users</a>
+      </li>
+      <li class="main-nav__link">
+        <img src="{{user.github_avatar_url}}" alt="my profile picture" class="avatar--is-small sg-main-link"> {{/if}}
+        <a href="/myprofile/{{user.github_id}}" class="sg-main-link" id="">My Profile</a>
+      </li>
+      <li class="main-nav__link">
+        <a href="/auth/github/logout" class="sg-main-link">Log Out</a>
+      </li> {{#if user.github_avatar_url}} {{/if}} {{else}}
+      <li class="main-nav__link">
+        <a href="/auth/github/signup" class="sg-main-link">Sign Up</a>
+      </li>
+      <li class="main-nav__link">
+        <a href="/auth/github/signup" class="sg-main-link">Log In</a>
+      </li>
+      {{/if}}
+    </ul>
+  </nav>
+</header>
