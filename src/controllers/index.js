@@ -11,7 +11,7 @@ const { ensureAuthenticated } = require('./middleware');
 // UNPROTECTED ROUTES //
 router.get('/', home.get);
 router.get('/notmember', (req, res) => {
-  res.send('You are not a member of the Founders and Coders Github organization. You must be a member in order to sign up and use StackMatch');
+  res.render('notmember');
 });
 router.get('/goodbye', (req, res) => {
   res.send('goodbye');
@@ -24,6 +24,7 @@ router.post('/savePersonalDetails', ensureAuthenticated, profile.postDetails);
 router.post('/saveJobDetails', ensureAuthenticated, profile.postJobDetails);
 router.delete('/deleteAccount', ensureAuthenticated, profile.delete);
 // middleware to take user to goodbye page after deletion
+
 // AUTHENTICATION ROUTES //
 router.get(
   '/auth/github/signup',
