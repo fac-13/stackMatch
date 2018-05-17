@@ -7,8 +7,8 @@
     </label>
   <form method="POST" action="/saveStackDetails" novalidate>
     <ul class="remove-list-style" id="stack__list">
-    {{#if user.tech_stack}}
-      {{#each}}
+    {{#if profileUser.tech_stack}}
+      {{#each profileUser.tech_stack}}
       <li id={{this}}>
         <input type="hidden" name="tech" value={{this}}>
         <div>{{this}}</div>

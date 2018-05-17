@@ -49,10 +49,10 @@
     </ul>
     <button id="open-modal-stack" class="btn-open-modal" value="stack">Edit</button>
     
-    {{#if this.tech_stack}}
+    {{#if profileUser.tech_stack}}
     <div>
       <ul class="remove-list-style">
-        {{#each this.tech_stack}}
+        {{#each profileUser.tech_stack}}
         <li>
           {{this}}
         </li>
