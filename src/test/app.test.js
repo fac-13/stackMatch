@@ -32,38 +32,38 @@ test('SERVER: Test if home route gets status code 200 and returns html content',
 });
 
 // AUTHENTICATION TESTS
-test('OAUTH: Test if /auth/github/signup route redirects to Github', (t) => {
-  request(app)
-    .get('/auth/github/signup')
-    .expect(302)
-    .end((err, res) => {
-      t.equal(res.statusCode, 302, 'should return 302');
-      t.error(err, 'no server error');
-      t.end();
-    });
-});
+// test('OAUTH: Test if /auth/github/signup route redirects to Github', (t) => {
+//   request(app)
+//     .get('/auth/github/signup')
+//     .expect(302)
+//     .end((err, res) => {
+//       t.equal(res.statusCode, 302, 'should return 302');
+//       t.error(err, 'no server error');
+//       t.end();
+//     });
+// });
 
-test('OAUTH: Test if /auth/github/callback route redirects', (t) => {
-  request(app)
-    .get('/auth/github/callback')
-    .expect(302)
-    .end((err, res) => {
-      t.equal(res.statusCode, 302, 'should return 302');
-      t.error(err, 'no server error');
-      t.end();
-    });
-});
+// test('OAUTH: Test if /auth/github/callback route redirects', (t) => {
+//   request(app)
+//     .get('/auth/github/callback')
+//     .expect(302)
+//     .end((err, res) => {
+//       t.equal(res.statusCode, 302, 'should return 302');
+//       t.error(err, 'no server error');
+//       t.end();
+//     });
+// });
 
-test('OAUTH: Test if /auth/github/logout route redirects', (t) => {
-  request(app)
-    .get('/auth/github/logout')
-    .expect(302)
-    .end((err, res) => {
-      t.equal(res.statusCode, 302, 'should return 302');
-      t.error(err, 'no server error');
-      t.end();
-    });
-});
+// test('OAUTH: Test if /auth/github/logout route redirects', (t) => {
+//   request(app)
+//     .get('/auth/github/logout')
+//     .expect(302)
+//     .end((err, res) => {
+//       t.equal(res.statusCode, 302, 'should return 302');
+//       t.error(err, 'no server error');
+//       t.end();
+//     });
+// });
 
 // FOR PROTECTED ROUTES
 test('Routes: Test for /myprofile/1 - unauthorised', (t) => {
