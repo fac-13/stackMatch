@@ -14,8 +14,11 @@ router.get('/notmember', (req, res) => {
   res.render('notmember');
 });
 router.get('/goodbye', (req, res) => {
-  res.send('goodbye');
+  req.session = null;
+  req.logout();
+  res.render('goodbye');
 });
+
 
 // PROTECTED ROUTES //
 router.get('/allmembers', ensureAuthenticated, allMembers.get);
