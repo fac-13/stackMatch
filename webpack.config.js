@@ -2,6 +2,7 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
+  mode: 'none',
   entry: {
     index: './src/static/dom/index.js',
     home: './src/static/dom/home.js',
