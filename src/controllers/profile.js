@@ -1,5 +1,6 @@
 const { addUserStatus } = require('./middleware');
 const { saveProfileData, saveJobDetails, getMemberData } = require('../model/queries/');
+const { processMemberTechStack } = require('../model/queries/processMemberTechStack');
 
 exports.get = (req, res) => {
   // this checks if the :github_id in req.params matches (and it's your profile)
@@ -21,6 +22,18 @@ exports.postDetails = (req, res, next) => {
     .then(() => res.redirect(`/myprofile/${req.user.github_id}`))
     .catch((err) => {
       console.log('Error saving user details: ', err.message);
+      next(err);
+    });
+};
+
+exports.postStackDetails = (req, res, next) => {
+  processMemberTechStack(
+    req.user.github_id,
+    Array.isArray(res.req.body.tech) ? res.req.body.tech : [res.req.body.tech],
+  )
+    .then(() => res.redirect(`/myprofile/${req.user.github_id}`))
+    .catch((err) => {
+      console.log('Error saving job details: ', err.message);
       next(err);
     });
 };
