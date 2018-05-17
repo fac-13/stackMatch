@@ -6,16 +6,16 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
+    "dev:wp": "webpack --watch",
+    "build:wp": "webpack",
+    "build:db": "node src/model/database/db_build.js",
     "test": "NODE_ENV=test nyc tape src/test/*.test.js | tap-spec",
     "test:app": "NODE_ENV=test nodemon src/test/app.test.js | tap-spec",
     "test:db": "NODE_ENV=test nodemon src/test/db.test.js | tap-spec",
     "test:unit": "NODE_ENV=test nodemon src/test/unit.test.js | tap-spec",
     "test:api": "NODE_ENV=test nodemon src/test/api.test.js | tap-spec",
     "test:coverage": "NODE_ENV=test nyc --reporter=lcov --reporter=text-lcov tape src/test/*.test.js | tap-spec && open -a \"Google Chrome\" ./coverage/lcov-report/index.html",
-    "build": "node src/model/database/db_build.js",
-    "lint": "./node_modules/.bin/eslint **/*.js --ignore-pattern node_modules/",
-    "build:wp": "webpack",
-    "dev:wp": "webpack --watch"
+    "lint": "./node_modules/.bin/eslint **/*.js --ignore-pattern node_modules/"
   },
   "pre-commit": [
     "build:wp",
@@ -41,6 +41,7 @@
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.11.0",
     "mini-css-extract-plugin": "^0.4.0",
+    "nock": "^9.2.6",
     "node-sass": "^4.9.0",
     "nodemon": "^1.17.4",
     "nyc": "^11.7.1",
@@ -61,7 +62,6 @@
     "express": "^4.16.3",
     "express-handlebars": "^3.0.0",
     "helmet": "^3.12.0",
-    "nock": "^9.2.6",
     "passport": "^0.4.0",
     "passport-github2": "^0.1.11",
     "pg-promise": "^8.4.3"
