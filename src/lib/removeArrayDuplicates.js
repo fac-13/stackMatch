@@ -1,4 +1,4 @@
-const remDupsFromArray = (arrayInput) => {
+const removeArrayDuplicates = (arrayInput) => {
   return arrayInput.reduce((acc, curr) => {
     const lowerCaseAcc = acc.map(function (item) {
       return item.toLowerCase();
@@ -10,4 +10,4 @@ const remDupsFromArray = (arrayInput) => {
   }, []);
 };
 
-module.exports = remDupsFromArray;
+module.exports = removeArrayDuplicates;

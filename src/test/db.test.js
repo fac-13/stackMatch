@@ -23,7 +23,7 @@ const {
   getMemberTechStack,
   updateTechOrderNum,
   deleteMemberTechStack,
-} = require('../model/queries/queryTechStack');
+} = require('../model/queries/queryDb_TechStackTables');
 
 const {
   processMemberTechStack,
