@@ -1,5 +1,7 @@
 const { addUserStatus } = require('./middleware');
-const { saveProfileData, saveJobDetails, getMemberData } = require('../model/queries/');
+const {
+  saveProfileData, saveJobDetails, getMemberData, deleteMemberFromDB,
+} = require('../model/queries/');
 
 exports.get = (req, res) => {
   // this checks if the :github_id in req.params matches (and it's your profile)
@@ -36,7 +38,11 @@ exports.postJobDetails = (req, res, next) => {
 
 exports.delete = (req, res, next) => {
   const { github_id } = req.user;
-  console.log('delete');
-  console.log('github id: ', github_id);
-  res.status(200);
+  deleteMemberFromDB(github_id)
+    .then(() => {
+      res.status(200);
+    })
+    .catch((err) => {
+      next(err);
+    });
 };

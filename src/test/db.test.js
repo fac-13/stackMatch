@@ -704,7 +704,7 @@ const getMemberIdFromMembers = githubId => dbConnection.query(
 ).then(res => res[0].id);
 
 test('Test deleteMemberFromDB', (t) => {
-  const githubId = 1;
+  const githubId = 3;
   let memberId;
   runDbBuild()
     .then(() => getMemberIdFromMembers(githubId))
