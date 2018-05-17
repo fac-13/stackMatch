@@ -1,18 +1,29 @@
 <div class="modal-background">
   <h1 class="sg-heading">Tech Stack</h1>
   <form method="POST" action="/saveTechStack" novalidate>
-    <label for="tech_stack" class="sg-title">Tech Stack
-      <input id="tech_stack" name="tech_stack" type="text" value="" /> {{#if user.tech_stack}}
-      <ul>
-        {{#each}}
-        <li>
-          {{this}}
-        </li>
-        {{/each}}
-      </ul>
-      {{/if}}
+    <label for="tech_stack" class="sg-title">Tech Name
+      <input id="stack__input" name="tech_stack" type="text" value="" />
+      <button id="stack__addbutton">Add</button>
     </label>
+
+    {{#if user.tech_stack}}
+    <ul class="remove-list-style" id="stack__list">
+      {{#each}}
+      <li>
+        <input type="hidden" name="tech" value="{{this}}">
+        <div>{{this}}</div>
+        <button>Remove</button>
+      </li>
+      {{/each}}
+    </ul>
+    {{/if}}
     <button>Submit</button>
   </form>
   <button class="btn-close-modal">Close without saving</button>
 </div>
+{{!--
+<li>
+  <input type="hidden" name="tech" value=${tech}>
+  <div>${tech}</div>
+  <buttonnp>Remove</buttonnp>
+</li> --}}
