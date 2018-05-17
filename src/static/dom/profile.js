@@ -10,6 +10,7 @@ var modalDetails = document.getElementById('modal-details');
 var modalStack = document.getElementById('modal-stack');
 var modalJob = document.getElementById('modal-job');
 var modalDelete = document.getElementById('modal-delete');
+var modalStack = document.getElementById('modal-stack');
 var deleteConfirmInput = document.querySelector('#delete_account_input');
 var deleteBtn = document.querySelector('#delete-account-btn');
 
@@ -38,6 +39,9 @@ function openModal(profileSection) {
       break;
     case 'delete':
       modalDelete.style.display = 'block';
+      break;
+    case 'stack':
+      modalStack.style.display = 'block';
       break;
     default:
       break;
@@ -99,7 +103,7 @@ stackAddBtn.addEventListener('click', (e) => {
   }
   if (!listOfTech.includes(tech)) {
     var techString =
-    stackValidation.classList.add('is-hidden');
+      stackValidation.classList.add('is-hidden');
     stack__list.insertAdjacentHTML('beforeend', `<li id="${tech}">
     <label for="tech" class="sg-title">
       <input type="hidden" name="tech" value="${tech}">

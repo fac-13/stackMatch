@@ -14,7 +14,7 @@
       </h1>
       <i class="icon icon-visible">Public</i>
     </header>
-    <button class="btn-open-modal" value="details">Edit</button>
+    <button class="btn-open-modal sg-button" value="details">Edit</button>
     {{/if}} {{!-- github info --}}
     <div>
       {{#if profileUser.github_avatar_url}}
@@ -47,8 +47,11 @@
       </li>
       {{/if}}
     </ul>
-    <button id="open-modal-stack" class="btn-open-modal" value="stack">Edit</button>
-    
+    <h1 class="sg-main-link">
+      Tech Stack
+    </h1>
+    <button id="open-modal-stack" class="btn-open-modal sg-button" value="stack">+ Add</button>
+
     {{#if profileUser.tech_stack}}
     <div>
       <ul class="remove-list-style">
@@ -77,7 +80,7 @@
       {{#if profileUser.myProfile }} {{#if profileUser.job_view_pref}}
       <i class="icon icon-visible">{{profileUser.job_view_pref}}</i>{{/if}}
     </header>
-    <button id="open-modal-job" class="btn-open-modal" value="job">Edit</button>
+    <button id="open-modal-job" class="btn-open-modal sg-button" value="job">Edit</button>
     {{!-- job search status --}} {{/if}}
     <div>
       {{#if profileUser.job_search_status}}
@@ -104,6 +107,6 @@
 
 <footer>
   {{#if profileUser.myProfile }}
-  <button id="open-modal-delete" class="btn-open-modal" value="delete">Delete Account</button>
+  <button id="open-modal-delete" class="btn-open-modal sg-main-link text--is-orange" value="delete">Delete Account</button>
   {{/if}}
 </footer>

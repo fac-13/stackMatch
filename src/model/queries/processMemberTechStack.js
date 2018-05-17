@@ -30,8 +30,10 @@ const addUniqueTech = techStackArray =>
 // Uses addUniqueTech to check if any tech strings are NOT in the DB tech_stack table and adds them.
 // Returns - Updates the DB member_tech_stack linking table - adds to it or updates it.
 
-const processMemberTechStack = (github_id, techStackArray) =>
-  addUniqueTech(techStackArray)
+const processMemberTechStack = (github_id, techStackArray) => {
+  console.log('github_id', github_id);
+  console.log('techStackArray', techStackArray);
+  return addUniqueTech(techStackArray)
     .then(() => deleteMemberTechStack(github_id))
     .then(() => removeArrayDuplicates(techStackArray).reduce((acc, curr, i) => {
       acc.push({
@@ -41,5 +43,8 @@ const processMemberTechStack = (github_id, techStackArray) =>
       return acc;
     }, []))
     .then(res => Promise.all(res.map(tech => addMemberTechStack(github_id, tech.techName, tech.order_num))));
+
+}
+
 
 module.exports = { addUniqueTech, processMemberTechStack };
