@@ -9,9 +9,14 @@ var modalIsOpen = document.querySelectorAll('.modal');
 var modalDetails = document.getElementById('modal-details');
 var modalJob = document.getElementById('modal-job');
 var modalDelete = document.getElementById('modal-delete');
+var modalStack = document.getElementById('modal-stack');
 var deleteConfirmInput = document.querySelector('#delete_account_input');
 var deleteBtn = document.querySelector('#delete-account-btn');
 
+var stackAddBtn = document.querySelector('#stack__addbutton');
+var stack__list = document.querySelector('#stack__list');
+var stack__input = document.querySelector('#stack__input');
+var stackValidation = document.querySelector('#stack__validation');
 
 function closeModal() {
   modalIsOpen.forEach((modal) => {
@@ -30,6 +35,9 @@ function openModal(profileSection) {
       break;
     case 'delete':
       modalDelete.style.display = 'block';
+      break;
+    case 'stack':
+      modalStack.style.display = 'block';
       break;
     default:
       break;
@@ -65,3 +73,42 @@ deleteBtn.addEventListener('click', (e) => {
 });
 
 
+// TECH STACK FUNCTIONS
+function checkTechDuplicates() {
+  var liArr = [];
+  var listIds = document.querySelectorAll('#stack__list li[id]');
+  for (var i = 0; i < listIds.length; i++) {
+    liArr.push(listIds[i].id);
+  }
+  return liArr;
+}
+
+function removeLi(liId) {
+  var liToBeRemoved = document.getElementById(liId);
+  liToBeRemoved.remove();
+}
+
+stackAddBtn.addEventListener('click', (e) => {
+  console.log(e);
+  e.preventDefault();
+  e.stopPropagation();
+
+  // var listOfTech = checkTechDuplicates();
+
+  // var tech = stack__input.value;
+  // if (!tech) {
+  //   return;
+  // }
+  // if (!listOfTech.includes(tech)) {
+  //   stackValidation.classList.add('is-hidden');
+  //   stack__list.insertAdjacentHTML('beforeend', `<li id="${tech}">
+  //   <label for="tech" class="sg-title">
+  //     <input type="hidden" name="tech" value="${tech}">
+  //   </label>
+  //   <span class="sg-node">${tech}<button onclick="removeLi('${tech}')" class="stack__removebutton sg-node-remove">Remove</button></span>
+
+  // </li>`);
+  // } else {
+  //   stackValidation.classList.remove('is-hidden');
+  // }
+});
