@@ -4,7 +4,7 @@ const { addUserStatus } = require('../controllers/middleware');
 const { jobStatusText, jobPrefIsPublic } = require('../views/helpers/index');
 const makeFacCohortName = require('../lib/makeFacCohortName');
 const remDupsFromArray = require('../lib/remDupsFromArray');
-const getGitHubStack = require('../lib/getGitHubStack');
+const githubApiCalls = require('../lib/githubApiCalls');
 
 
 test('UNIT TESTS', (t) => {
