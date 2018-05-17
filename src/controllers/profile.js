@@ -46,13 +46,6 @@ exports.postStackDetails = (req, res, next) => {
       next(err);
     });
 };
-// saveJobDetails(req.body, req.user.github_id)
-//   .then(() => res.redirect(`/myprofile/${req.user.github_id}`))
-//   .catch((err) => {
-//     console.log('Error saving job details: ', err.message);
-//     next(err);
-//   });
-
 
 exports.delete = (req, res, next) => {
   const { github_id } = req.user;

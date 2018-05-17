@@ -98,7 +98,7 @@ stackAddBtn.addEventListener('click', (e) => {
   if (!tech) {
     return;
   }
-  if (!listOfTech.includes(/tech/i)) {
+  if (!listOfTech.includes(tech)) {
     stackValidation.classList.add('is-hidden');
     stack__list.insertAdjacentHTML('beforeend', `<li id="${tech}">
     <label for="tech" class="sg-title">
