@@ -9,4 +9,7 @@ module.exports = {
   updateMemberDetails: require('./updateMemberDetails'),
   saveProfileData: require('./saveProfileData'),
   saveJobDetails: require('./saveJobDetails'),
+  deleteMemberFromMembers: require('./deleteMemberFromMembers'),
+  deleteMemberFromMemberTechStack: require('./deleteMemberFromMemberTechStack'),
+  deleteMemberFromDB: require('./deleteMemberFromMemberTechStack'),
 };
