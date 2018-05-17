@@ -1,0 +1,18 @@
+<div class="modal-background">
+  <h1 class="sg-heading">Tech Stack</h1>
+  <form method="POST" action="/saveTechStack" novalidate>
+    <label for="tech_stack" class="sg-title">Tech Stack
+      <input id="tech_stack" name="tech_stack" type="text" value="" /> {{#if user.tech_stack}}
+      <ul>
+        {{#each}}
+        <li>
+          {{this}}
+        </li>
+        {{/each}}
+      </ul>
+      {{/if}}
+    </label>
+    <button>Submit</button>
+  </form>
+  <button class="btn-close-modal">Close without saving</button>
+</div>
