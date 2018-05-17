@@ -12,8 +12,6 @@ const {
   getAllMemberData,
   saveProfileData,
   saveJobDetails,
-  deleteMemberFromMembers,
-  deleteMemberFromMemberTechStack,
   deleteMemberFromDB,
 } = require('../model/queries/');
 
@@ -545,51 +543,42 @@ test('Test updateTechOrderNum to ensure edit order number based on params', (t) 
 });
 
 // DELETE ACCOUNT
-const countMembers = () => dbConnection.query('SELECT COUNT(id) FROM members');
+const formatCount = res => +res[0].count;
+const countMemberFromMembers = id => dbConnection.query(
+  'SELECT COUNT(id) FROM members WHERE id = $1',
+  [id],
+).then(formatCount);
+const countMemberFromMemberTechStack = id => dbConnection.query(
+  'SELECT COUNT(member_id) FROM member_tech_stack WHERE member_id = $1',
+  [id],
+).then(formatCount);
 
-// deleteMemberFromMembers
-// test.only('Test deleteMemberFromMembers', (t) => {
-//   const memberId = 1;
-//   let beforeDelCount;
-//   runDbBuild()
-//     .then(countMembers)
-//     .then((count) => {
-//       beforeDelCount = count;
-//       return deleteMemberFromMembers(memberId);
-//     })
-//     .then(countMembers)
-//     .then((count) => {
-//       t.ok(beforeDelCount > count, 'there are less members after delete');
-//       t.end();
-//     })
-//     .catch((err) => {
-//       t.error(err, 'delete from member table was successful');
-//       t.end();
-//     });
-// });
-
-// deleteMemberFromMemberTechStack
-test.only('Test deleteMemberFromMemberTechStack', (t) => {
+test('Test deleteMemberFromDB', (t) => {
   const memberId = 1;
   runDbBuild()
-    .then(() => deleteMemberFromMemberTechStack(memberId))
-    .then(() => dbConnection.query(
-      'SELECT COUNT(member_id) FROM member_tech_stack WHERE member_id = $1',
-      [memberId],
-    ))
-    .then((res) => {
-      const { count } = res[0];
-      t.ok(+count === 0, `there are no more occurrences of member_id: ${memberId} in member_tech_stack`);
+    .then(() => deleteMemberFromDB(memberId))
+    .then(() =>
+      Promise.all([
+        countMemberFromMembers(memberId),
+        countMemberFromMemberTechStack(memberId),
+      ]))
+    .then(([membersCount, memberTechStackCount]) => {
+      t.ok(
+        membersCount === 0,
+        `there are ${membersCount} of occurrences of id: ${memberId} in members table`,
+      );
+
+      t.ok(
+        memberTechStackCount === 0,
+        `there are ${memberTechStackCount} of occurrences of id: ${memberId} in member_tech_stack table`,
+      );
       t.end();
     })
     .catch((err) => {
-      t.error(err, 'error deleting member form member tech stack');
+      t.error(err, 'member was successfully deleted');
       t.end();
     });
 });
-
-// deleteMemberFromDB
-
 
 test.onFinish(() => {
   dbConnection.$pool.end();
