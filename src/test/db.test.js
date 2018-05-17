@@ -550,6 +550,9 @@ test('Test addUniqueTech to ensure added unique tech, and no duplicate additions
         const expected = ['JavaScript', 'Node.js', 'PostgreSQL', 'HTML'];
         t.equal(oldTechStackList.length + 2, res.length, 'added two new items to tech stack')
         t.deepEqual(expected, res, 'added PostgreSQL and HTML to tech stack')
+        t.pass(res.includes('PostgreSQL'), 'PostgreSQL has been added')
+        t.pass(res.includes('HTML'), 'HTML has been added')
+        t.equal(res.indexOf('HTML'), res.lastIndexOf('HTML'), 'duplicates removed')
         t.end();
       }).catch((err) => {
         console.log(err.message);
