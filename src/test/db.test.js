@@ -692,24 +692,35 @@ const countMemberFromMembers = id => dbConnection.query(
   'SELECT COUNT(id) FROM members WHERE id = $1',
   [id],
 ).then(formatCount);
+
 const countMemberFromMemberTechStack = id => dbConnection.query(
   'SELECT COUNT(member_id) FROM member_tech_stack WHERE member_id = $1',
   [id],
 ).then(formatCount);
 
+const getMemberIdFromMembers = githubId => dbConnection.query(
+  'SELECT id FROM members WHERE github_id = $1',
+  [githubId],
+).then(res => res[0].id);
+
 test('Test deleteMemberFromDB', (t) => {
-  const memberId = 1;
+  const githubId = 1;
+  let memberId;
   runDbBuild()
-    .then(() => deleteMemberFromDB(memberId))
+    .then(() => getMemberIdFromMembers(githubId))
+    .then((id) => {
+      memberId = id;
+      return deleteMemberFromDB(githubId);
+    })
     .then(() =>
       Promise.all([
-        countMemberFromMembers(memberId),
+        countMemberFromMembers(githubId),
         countMemberFromMemberTechStack(memberId),
       ]))
     .then(([membersCount, memberTechStackCount]) => {
       t.ok(
         membersCount === 0,
-        `there are ${membersCount} of occurrences of id: ${memberId} in members table`,
+        `there are ${membersCount} of occurrences of github_id: ${githubId} in members table`,
       );
 
       t.ok(
