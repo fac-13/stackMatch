@@ -15,7 +15,8 @@
       <i class="icon icon-visible">Public</i>
     </header>
     <button class="btn-open-modal" value="details">Edit</button>
-    {{/if}} {{!-- github info --}}
+    {{/if}}
+    {{!-- github info --}}
     <div>
       {{#if profileUser.github_avatar_url}}
       <img src="{{profileUser.github_avatar_url}}" alt="my profile picture" class="profile__avatar"> {{/if}}
@@ -47,19 +48,7 @@
       </li>
       {{/if}}
     </ul>
-    <button id="open-modal-stack" class="btn-open-modal" value="stack">Edit</button>
-    
-    {{#if profileUser.tech_stack}}
-    <div>
-      <ul class="remove-list-style">
-        {{#each profileUser.tech_stack}}
-        <li>
-          {{this}}
-        </li>
-        {{/each}}
-      </ul>
-    </div>
-    {{/if}} {{!-- contact --}}
+    {{!-- contact --}}
     <a>
       {{#if profileUser.github_handle}}
       <a href="https://gitter.im/{{profileUser.github_handle}}" target="_blank">
@@ -74,11 +63,13 @@
       <h1 class="sg-main-link">
         Job Interest
       </h1>
-      {{#if profileUser.myProfile }} {{#if profileUser.job_view_pref}}
+      {{#if profileUser.myProfile }}
+      {{#if profileUser.job_view_pref}}
       <i class="icon icon-visible">{{profileUser.job_view_pref}}</i>{{/if}}
     </header>
     <button id="open-modal-job" class="btn-open-modal" value="job">Edit</button>
-    {{!-- job search status --}} {{/if}}
+    {{!-- job search status --}}
+    {{/if}}
     <div>
       {{#if profileUser.job_search_status}}
       <i class="icon icon-jobstatus-{{profileUser.job_search_status}}">{{profileUser.job_search_status}} circle</i>
