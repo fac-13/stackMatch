@@ -1,7 +1,10 @@
-const addFacCohortReturnID = require('./addFacCohortReturnID');
-const getFacCohortID = require('./getFacCohortID');
+const {
+  addFacCohortReturnID,
+  getFacCohortID,
+} = require('./subqueries/queryDbFacCohortTable');
 const updateMemberDetails = require('./updateMemberDetails');
 const makeFacCohortName = require('../../lib/makeFacCohortName');
+
 
 const saveProfileData = (dataObj, githubID) => {
   const objClone = JSON.parse(JSON.stringify(dataObj));
