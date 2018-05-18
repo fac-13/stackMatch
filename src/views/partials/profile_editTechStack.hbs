@@ -9,12 +9,12 @@
   <form method="POST" action="/saveStackDetails" novalidate>
     <ul class="remove-list-style" id="stack__list">
       {{#if user.tech_stack}} {{#each user.tech_stack}}
-      <li id={{this}}>
+      <li class="js-techLi">
         <label for="tech" class="sg-title">
           <input type="hidden" name="tech" value={{this}}>
         </label>
         <span class="sg-node">
-          <button onclick="removeTech({{this}})" class="sg-node-remove" type="button" id="{{this}}-btn">x</button>{{this}}</span>
+          <button class="sg-node-remove" type="button">x</button>{{this}}</span>
       </li>
       <br> {{/each}} {{/if}}
     </ul>

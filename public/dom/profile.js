@@ -169,8 +169,15 @@ function checkTechDuplicates() {
   return liArr;
 }
 
-function removeTech(liId) {
-  document.getElementById(liId).remove();
+// function removeTech(liId) {
+//   document.getElementById(liId).remove();
+// }
+
+var listItems = document.querySelectorAll(".js-techLi"); // or document.querySelectorAll("li"); 
+for (var i = 0; i < listItems.length; i++) {
+  listItems[i].onclick = function () {
+    this.parentNode.removeChild(this);
+  };
 }
 
 stackAddBtn.addEventListener('click', function (e) {
