@@ -152,6 +152,40 @@ p {
   margin: 0;
   line-height: 1rem; }
 
+.signup-btn {
+  width: 50%;
+  margin-left: 50%;
+  margin-top: 2rem;
+  margin-bottom: 5rem;
+  padding-left: 10%; }
+
+.home-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap; }
+
+.home-container__sm-intro {
+  margin-top: 10rem;
+  width: 100%; }
+
+.home-container__sm-signup {
+  text-align: right;
+  margin-top: 5rem;
+  width: 100%; }
+
+.home-container__sm-signuptext {
+  width: 50%;
+  margin-top: 4rem; }
+
+.home-container__sm-preview {
+  width: 50%;
+  margin-right: 0; }
+
+.home-container__img {
+  width: 100%;
+  margin: 0 auto;
+  box-shadow: 3px 3px 5px 6px #ccc; }
+
 .profile__avatar {
   width: 30%; }
 
