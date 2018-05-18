@@ -50,8 +50,9 @@
     <h1 class="sg-main-link">
       Tech Stack
     </h1>
+    {{#if profileUser.myProfile }}    
     <button id="open-modal-stack" class="btn-open-modal sg-button" value="stack">+ Add</button>
-
+    {{/if}}
     {{#if profileUser.tech_stack}}
     <div>
       <ul class="remove-list-style">
