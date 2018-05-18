@@ -16,7 +16,7 @@ $offwhite: #F2F2F2;
 *,
 *:before,
 *:after {
-  // border: 1px solid lightblue;
+  border: 1px solid lightblue;
   box-sizing: border-box;
 }
 
@@ -143,10 +143,11 @@ p {
 
 .sg-node {
   background-color: $dark;
-  padding: 1rem 2rem;
+  padding: .5rem 1rem;
+  margin: .2rem .2rem .2rem 0;
   border-radius: .7rem;
   color: $offwhite;
-  
+  display: inline-block;
   font-size: 1rem;
 }
 
