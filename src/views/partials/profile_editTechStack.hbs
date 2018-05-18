@@ -10,10 +10,11 @@
     <ul class="remove-list-style" id="stack__list">
       {{#if user.tech_stack}} {{#each user.tech_stack}}
       <li id={{this}}>
-        <input type="hidden" name="tech" value={{this}}>
-        <div>{{this}}</div>
-        {{!-- NEED TO ADD EVENT LISTENER TO REMOVE SOMEHOW --}}
-        <button class="stack__removebutton">Remove</button>
+        <label for="tech" class="sg-title">
+          <input type="hidden" name="tech" value={{this}}>
+        </label>
+        <span class="sg-node">
+          <button onclick="removeTech({{this}})" class="sg-node-remove" type="button" id="{{this}}-btn">x</button>{{this}}</span>
       </li>
       <br> {{/each}} {{/if}}
     </ul>

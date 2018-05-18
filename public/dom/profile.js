@@ -169,8 +169,8 @@ function checkTechDuplicates() {
   return liArr;
 }
 
-function removeLi(liId) {
-  liId.remove();
+function removeTech(liId) {
+  document.getElementById(liId).remove();
 }
 
 stackAddBtn.addEventListener('click', function (e) {
@@ -185,12 +185,12 @@ stackAddBtn.addEventListener('click', function (e) {
   }
   if (!listOfTech.includes(tech)) {
     var techString = stackValidation.classList.add('is-hidden');
-    stack__list.insertAdjacentHTML('beforeend', '<li id="' + tech + '">\n    <label for="tech" class="sg-title">\n      <input type="hidden" name="tech" value="' + tech + '">\n    </label>\n    <div>' + tech + '</div>\n    <button class="stack__removebutton" type="button" id="' + tech + '-btn">Remove</button>\n  </li>');
+    stack__list.insertAdjacentHTML('beforeend', '<li id="' + tech + '">\n    <label for="tech" class="sg-title">\n    <input type="hidden" name="tech" value="' + tech + '">\n    </label>\n    <span class="sg-node"><button class="sg-node-remove" type="button" id="' + tech + '-btn">x</button>' + tech + '</span>\n    </li>');
     var newLiId = document.getElementById(tech);
     var newLiBtn = document.getElementById(tech + '-btn');
     newLiBtn.addEventListener('click', function (e) {
       e.preventDefault;
-      removeLi(newLiId);
+      newLiId.remove();
     });
   } else {
     stackValidation.classList.remove('is-hidden');

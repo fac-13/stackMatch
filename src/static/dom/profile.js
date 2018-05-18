@@ -87,8 +87,8 @@ function checkTechDuplicates() {
   return liArr;
 }
 
-function removeLi(liId) {
-  liId.remove();
+function removeTech(liId) {
+  document.getElementById(liId).remove();
 }
 
 stackAddBtn.addEventListener('click', (e) => {
@@ -106,18 +106,18 @@ stackAddBtn.addEventListener('click', (e) => {
       stackValidation.classList.add('is-hidden');
     stack__list.insertAdjacentHTML('beforeend', `<li id="${tech}">
     <label for="tech" class="sg-title">
-      <input type="hidden" name="tech" value="${tech}">
+    <input type="hidden" name="tech" value="${tech}">
     </label>
-    <div>${tech}</div>
-    <button class="stack__removebutton" type="button" id="${tech}-btn">Remove</button>
-  </li>`);
+    <span class="sg-node"><button class="sg-node-remove" type="button" id="${tech}-btn">x</button>${tech}</span>
+    </li>`);
     var newLiId = document.getElementById(tech);
     var newLiBtn = document.getElementById(`${tech}-btn`);
     newLiBtn.addEventListener('click', (e) => {
       e.preventDefault;
-      removeLi(newLiId);
+      newLiId.remove();
     });
   } else {
     stackValidation.classList.remove('is-hidden');
   }
 });
+

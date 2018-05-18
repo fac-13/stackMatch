@@ -95,9 +95,11 @@ p {
 
 .sg-node {
   background-color: #223241;
-  padding: 1rem 2rem;
+  padding: .5rem 1rem;
+  margin: .2rem .2rem .2rem 0;
   border-radius: .7rem;
   color: #F2F2F2;
+  display: inline-block;
   font-size: 1rem; }
 
 .sg-node-remove {
