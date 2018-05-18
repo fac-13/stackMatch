@@ -38,7 +38,7 @@ ___
 | HTML5                 | Node.js              | Tape       | OAuth (Passport)    |
 | CSS3 (BEM)            | Handlebars           | Travis CI  | Webpack             |
 | SASS                  | PostgreSQL           | Supertest  | Babel               |
-| Javascript            | Express.js           | istanbul   |                     |
+| Javascript            | Express.js           | nyc        |                     |
 
 ___
 
