@@ -4,7 +4,7 @@
 
 [![Build Status](https://travis-ci.org/fac-13/stackMatch.svg?branch=master)](https://travis-ci.org/fac-13/stackMatch)
 
-Preview StackMatch: _link to Heroku to come_
+Preview StackMatch: https://stackmatch-fac-dev.herokuapp.com/
 
 ## Problem statement
 The [Founders & Coders (FAC)](https://foundersandcoders.com/) community needs a way for FAC members to connect with each other, so that they can help each other and make it possible for the hiring manager to contact a FAC member with a job opportunity they may find interesting.
@@ -35,9 +35,9 @@ ___
 
 | Front end             | Backend              | Testing    | Other               |
 |:---------------------:|:--------------------:|:----------:|:-------------------:|
-| HTML5                 | Node.js              | Tape       | OAuth (Passport)    | 
-| CSS3 (BEM)            | Handlebars temp.     | Travis CI  | GraphQL API         |
-| SASS                  | PostgreSQL           | Supertest  |                     |
+| HTML5                 | Node.js              | Tape       | OAuth (Passport)    |
+| CSS3 (BEM)            | Handlebars           | Travis CI  | Webpack             |
+| SASS                  | PostgreSQL           | Supertest  | Babel               |
 | Javascript            | Express.js           | istanbul   |                     |
 
 ___
@@ -46,7 +46,7 @@ ___
 
 _Diagram that links Node.js icon to other services (that have their own icons) coming_
 * The database schema:
-![schema](https://i.imgur.com/87975Wi.png)
+![schema](https://i.imgur.com/Dgqvatm.png)
 ___
 ## How to run locally
 
@@ -82,7 +82,7 @@ ___
     * `COOKIE_KEY =` [Anything you want]
 
 5. Run `npm run build` to build the database (or login to your prod db using postgres and run `\i [full path to] db_build.sql`).
-6. Run the app in dev mode using`npm run dev` and access the site at [http:://localhost:3000](http:://localhost:3000). 
+6. Run the app in dev mode using`npm run dev` and access the site at [http:://localhost:3000](http:://localhost:3000).
 
 ### Testing:
 1. Run `npm test` in the command line
